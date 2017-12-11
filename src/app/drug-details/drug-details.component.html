@@ -1,0 +1,7 @@
+<mat-list>
+  <mat-list-item>Active Ingredients: {{drug.ingredients}}</mat-list-item>
+  <mat-list-item>FDA-approved use on approval date: {{drug.use}}</mat-list-item>
+  <mat-list-item *ngIf="drug.press"><a href = "https://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/{{drug.press}}.htm" target="_blank">Press Release</a></mat-list-item>
+  <mat-list-item *ngIf="drug.trials"><a href = "https://www.fda.gov/Drugs/InformationOnDrugs/{{drug.trials}}.htm" target="_blank">Drug Trials</a></mat-list-item>
+</mat-list>
+

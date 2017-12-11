@@ -1,0 +1,14 @@
+<mat-card class="example-card">
+  <h1><a href="http://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&varApplNo={{drug.bla}}" target="_blank">{{drug.name}}</a></h1> Date Approved: {{drug.date}}
+  <mat-tab-group>
+    <mat-tab label="Drug Details">
+<app-drug-details [drug]="drug"></app-drug-details>
+    </mat-tab>
+    <mat-tab label="Timeline">
+<app-timeline [drug]="drug"></app-timeline>
+    </mat-tab>
+    <mat-tab label="Disease Landscape">
+    <app-disease-landscape [drug]="drug"></app-disease-landscape>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
