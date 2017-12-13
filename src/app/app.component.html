@@ -1,84 +1,12 @@
 
+ <div fxLayout="row" id="timeLine">
+   <div fxFlex="100">
+<app-timeline></app-timeline>
+   </div>
+ </div>
 
- <!--       <div fxLayoutGap="10px" *ngFor="let drug of drugs">
-    <app-drug-card [drug]="drug"></app-drug-card>
-        </div>-->
+ <hr>
 
-
-        <mat-table #table [dataSource]="dataSource" matSort >
-
-          <!--- Note that these columns can be defined in any order.
-                The actual rendered columns are set as a property on the row definition" -->
-          <ng-container matColumnDef="product">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <mat-list>
-              <mat-list-item>{{row.name}}</mat-list-item>
-            </mat-list>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="ingredients">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Active Ingredients</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <mat-list>
-                <mat-list-item>{{row.ingredients}}</mat-list-item>
-              </mat-list>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="newIngredients">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>New Ingredients</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <mat-list>
-                <mat-list-item>{{row.newIngredients}}</mat-list-item>
-              </mat-list>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="timeline">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Timeline</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              {{row.date}}
-<!--
-              <app-timeline [drug]="row"></app-timeline>
--->
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="details">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="references">
-            <mat-header-cell *matHeaderCellDef>References</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <mat-list>
-                <mat-list-item *ngIf="row.press"><a href = "https://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/{{row.press}}.htm" target="_blank">Press Release</a></mat-list-item>
-                <mat-list-item *ngIf="row.trials"><a href = "https://www.fda.gov/Drugs/InformationOnDrugs/{{row.trials}}.htm" target="_blank">Drug Trials</a></mat-list-item>
-              </mat-list>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="use">
-            <mat-header-cell *matHeaderCellDef >Use</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-                 {{row.use}}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="notes">
-            <mat-header-cell *matHeaderCellDef >Notes</mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <mat-list>
-                <mat-list-item> {{row.notes}}</mat-list-item>
-              </mat-list>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;" fxLayoutAlign="center start" ></mat-row>
-        </mat-table>
+ <div fxLayout="row">
+   <app-drug-details></app-drug-details>
+ </div>

@@ -1,4 +1,4 @@
-bla,name,ingredients,newIngredients,notes,date,use,press,trials
+bla,name,ingredients,newIngredients,notes,dateString,use,press,trials
 761083,Hemlibra,emicizumab,emicizumab,,11/16/2017,To prevent or reduce the frequency of bleeding episodes in adult and pediatric patients with hemophilia A who have developed antibodies called Factor VIII (FVIII) inhibitors,ucm585567,
 761047,Mepsevii,vestronidase alfa-vjbk,vestronidase alfa,,11/15/2017,To treat pediatric and adult patients with an inherited metabolic condition called mucopolysaccharidosis type VII (MPS VII)- also known as Sly syndrome.,ucm585308,
 761070,Fasenra,benralizumab,benralizumab,,11/14/2017,For add-on maintenance treatment of patients with severe asthma aged 12 years and older- and with an eosinophilic phenotype,,ucm586076
@@ -8,7 +8,7 @@ bla,name,ingredients,newIngredients,notes,date,use,press,trials
 208716,Verzenio,abemaciclib,abemaciclib,,9/28/2017,To treat certain advanced or metastatic breast cancers,ucm578071,ucm580765
 209363,Solosec,secnidazole,secnidazole,,9/15/2017,To treat bacterial vaginosis,,ucm577042
 209936,Aliqopa,copanlisib,copanlisib,,9/14/2017,To treat adults with relapsed follicular lymphoma,ucm576129,ucm577548
-209570,benznidazole,benznidazole,benznidazole,,8/29/2017,To treat children ages 2 to 12 years old with Chagas disease,ucm573942,ucm576378
+209570,Benznidazole,benznidazole,benznidazole,,8/29/2017,To treat children ages 2 to 12 years old with Chagas disease,ucm573942,ucm576378
 209776,Vabomere,meropenem and vaborbactam,vaborbactam,,8/29/2017,To treat adults with complicated urinary tract infections,ucm573955,ucm576380
 761040,Besponsa,inotuzumab ozogamicin,inotuzumab ozogamicin,,8/17/2017,To treat adults with relapsed or refractory acute lymphoblastic leukemia,ucm572131,ucm573493
 209394,Mavyret,glecaprevir and pibrentasvir,glecaprevir and pibrentasvir,,8/3/2017,To treat adults with chronic hepatitis C virus,ucm570038,ucm571769

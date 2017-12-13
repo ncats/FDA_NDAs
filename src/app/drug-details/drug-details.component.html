@@ -1,7 +1,73 @@
-<mat-list>
-  <mat-list-item>Active Ingredients: {{drug.ingredients}}</mat-list-item>
-  <mat-list-item>FDA-approved use on approval date: {{drug.use}}</mat-list-item>
-  <mat-list-item *ngIf="drug.press"><a href = "https://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/{{drug.press}}.htm" target="_blank">Press Release</a></mat-list-item>
-  <mat-list-item *ngIf="drug.trials"><a href = "https://www.fda.gov/Drugs/InformationOnDrugs/{{drug.trials}}.htm" target="_blank">Drug Trials</a></mat-list-item>
-</mat-list>
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+<mat-table #table [dataSource]="dataSource" matSort >
 
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-list>
+        <mat-list-item>{{row.name}}</mat-list-item>
+      </mat-list>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="ingredients">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Active Ingredients</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+{{row.ingredients}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="newIngredients">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>New Ingredients</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+{{row.newIngredients}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Timeline</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      {{row.dateString}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="details">
+    <mat-header-cell *matHeaderCellDef>Details</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="references">
+    <mat-header-cell *matHeaderCellDef>References</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-list>
+        <mat-list-item *ngIf="row.press"><a href = "https://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/{{row.press}}.htm" target="_blank">Press Release</a></mat-list-item>
+        <mat-list-item *ngIf="row.trials"><a href = "https://www.fda.gov/Drugs/InformationOnDrugs/{{row.trials}}.htm" target="_blank">Drug Trials</a></mat-list-item>
+      </mat-list>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="use">
+    <mat-header-cell *matHeaderCellDef >Use</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      {{row.use}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="notes">
+    <mat-header-cell *matHeaderCellDef >Notes</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-list>
+        <mat-list-item> {{row.notes}}</mat-list-item>
+      </mat-list>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" fxLayoutAlign="center start" ></mat-row>
+</mat-table>
