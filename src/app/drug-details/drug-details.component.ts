@@ -21,7 +21,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.dataLoaderService.getData('assets/2017-drugs.csv').subscribe();
+    this.dataLoaderService.getData('assets/2012-2017-drugs.csv').subscribe();
     this.dataLoaderService.data$.subscribe(res => this.dataSource.data = res);
     this.drugHoverService.hoverednode$.subscribe(drug => {
       this.dataSource.data = Array.from(new Set([drug].concat(this.dataSource.data)));

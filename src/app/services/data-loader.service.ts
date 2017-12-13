@@ -50,12 +50,13 @@ export class DataLoaderService {
     const headers = lines.shift().split(',');
     for (let i of lines) {
       const obj: Drug = new Drug();
-      const currentline = i.split(',');
+      const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
       for (let j in headers) {
         obj[headers[j]] = currentline[j];
       }
-      obj.date = Date.parse(obj.dateString);
+      const d = obj.dateString.split('/');
+      obj.date = Date.parse(d[0] + '/' + d[1]);
       result.push(obj);
 
     }

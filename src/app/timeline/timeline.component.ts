@@ -17,6 +17,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
   data: any[] = [];
   products: string[] = [];
   chart: Highcharts.ChartObject;
+  dataMap: Map<number, any[]> = new Map();
+  mmm: any;
+seriesData: any = [];
 
   constructor(private dataLoaderService: DataLoaderService,
               private drugHoverService: DrugHoverService) {
@@ -24,10 +27,24 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
-      this.products = res.map(drug => drug.name);
+      console.log(res);
+   //   let years = ;
+    //  this.products = res.map(drug => drug.name);
       this.data = res.map(drug => {
-        return {x: drug.date, y: res.indexOf(drug), drug: drug};
+        let year = this.dataMap.get(drug.dateString.split('/')[2] - 1 + 1);
+        if (year && year.length > 0) {
+          year.push({x: drug.date, y: drug.dateString.split('/')[2] - 1 + 1, drug: drug});
+        }else {
+          year = [{x: drug.date, y: drug.dateString.split('/')[2] - 1 + 1, drug: drug}];
+        }
+        this.dataMap.set((drug.dateString.split('/')[2] - 1 + 1), year);
+        return {x: drug.date, y: drug.dateString.split('/')[2] - 1 + 1, drug: drug};
       });
+      console.log(this.dataMap.keys());
+      for (let k of Array.from(this.dataMap.keys())) {
+        console.log(k);
+        this.seriesData.push({name: k, data: this.dataMap.get(k)});
+      }
       this.makeChart();
     });
   }
@@ -44,7 +61,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
         colors: ['#673ab7'
         ],
        title: {
-         text: 'FDA approved Drugs in 2017'
+         text: 'FDA approved Drugs by Year'
        },
         legend: {
           enabled: false
@@ -64,7 +81,23 @@ export class TimelineComponent implements OnInit, OnDestroy {
           }
         },
        series: [{
-         data: this.data
+          name: '2017',
+         data: ctrl.dataMap.get(2017)
+       }, {
+         name: '2016',
+         data: ctrl.dataMap.get(2016)
+       }, {
+         name: '2015',
+         data: ctrl.dataMap.get(2015)
+       }, {
+         name: '2014',
+         data: ctrl.dataMap.get(2014)
+       }, {
+         name: '2013',
+         data: ctrl.dataMap.get(2013)
+       }, {
+         name: '2012',
+         data: ctrl.dataMap.get(2012)
        }],
         tooltip: {
           formatter: function () {
@@ -73,16 +106,15 @@ export class TimelineComponent implements OnInit, OnDestroy {
           }
         },
         xAxis: {
-          type: 'datetime'
+          type: 'datetime',
+          dateTimeLabelFormats: {
+            month: '%b'
+          }
         },
         yAxis: {
-          title: {
-            text: 'Products'
-          },
-          categories: this.products,
+          categories: ['2017', '2016', '2015', '2014', '2013', '2012'],
           reversed: true,
           labels: {
-            padding: 10,
             step: 1
           },
         }
