@@ -6,6 +6,7 @@ newIngredients: string;
 dateString: string;
 initClinicalStudy: number;
 date: number;
+fullDate: number;
 notes: string;
 use: string;
 press: string;

@@ -12,6 +12,8 @@ export class DataLoaderService {
   private _dataSource = new Subject<any>();
   //  Observable navItem stream
   data$ = this._dataSource.asObservable();
+  dataMap: Map<number, any[]> = new Map();
+
   constructor(private http: HttpClient) {}
 
   getData(url: string): Observable<any> {
@@ -57,10 +59,19 @@ export class DataLoaderService {
       }
       const d = obj.dateString.split('/');
       obj.date = Date.parse(d[0] + '/' + d[1]);
-      result.push(obj);
-
+      obj.moleculeType = obj.moleculeType.toLowerCase();
+      obj.fullDate = Date.parse(obj.dateString);
+      let year:number = Number(obj.dateString.split('/')[2]);
+      let yearList: any[] = this.dataMap.get(year);
+     if (yearList && yearList.length > 0) {
+       yearList.push({x: obj.date, y: year, drug: obj});
+     }else {
+       yearList = [{x: obj.date, y: year, drug: obj}];
+     }
+        this.dataMap.set(year, yearList);
+     result.push(obj);
     }
-    this._dataSource.next(result);
+    this._dataSource.next({drugs: result, years: this.dataMap});
   }
 }
 
