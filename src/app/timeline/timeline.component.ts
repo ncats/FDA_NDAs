@@ -4,6 +4,10 @@ import {DataLoaderService} from '../services/data-loader.service';
 import * as Highcharts from 'highcharts';
 import {DrugHoverService} from '../services/drug-hover.service';
 import {FilterService} from "../services/filter.service";
+// Load the exporting module.
+import Exporting from 'highcharts/modules/exporting.src.js';
+// Initialize exporting module.
+
 
 // todo: add exporting module
 
@@ -15,6 +19,7 @@ import {FilterService} from "../services/filter.service";
 export class TimelineComponent implements OnInit, OnDestroy {
   @ViewChild('chartTarget') chartTarget: ElementRef;
   chart: Highcharts.ChartObject;
+
   dataMap: Map<number, any[]> = new Map();
 
   constructor(private dataLoaderService: DataLoaderService,
@@ -23,6 +28,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    Exporting(Highcharts);
     this.dataLoaderService.data$.subscribe(res => {
       this.dataMap = res.years;
       this.makeChart();
