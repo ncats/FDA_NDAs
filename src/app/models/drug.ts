@@ -5,14 +5,20 @@ ingredients: string;
 newIngredients: string;
 dateString: string;
 initClinicalStudy: number;
-date: number;
+date: number; // utc number for date and month
+year: string;
 fullDate: number;
 notes: string;
 use: string;
 press: string;
 trials: string;
-first; orphan; fastTrack; breakthrough; priority; accelerated: boolean;
-therapeuticClass; moleculeType; modeOfAction; innovationCategories: string;
+first: boolean;
+orphan: boolean;
+fastTrack: boolean;
+breakthrough: boolean;
+priority: boolean;
+accelerated: boolean;
+therapeuticClass; moleculeType; modeOfAction; substanceClass; innovationCategories; unii; pharmacology: string;
 constructor() {}
 
 }

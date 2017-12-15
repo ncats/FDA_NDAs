@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {DrugHoverService} from "../services/drug-hover.service";
 import {DataLoaderService} from "../services/data-loader.service";
 import * as Highcharts from 'highcharts';
@@ -13,11 +13,13 @@ Drilldown(Highcharts);
 })
 export class DrugChartsComponent implements OnInit {
   @ViewChild('chartTarget') chartTarget: ElementRef;
+  @Input()field: string;
+  @Input()label: string;
   chart: Highcharts.ChartObject;
   drilldown: any[] = [];
   products: string[] = [];
   dataMap: Map<number, any[]> = new Map();
-  mmm: any;
+  down:boolean = false;
   series: any = [];
 
   constructor(private dataLoaderService: DataLoaderService,
@@ -26,6 +28,7 @@ export class DrugChartsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this);
     this.dataLoaderService.data$.subscribe(res => {
       this.dataMap = res.years;
       this.getDrilldown();
@@ -38,15 +41,15 @@ export class DrugChartsComponent implements OnInit {
     this.dataMap.forEach((drugs, year)=>{
       const yearCountMap: Map<number, number> = new Map();
       drugs.map(obj=>{
-        // this half tracks the global molecule type and total counts
-        let moleculeType = obj.drug.moleculeType.toLowerCase();
-        let totals: any = typeCountMap.get(moleculeType);
+        // this half tracks the global field and total counts
+        let field = obj.drug[this.field];
+        let totals: any = typeCountMap.get(field);
         let yearCounts: Map<number, number>;
         if(!totals) {
           totals= {total:0, yearly: new Map()};
         }
          let count: number = totals.total;
-          // this is a map of counts by year for a molecule type
+          // this is a map of counts by year for a field
           yearCounts= totals.yearly;
           // this tracks the counts by year
            let localYearCount: number = yearCounts.get(year);
@@ -56,7 +59,7 @@ export class DrugChartsComponent implements OnInit {
           localYearCount++;
           yearCounts.set(year, localYearCount);
           count++;
-        typeCountMap.set(moleculeType, {total: count, yearly:yearCounts});
+        typeCountMap.set(field, {total: count, yearly:yearCounts});
       })
     });
 
@@ -68,6 +71,7 @@ export class DrugChartsComponent implements OnInit {
       });
       this.drilldown.push({name:key, id:key, data: data})
     });
+    console.log(this);
     this.makeChart();
   }
 
@@ -83,15 +87,17 @@ filterString(event:any):void{
         type: 'pie',
         events: {
           drilldown: function (e) {
-            ctrl.filterService.filterString(e.seriesOptions.name, 'moleculeType');
+            ctrl.down = true;
+            ctrl.filterService.filterString(e.seriesOptions.name, ctrl.field);
           },
           drillup: function (e) {
+            ctrl.down = false;
             ctrl.filterService.clearFilter();
           }
         }
       },
       title: {
-        text: 'FDA approved Drugs by Type 2012-2017'
+        text: 'FDA approved Drugs by ' + ctrl.label + ' 2012-2017'
       },
       subtitle: {
         text: 'Click the slices to view by year.'
@@ -107,6 +113,21 @@ filterString(event:any):void{
           dataLabels: {
             enabled: true,
             format: '{point.name}: {point.y}'
+          },
+          point: {
+            events: {
+              mouseOver: function () {
+                if (ctrl.down) {
+                  //  ctrl.filterService.filterString(this.name, 'year');
+                }
+                console.log(this);
+              },
+              mouseOut: function () {
+                if (ctrl.down) {
+                  //   ctrl.filterService.clearFilter();
+                }
+              }
+            }
           }
         }
       },
@@ -115,13 +136,13 @@ filterString(event:any):void{
         pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
       },
       series: [{
-        name: 'Molecule Type',
+        name: ctrl.label,
         allowPointSelect: true,
         colorByPoint: true,
         data: this.series
       }],
       drilldown: {
-        series: this.drilldown
+        series: this.drilldown,
       }
     };
     this.chart = Highcharts.chart(this.chartTarget.nativeElement, options);

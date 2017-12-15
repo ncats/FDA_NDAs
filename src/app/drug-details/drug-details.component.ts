@@ -24,7 +24,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.dataLoaderService.getData('assets/2012-2017-drugs.csv').subscribe();
+    this.dataLoaderService.getData('assets/2012-2017-NMEs.csv').subscribe();
     this.dataLoaderService.data$.subscribe(res => {
       this.backup = res.drugs;
       this.dataSource.data = res.drugs
@@ -37,6 +37,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
       if(filter =="clear"){
         this.dataSource.data= this.backup;
       }
+      console.log(filter);
       this.dataSource.data = this.dataSource.data.filter(drug => drug[filter.field] === filter.term);
     });
   }
@@ -49,5 +50,15 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  drugClick(drug:Drug){
+    console.log(drug);
+    this.drugHoverService.clickedNode(drug);
+  }
+
+  hover(drug:Drug){
+    console.log(drug);
+    this.drugHoverService.clickedNode(drug);
   }
 }

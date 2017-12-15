@@ -3,6 +3,7 @@ import {Drug} from '../models/drug';
 import {DataLoaderService} from '../services/data-loader.service';
 import * as Highcharts from 'highcharts';
 import {DrugHoverService} from '../services/drug-hover.service';
+import {FilterService} from "../services/filter.service";
 
 // todo: add exporting module
 
@@ -17,13 +18,38 @@ export class TimelineComponent implements OnInit, OnDestroy {
   dataMap: Map<number, any[]> = new Map();
 
   constructor(private dataLoaderService: DataLoaderService,
-              private drugHoverService: DrugHoverService) {
+              private drugHoverService: DrugHoverService,
+              private filterService: FilterService) {
   }
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
       this.dataMap = res.years;
       this.makeChart();
+    });
+
+    this.drugHoverService.clickednode$.subscribe(drug => {
+      console.log(this.chart);
+      let list:any[] = this.chart.series.filter(l => l.name === drug.year);
+      console.log(list);
+      const point = list[0].data.filter(d =>d['drug'].name === drug.name);
+      console.log(point);
+      point[0].setState(point[0].state==='hover'? '': 'hover');
+    point[0].select(null, true);
+      this.chart['tooltip'].refresh(point[0]);
+    });
+
+
+    this.filterService.filter$.subscribe(filter => {
+      console.log(filter);
+     /* let list:any[] = this.chart.series.filter(l => l.name === drug.year);
+      console.log(list);
+      const point = list[0].data.filter(d =>d['drug'].name === drug.name);
+      console.log(point);
+      point[0].setState(point[0].state==='hover'? '': 'hover');
+      point[0].select(null, true);
+      this.chart['tooltip'].refresh(point[0]);
+      this.dataSource.data = this.dataSource.data.filter(drug => drug[filter.field] === filter.term);*/
     });
   }
 
@@ -98,6 +124,10 @@ export class TimelineComponent implements OnInit, OnDestroy {
      };
 
      this.chart = Highcharts.chart(this.chartTarget.nativeElement, options);
+  }
+
+  toggleHighlight(){
+
   }
 
   ngOnDestroy() {

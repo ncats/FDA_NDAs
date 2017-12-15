@@ -5,18 +5,18 @@ import { NgModule } from '@angular/core';
 import {
   MatButtonModule, MatAutocompleteModule, MatMenuModule, MatToolbarModule, MatInputModule, MatIconModule,
   MatListModule, MatSliderModule, MatProgressSpinnerModule, MatSortModule, MatTableModule, MatSidenavModule,
-  MatSlideToggleModule, MatRadioModule, MatCheckboxModule, MatTabsModule, MatCardModule
+  MatSlideToggleModule, MatRadioModule, MatCheckboxModule, MatTabsModule, MatCardModule, MatTooltipModule
 } from '@angular/material';
 
 @NgModule({
   imports: [MatButtonModule, MatAutocompleteModule, MatMenuModule, MatToolbarModule,
     MatInputModule, MatIconModule, MatListModule, MatSliderModule, MatProgressSpinnerModule,
     MatTableModule, MatSortModule, MatSidenavModule, MatSlideToggleModule, MatRadioModule,
-    MatTabsModule, MatCheckboxModule, MatCardModule],
+    MatTabsModule, MatCheckboxModule, MatCardModule, MatTooltipModule],
   exports: [MatButtonModule, MatAutocompleteModule, MatMenuModule, MatToolbarModule,
     MatInputModule, MatIconModule, MatListModule, MatSliderModule, MatProgressSpinnerModule,
     MatTableModule, MatSortModule, MatSidenavModule, MatSlideToggleModule, MatRadioModule,
-    MatTabsModule, MatCheckboxModule, MatCardModule],
+    MatTabsModule, MatCheckboxModule, MatCardModule, MatTooltipModule],
 })
 export class MaterialModule { }
 

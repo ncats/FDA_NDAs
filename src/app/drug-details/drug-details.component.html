@@ -1,3 +1,11 @@
+<h3>Legend</h3>
+<span><mat-icon> verified_user </mat-icon>: First-in-class</span>
+<span><mat-icon> child_friendly </mat-icon>: Orphan Designation</span>
+<span><mat-icon> flight_takeoff </mat-icon>: Fast Track</span>
+<span><mat-icon> trending_up </mat-icon>: FDA Breakthrough Designation</span>
+<span><mat-icon> visibility </mat-icon>: Priority Review </span>
+<span><mat-icon> fast_forward </mat-icon>: FDA Accelerated Approval</span>
+
 <mat-form-field>
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
 </mat-form-field>
@@ -62,12 +70,15 @@
   <ng-container matColumnDef="notes">
     <mat-header-cell *matHeaderCellDef >Notes</mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <mat-list>
-        <mat-list-item> {{row.notes}}</mat-list-item>
-      </mat-list>
+<span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon> verified_user </mat-icon></span>
+<span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon> child_friendly </mat-icon></span>
+<span *ngIf="row.fastTrack" matTooltip="Fast Track" [matTooltipPosition]="'above'"><mat-icon> flight_takeoff </mat-icon></span>
+<span *ngIf="row.breakthrough" matTooltip="FDA Breakthrough Designation" [matTooltipPosition]="'above'"><mat-icon> trending_up </mat-icon></span>
+<span *ngIf="row.priority" matTooltip="Priority Review" [matTooltipPosition]="'above'"><mat-icon> visibility </mat-icon></span>
+<span *ngIf="row.accelerated" matTooltip="FDA Accelerated Approval" [matTooltipPosition]="'above'"><mat-icon> fast_forward </mat-icon></span>
     </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" fxLayoutAlign="center start" ></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" fxLayoutAlign="center start" (click)="drugClick(row)" [ngClass]="{clicked: clicked}" (mouseenter) ="hover(row) "  (mouseleave) ="hover(row)"></mat-row>
 </mat-table>

@@ -8,7 +8,15 @@
  <hr>
 
  <div fxLayout="row">
-<app-drug-charts></app-drug-charts>
+   <div fxFlex="33">
+   <app-drug-charts [field]="'moleculeType'" [label]="'Molecule Type'"></app-drug-charts>
+   </div>
+   <div fxFlex="33">
+   <app-drug-charts [field]="'substanceClass'" [label]="'Substance Class'"></app-drug-charts>
+   </div>
+   <div fxFlex="33">
+   <app-drug-charts [field]="'pharmacology'" [label]="'Pharmacology'"></app-drug-charts>
+   </div>
  </div>
 
  <div fxLayout="row">
