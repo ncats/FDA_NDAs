@@ -1,7 +1,25 @@
+<app-ncats-header></app-ncats-header>
 
- <div fxLayout="row" id="timeLine">
-   <div fxFlex="100">
-<app-timeline></app-timeline>
+<div id="main-body">
+  <div *ngIf="loading" class = "loadingIcon" fxLayoutAlign="center center">
+    <mat-spinner></mat-spinner>
+  </div>
+ <div fxLayout="row" fxLayoutAlign="center center" id="yearFilter">
+   <h2>FDA innovative drugs approved in: &nbsp;</h2>
+   <mat-form-field>
+   <mat-select [formControl]="yearFilterCtrl" multiple>
+      <mat-option [value]=2017>2017</mat-option>
+      <mat-option [value]=2016>2016</mat-option>
+      <mat-option [value]=2015>2015</mat-option>
+      <mat-option [value]=2014>2014</mat-option>
+      <mat-option [value]=2013>2013</mat-option>
+      <mat-option [value]=2012>2012</mat-option>
+  </mat-select>
+     </mat-form-field>
+ </div>
+   <div fxLayout="row" id="timeLine">
+     <div fxFlex="100">
+           <app-timeline></app-timeline>
    </div>
  </div>
 
@@ -10,6 +28,9 @@
  <div fxLayout="row">
    <div fxFlex="33">
    <app-drug-charts [field]="'moleculeType'" [label]="'Molecule Type'"></app-drug-charts>
+<!--
+     <app-drug-charts [fields]="['substanceClass', 'moleculeType']" [label]="'Molecule Type'"></app-drug-charts>
+-->
    </div>
    <div fxFlex="33">
    <app-drug-charts [field]="'substanceClass'" [label]="'Substance Class'"></app-drug-charts>
@@ -24,3 +45,6 @@
    <app-drug-details></app-drug-details>
    </div>
  </div>
+</div>
+
+<app-ncats-footer></app-ncats-footer>

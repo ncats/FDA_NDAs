@@ -4,6 +4,7 @@ import {DataLoaderService} from "../services/data-loader.service";
 import * as Highcharts from 'highcharts';
 import * as Drilldown from 'highcharts/modules/drilldown';
 import {FilterService} from "../services/filter.service";
+import {YearFilterService} from "../services/year-filter.service";
 Drilldown(Highcharts);
 
 @Component({
@@ -21,10 +22,12 @@ export class DrugChartsComponent implements OnInit {
   dataMap: Map<number, any[]> = new Map();
   down:boolean = false;
   series: any = [];
+  years:number[] = [2017];
 
   constructor(private dataLoaderService: DataLoaderService,
               private drugHoverService: DrugHoverService,
-              private filterService: FilterService) {
+              private filterService: FilterService,
+              private yearFilterService: YearFilterService) {
   }
 
   ngOnInit() {
@@ -33,6 +36,27 @@ export class DrugChartsComponent implements OnInit {
       this.dataMap = res.years;
       this.getDrilldown();
     });
+   /* this.dataLoaderService.data$.subscribe(res => {
+      this.dataMap = res.years;
+      const data: any[] =[];
+      this.years.forEach(year => {
+        data.push({name:year.toString(), data: this.dataMap.get(year)});
+      });
+      this.series = data;
+      this.makeChart();
+    });
+
+    this.yearFilterService.year$.subscribe(years =>{
+      this.years = years;
+      const data: any[] =[];
+      this.years.forEach(year => {
+        data.push({name:year.toString(), data: this.dataMap.get(year)});
+      });
+      this.series = data;
+      this.makeChart();
+    });
+*/
+
   }
 
   getDrilldown(){

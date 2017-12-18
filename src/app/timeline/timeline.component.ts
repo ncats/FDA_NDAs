@@ -6,6 +6,8 @@ import {DrugHoverService} from '../services/drug-hover.service';
 import {FilterService} from "../services/filter.service";
 // Load the exporting module.
 import Exporting from 'highcharts/modules/exporting.src.js';
+import {YearFilterService} from "../services/year-filter.service";
+import {LoadingService} from "../services/loading.service";
 // Initialize exporting module.
 
 
@@ -19,27 +21,44 @@ import Exporting from 'highcharts/modules/exporting.src.js';
 export class TimelineComponent implements OnInit, OnDestroy {
   @ViewChild('chartTarget') chartTarget: ElementRef;
   chart: Highcharts.ChartObject;
+  years: number[] = [2017];
+  series: any = [];
 
   dataMap: Map<number, any[]> = new Map();
 
   constructor(private dataLoaderService: DataLoaderService,
               private drugHoverService: DrugHoverService,
-              private filterService: FilterService) {
+              private filterService: FilterService,
+              private yearFilterService: YearFilterService,
+              private loadingService: LoadingService,
+) {
   }
 
   ngOnInit() {
     Exporting(Highcharts);
     this.dataLoaderService.data$.subscribe(res => {
       this.dataMap = res.years;
+      const data: any[] =[];
+      this.years.forEach(year => {
+        data.push({name:year.toString(), data: this.dataMap.get(year)});
+      });
+      this.series = data;
+      this.makeChart();
+    });
+
+    this.yearFilterService.year$.subscribe(years =>{
+      this.years = years;
+      const data: any[] =[];
+      this.years.forEach(year => {
+        data.push({name:year.toString(), data: this.dataMap.get(year)});
+      });
+      this.series = data;
       this.makeChart();
     });
 
     this.drugHoverService.clickednode$.subscribe(drug => {
-      console.log(this.chart);
       let list:any[] = this.chart.series.filter(l => l.name === drug.year);
-      console.log(list);
       const point = list[0].data.filter(d =>d['drug'].name === drug.name);
-      console.log(point);
       point[0].setState(point[0].state==='hover'? '': 'hover');
     point[0].select(null, true);
       this.chart['tooltip'].refresh(point[0]);
@@ -65,12 +84,12 @@ export class TimelineComponent implements OnInit, OnDestroy {
       const options = {
         chart: {
           type: 'scatter',
-          height: '35%'
+          height: '15%'
         },
         colors: ['#673ab7'
         ],
        title: {
-         text: 'FDA approved Drugs by Year'
+         text: null
        },
         legend: {
           enabled: false
@@ -89,25 +108,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
             }
           }
         },
-       series: [{
-          name: '2017',
-         data: ctrl.dataMap.get(2017)
-       }, {
-         name: '2016',
-         data: ctrl.dataMap.get(2016)
-       }, {
-         name: '2015',
-         data: ctrl.dataMap.get(2015)
-       }, {
-         name: '2014',
-         data: ctrl.dataMap.get(2014)
-       }, {
-         name: '2013',
-         data: ctrl.dataMap.get(2013)
-       }, {
-         name: '2012',
-         data: ctrl.dataMap.get(2012)
-       }],
+       series: ctrl.series,
         tooltip: {
           formatter: function () {
             return '<b>' + this.point.drug.name +
@@ -121,15 +122,18 @@ export class TimelineComponent implements OnInit, OnDestroy {
           }
         },
         yAxis: {
+          title:{
+            text: null
+          },
           categories: ['2017', '2016', '2015', '2014', '2013', '2012'],
-          reversed: true,
-          labels: {
+         labels: {
             step: 1
           },
         }
      };
 
      this.chart = Highcharts.chart(this.chartTarget.nativeElement, options);
+     this.loadingService.toggleVisible(false);
   }
 
   toggleHighlight(){

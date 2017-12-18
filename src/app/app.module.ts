@@ -11,6 +11,11 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {DrugHoverService} from './services/drug-hover.service';
 import { DrugChartsComponent } from './drug-charts/drug-charts.component';
 import {FilterService} from "./services/filter.service";
+import { NcatsHeaderComponent } from './ncats-header/ncats-header.component';
+import { NcatsFooterComponent } from './ncats-footer/ncats-footer.component';
+import {YearFilterService} from "./services/year-filter.service";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {LoadingService} from "./services/loading.service";
 
 
 @NgModule({
@@ -18,19 +23,25 @@ import {FilterService} from "./services/filter.service";
     AppComponent,
     TimelineComponent,
     DrugDetailsComponent,
-    DrugChartsComponent
+    DrugChartsComponent,
+    NcatsHeaderComponent,
+    NcatsFooterComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     FlexLayoutModule
   ],
   providers: [
     DataLoaderService,
     DrugHoverService,
-    FilterService
+    FilterService,
+    YearFilterService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })

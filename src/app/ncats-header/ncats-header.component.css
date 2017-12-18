@@ -1,0 +1,33 @@
+#ncats-banner{
+  height: 30px;
+  background-color: #642F6C;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+}
+
+a{
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+#ncats-banner img{
+  height: 26px;
+  padding: 10px;
+}
+
+#ncats-logo{
+  min-height: 80px;
+}
+
+#ncats-logo img{
+  height: 5vh;
+  padding: 10px;
+}
+
