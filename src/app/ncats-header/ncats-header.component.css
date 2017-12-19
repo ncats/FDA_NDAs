@@ -1,6 +1,5 @@
 #ncats-banner{
   height: 30px;
-  background-color: #642F6C;
   color: #fff;
   cursor: pointer;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -24,6 +23,7 @@ a:hover{
 
 #ncats-logo{
   min-height: 80px;
+  background-color: #fff;
 }
 
 #ncats-logo img{

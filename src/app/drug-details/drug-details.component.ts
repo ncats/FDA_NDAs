@@ -15,6 +15,16 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'ingredients', 'newIngredients', 'fullDate', 'details', 'references', 'use', 'notes'];
   data: Drug[] = [];
   backup: Drug[] = [];
+  filters: string[] = [];
+  checked: {} ={
+    first: false,
+    orphan: false,
+    fastTrack: false,
+    breakthrough: false,
+    priority: false,
+    accelerated: false
+  };
+
   dataMap: Map<number, any[]> = new Map();
   years: number[] = [2017];
   dataSource = new MatTableDataSource<any>(this.data);
@@ -24,7 +34,8 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
               private drugHoverService: DrugHoverService,
               private filterService: FilterService,
               private yearFilterService: YearFilterService
-  ) {}
+  ){}
+
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
@@ -59,7 +70,6 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
       if (filter === 'clear') {
         this.dataSource.data = this.backup;
       }
-      console.log(filter);
       this.dataSource.data = this.dataSource.data.filter(drug => drug[filter.field] === filter.term);
     });
   }
@@ -79,5 +89,19 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
 
   hover(drug: Drug) {
     this.drugHoverService.clickedNode(drug);
+  }
+
+  toggleFilter (event: any, filter: string): void {
+    this.checked[filter] = !this.checked[filter];
+    let filtered: Drug[] = this.backup;
+    let filters: string[] = [];
+    for (let field in this.checked){
+      if (this.checked[field]){
+        filters.push(field);
+      }
+    }
+
+    filters.forEach(filter=> filtered = filtered.filter(drug => !!drug[filter] === true));
+    this.dataSource.data = filtered.filter((elem, pos, arr) =>  arr.indexOf(elem) == pos);
   }
 }

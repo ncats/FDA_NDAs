@@ -11,3 +11,8 @@ mat-row {
   min-height: 48px;
   padding: 0 24px;
 }
+
+.with-icon {
+  display: flex;
+  align-items: center;
+}

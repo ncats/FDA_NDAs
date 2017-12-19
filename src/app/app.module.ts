@@ -16,6 +16,7 @@ import { NcatsFooterComponent } from './ncats-footer/ncats-footer.component';
 import {YearFilterService} from "./services/year-filter.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoadingService} from "./services/loading.service";
+import { TooltipComponent } from './tooltip/tooltip.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {LoadingService} from "./services/loading.service";
     DrugDetailsComponent,
     DrugChartsComponent,
     NcatsHeaderComponent,
-    NcatsFooterComponent
+    NcatsFooterComponent,
+    TooltipComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,7 @@ import {LoadingService} from "./services/loading.service";
     YearFilterService,
     LoadingService
   ],
+  entryComponents: [TooltipComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

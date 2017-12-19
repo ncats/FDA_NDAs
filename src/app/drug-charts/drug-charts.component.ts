@@ -18,7 +18,6 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
   @Input()label: string;
   chart: Highcharts.ChartObject;
   drilldown: any[] = [];
-  products: string[] = [];
   dataMap: Map<number, any[]> = new Map();
   down: boolean;
   series: any = [];
@@ -32,79 +31,62 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this);
     this.dataLoaderService.data$.subscribe(res => {
       this.dataMap = res.years;
+      const data: any[] = [];
+      this.years.forEach(year => {
+        data.push({name: year, data: this.dataMap.get(year)});
+      });
+      this.dataIn = data;
       this.getDrilldown();
     });
-   /* this.dataLoaderService.data$.subscribe(res => {
-      this.dataMap = res.years;
-      const data: any[] =[];
-      this.years.forEach(year => {
-        data.push({name:year.toString(), data: this.dataMap.get(year)});
-      });
-      this.series = data;
-      this.makeChart();
-    });
-*/
     this.yearFilterService.year$.subscribe(years => {
       // todo keep master list, and get from that, this way the data ca be cleared on change
       this.years = years;
       const data: any[] = [];
+      this.dataIn = [];
+      this.series = [];
+      this.drilldown = [];
       // prefilter by years selected
       this.years.forEach(year => {
         data.push({name: year, data: this.dataMap.get(year)});
       });
       this.dataIn = data;
       this.getDrilldown();
-      console.log(this);
     });
 
   }
 
   getDrilldown() {
-    const countMap: Map<string, number> = new Map();
     const firstFilterMap: Map<string, any> = new Map();
-
     this.dataIn.forEach((drugs) => {
       // first filter --starting with map by year
-      const yearCountMap: Map<number, number> = new Map();
       drugs.data.map(obj => {
         // this half tracks the global field and total counts
         const field = obj[this.fields[0]];
-        let totals: any = firstFilterMap.get(field);
-        let firstFilterCounts: Map<string, number> = firstFilterMap.get(field);
-        if (!totals) {
-          totals = {total: 0, filtered: new Map()};
+        let firstFilterCounts = firstFilterMap.get(field);
+        if (!firstFilterCounts) {
+          firstFilterCounts = {total: 0, filtered: new Map()};
         }
-         let count: number = totals.total;
-          // this is a map of counts by year for a field
-        firstFilterCounts = totals.filtered;
-          // this tracks the counts by year
-           let localYearCount: number = firstFilterCounts.get(obj[this.fields[1]]);
-            if (!localYearCount) {
-              localYearCount = 0;
+           let localCount: number = firstFilterCounts.filtered.get(obj[this.fields[1]]);
+            if (!localCount) {
+              localCount = 0;
             }
-          localYearCount++;
+        localCount++;
             // this should be the second level data
-        firstFilterCounts.set(obj[this.fields[1]], localYearCount);
-          count++;
-        firstFilterMap.set(field, {total: count, filtered: firstFilterCounts});
+        firstFilterCounts.filtered.set(obj[this.fields[1]], localCount);
+        firstFilterCounts.total++;
+        firstFilterMap.set(field, firstFilterCounts);
       });
     });
-    console.log(firstFilterMap);
     firstFilterMap.forEach((val, key) => {
-      console.log(key);
       this.series.push({name: key, y: val.total, drilldown: key});
       const data: any[] = [];
-      console.log(val);
       val.filtered.forEach((count, field) => {
-        console.log(field);
         data.push([field, count]);
       });
       this.drilldown.push({name: key, id: key, data: data});
     });
-    console.log(this);
     this.makeChart();
   }
 
@@ -130,10 +112,10 @@ filterString(event: any): void {
         }
       },
       title: {
-        text: 'FDA approved Drugs by ' + ctrl.label + ' 2012-2017'
+        text: 'FDA approved Drugs by ' + ctrl.label
       },
       subtitle: {
-        text: 'Click the slices to view by year.'
+        text: 'Click the slices to drill down.'
       },
       legend: {
         enabled: false

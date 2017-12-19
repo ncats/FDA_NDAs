@@ -1,4 +1,7 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef, Injector, OnDestroy, OnInit,
+  ViewChild
+} from '@angular/core';
 import {Drug} from '../models/drug';
 import {DataLoaderService} from '../services/data-loader.service';
 import * as Highcharts from 'highcharts';
@@ -8,6 +11,7 @@ import {FilterService} from "../services/filter.service";
 import Exporting from 'highcharts/modules/exporting.src.js';
 import {YearFilterService} from "../services/year-filter.service";
 import {LoadingService} from "../services/loading.service";
+import {TooltipComponent} from "../tooltip/tooltip.component";
 // Initialize exporting module.
 
 
@@ -26,16 +30,22 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   dataMap: Map<number, any[]> = new Map();
 
+   private _component: ComponentRef<TooltipComponent>;
+
   constructor(private dataLoaderService: DataLoaderService,
               private drugHoverService: DrugHoverService,
               private filterService: FilterService,
               private yearFilterService: YearFilterService,
               private loadingService: LoadingService,
+              private _resolver: ComponentFactoryResolver,
+              private _injector: Injector
 ) {
   }
 
   ngOnInit() {
     Exporting(Highcharts);
+    const factory = this._resolver.resolveComponentFactory(TooltipComponent);
+    this._component = factory.create(this._injector);
     this.dataLoaderService.data$.subscribe(res => {
       this.dataMap = res.years;
       const data: any[] = [];
@@ -86,7 +96,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
           type: 'scatter',
           height: '15%'
         },
-        colors: ['#673ab7'
+        colors: ['#642F6C'
         ],
        title: {
          text: null
@@ -110,10 +120,14 @@ export class TimelineComponent implements OnInit, OnDestroy {
         },
        series: ctrl.series,
         tooltip: {
-          formatter: function () {
-            return '<b>' + this.point.drug.name +
-              '</b> approved <b>' + this.point.drug.dateString + '</b>';
-          }
+          formatter: function() {
+            ctrl._component.instance.drug = this.point.drug;
+            ctrl._component.changeDetectorRef.detectChanges();
+            const element = ctrl._component.location.nativeElement;
+           return element.innerHTML;
+          },
+          shared: true,
+          useHTML: true
         },
         xAxis: {
           type: 'datetime',
@@ -142,5 +156,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
    this.chart = null;
+    this._component.destroy();
   }
   }

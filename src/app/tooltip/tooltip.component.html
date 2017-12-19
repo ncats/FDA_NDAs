@@ -1,0 +1,7 @@
+<b>{{drug.name}}</b> approved <b>{{drug.dateString}}</b><br>
+<span *ngIf="drug.first"><mat-icon> verified_user </mat-icon></span>
+<span *ngIf="drug.orphan"><mat-icon> child_friendly </mat-icon></span>
+<span *ngIf="drug.fastTrack"><mat-icon> flight_takeoff </mat-icon></span>
+<span *ngIf="drug.breakthrough"><mat-icon> trending_up </mat-icon></span>
+<span *ngIf="drug.priority"><mat-icon> visibility </mat-icon></span>
+<span *ngIf="drug.accelerated"><mat-icon> fast_forward </mat-icon></span>
