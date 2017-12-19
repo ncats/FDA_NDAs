@@ -76,7 +76,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
 
     this.filterService.filter$.subscribe(filter => {
-      console.log(filter);
+     // console.log(filter);
      /* let list:any[] = this.chart.series.filter(l => l.name === drug.year);
       console.log(list);
       const point = list[0].data.filter(d =>d['drug'].name === drug.name);

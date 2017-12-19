@@ -9,8 +9,8 @@ export class FilterService {
 
   constructor() { }
   filterString(term: string, field: string ): void {
-    console.log(term);
-    console.log(field);
+   // console.log(term);
+  //  console.log(field);
     this._filterSource.next({term: term, field: field});
   }
 

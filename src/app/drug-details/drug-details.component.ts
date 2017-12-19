@@ -15,8 +15,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['name', 'ingredients', 'newIngredients', 'fullDate', 'details', 'references', 'use', 'notes'];
   data: Drug[] = [];
   backup: Drug[] = [];
-  filters: string[] = [];
-  checked: {} ={
+  checked ={
     first: false,
     orphan: false,
     fastTrack: false,

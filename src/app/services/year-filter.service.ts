@@ -11,7 +11,7 @@ export class YearFilterService {
   constructor() { }
 
  filterByYear(year:number[]):void {
-    console.log(year);
+   // console.log(year);
     this._yearFilterSource.next(year);
  }
 }

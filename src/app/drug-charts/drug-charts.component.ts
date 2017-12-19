@@ -135,7 +135,7 @@ filterString(event: any): void {
                 if (ctrl.down) {
                   //  ctrl.filterService.filterString(this.name, 'year');
                 }
-                console.log(this);
+             //   console.log(this);
               },
               mouseOut: function () {
                 if (ctrl.down) {
