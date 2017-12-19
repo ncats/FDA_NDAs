@@ -2,13 +2,11 @@ export class Drug {
 bla: string;
 name: string;
 ingredients: string;
-newIngredients: string;
 dateString: string;
 initClinicalStudy: number;
 date: number; // utc number for date and month
-year: string;
+year: number;
 fullDate: number;
-notes: string;
 use: string;
 press: string;
 trials: string;

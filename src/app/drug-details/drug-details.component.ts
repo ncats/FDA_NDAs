@@ -3,8 +3,8 @@ import {Drug} from '../models/drug';
 import {MatSort, MatTableDataSource} from '@angular/material';
 import {DrugHoverService} from '../services/drug-hover.service';
 import {DataLoaderService} from '../services/data-loader.service';
-import {FilterService} from "../services/filter.service";
-import {YearFilterService} from "../services/year-filter.service";
+import {FilterService} from '../services/filter.service';
+import {YearFilterService} from '../services/year-filter.service';
 
 @Component({
   selector: 'app-drug-details',
@@ -30,23 +30,21 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
     this.dataLoaderService.data$.subscribe(res => {
      // this.backup = res.drugs;
         this.dataMap = res.years;
-      let data: Drug[] =[];
+      let data: Drug[] = [];
 
       this.years.forEach(year => {
-        console.log(year);
-        data = data.concat(this.dataMap.get(year).map(drug=> drug = drug.drug));
+        data = data.concat(this.dataMap.get(year));
       });
     //  data = data;
       this.backup = data;
       this.dataSource.data = data;
-      console.log(data);
     });
 
-    this.yearFilterService.year$.subscribe(years =>{
+    this.yearFilterService.year$.subscribe(years => {
       this.years = years;
-      let data: Drug[] =[];
+      let data: Drug[] = [];
       this.years.forEach(year => {
-      data = data.concat(this.dataMap.get(year).map(drug=> drug = drug.drug));
+      data = data.concat(this.dataMap.get(year));
       });
       this.backup = data;
       this.dataSource.data = data;
@@ -58,8 +56,8 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
     });
 
     this.filterService.filter$.subscribe(filter => {
-      if(filter =="clear"){
-        this.dataSource.data= this.backup;
+      if (filter === 'clear') {
+        this.dataSource.data = this.backup;
       }
       console.log(filter);
       this.dataSource.data = this.dataSource.data.filter(drug => drug[filter.field] === filter.term);
@@ -67,7 +65,6 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this);
     this.dataSource.sort = this.sort;
   }
   applyFilter(filterValue: string) {
@@ -76,13 +73,11 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  drugClick(drug:Drug){
-    console.log(drug);
+  drugClick(drug: Drug) {
     this.drugHoverService.clickedNode(drug);
   }
 
-  hover(drug:Drug){
-    console.log(drug);
+  hover(drug: Drug) {
     this.drugHoverService.clickedNode(drug);
   }
 }

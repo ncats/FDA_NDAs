@@ -1,10 +1,10 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {DrugHoverService} from "../services/drug-hover.service";
-import {DataLoaderService} from "../services/data-loader.service";
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {DrugHoverService} from '../services/drug-hover.service';
+import {DataLoaderService} from '../services/data-loader.service';
 import * as Highcharts from 'highcharts';
 import * as Drilldown from 'highcharts/modules/drilldown';
-import {FilterService} from "../services/filter.service";
-import {YearFilterService} from "../services/year-filter.service";
+import {FilterService} from '../services/filter.service';
+import {YearFilterService} from '../services/year-filter.service';
 Drilldown(Highcharts);
 
 @Component({
@@ -12,17 +12,18 @@ Drilldown(Highcharts);
   templateUrl: './drug-charts.component.html',
   styleUrls: ['./drug-charts.component.css']
 })
-export class DrugChartsComponent implements OnInit {
+export class DrugChartsComponent implements OnInit, OnDestroy {
   @ViewChild('chartTarget') chartTarget: ElementRef;
-  @Input()field: string;
+  @Input()fields: string[];
   @Input()label: string;
   chart: Highcharts.ChartObject;
   drilldown: any[] = [];
   products: string[] = [];
   dataMap: Map<number, any[]> = new Map();
-  down:boolean = false;
+  down: boolean;
   series: any = [];
-  years:number[] = [2017];
+  dataIn: any = [];
+  years: number[] = [2017];
 
   constructor(private dataLoaderService: DataLoaderService,
               private drugHoverService: DrugHoverService,
@@ -45,61 +46,69 @@ export class DrugChartsComponent implements OnInit {
       this.series = data;
       this.makeChart();
     });
-
-    this.yearFilterService.year$.subscribe(years =>{
-      this.years = years;
-      const data: any[] =[];
-      this.years.forEach(year => {
-        data.push({name:year.toString(), data: this.dataMap.get(year)});
-      });
-      this.series = data;
-      this.makeChart();
-    });
 */
+    this.yearFilterService.year$.subscribe(years => {
+      // todo keep master list, and get from that, this way the data ca be cleared on change
+      this.years = years;
+      const data: any[] = [];
+      // prefilter by years selected
+      this.years.forEach(year => {
+        data.push({name: year, data: this.dataMap.get(year)});
+      });
+      this.dataIn = data;
+      this.getDrilldown();
+      console.log(this);
+    });
 
   }
 
-  getDrilldown(){
+  getDrilldown() {
     const countMap: Map<string, number> = new Map();
-    const typeCountMap: Map<string, any> = new Map();
-    this.dataMap.forEach((drugs, year)=>{
+    const firstFilterMap: Map<string, any> = new Map();
+
+    this.dataIn.forEach((drugs) => {
+      // first filter --starting with map by year
       const yearCountMap: Map<number, number> = new Map();
-      drugs.map(obj=>{
+      drugs.data.map(obj => {
         // this half tracks the global field and total counts
-        let field = obj.drug[this.field];
-        let totals: any = typeCountMap.get(field);
-        let yearCounts: Map<number, number>;
-        if(!totals) {
-          totals= {total:0, yearly: new Map()};
+        const field = obj[this.fields[0]];
+        let totals: any = firstFilterMap.get(field);
+        let firstFilterCounts: Map<string, number> = firstFilterMap.get(field);
+        if (!totals) {
+          totals = {total: 0, filtered: new Map()};
         }
          let count: number = totals.total;
           // this is a map of counts by year for a field
-          yearCounts= totals.yearly;
+        firstFilterCounts = totals.filtered;
           // this tracks the counts by year
-           let localYearCount: number = yearCounts.get(year);
-            if(!localYearCount){
+           let localYearCount: number = firstFilterCounts.get(obj[this.fields[1]]);
+            if (!localYearCount) {
               localYearCount = 0;
             }
           localYearCount++;
-          yearCounts.set(year, localYearCount);
+            // this should be the second level data
+        firstFilterCounts.set(obj[this.fields[1]], localYearCount);
           count++;
-        typeCountMap.set(field, {total: count, yearly:yearCounts});
-      })
-    });
-
-    typeCountMap.forEach((val, key)=>{
-      this.series.push({name:key, y: val.total, drilldown:key});
-      const data: any[] = [];
-      val.yearly.forEach((count, year)=>{
-        data.push([year.toString(),count, val.drugs]);
+        firstFilterMap.set(field, {total: count, filtered: firstFilterCounts});
       });
-      this.drilldown.push({name:key, id:key, data: data})
+    });
+    console.log(firstFilterMap);
+    firstFilterMap.forEach((val, key) => {
+      console.log(key);
+      this.series.push({name: key, y: val.total, drilldown: key});
+      const data: any[] = [];
+      console.log(val);
+      val.filtered.forEach((count, field) => {
+        console.log(field);
+        data.push([field, count]);
+      });
+      this.drilldown.push({name: key, id: key, data: data});
     });
     console.log(this);
     this.makeChart();
   }
 
-filterString(event:any):void{
+filterString(event: any): void {
 
 }
 
@@ -112,7 +121,7 @@ filterString(event:any):void{
         events: {
           drilldown: function (e) {
             ctrl.down = true;
-            ctrl.filterService.filterString(e.seriesOptions.name, ctrl.field);
+            ctrl.filterService.filterString(e.seriesOptions.name, ctrl.fields[0]);
           },
           drillup: function (e) {
             ctrl.down = false;
@@ -172,7 +181,7 @@ filterString(event:any):void{
     this.chart = Highcharts.chart(this.chartTarget.nativeElement, options);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy () {
     this.chart = null;
   }
 }

@@ -38,28 +38,28 @@ export class TimelineComponent implements OnInit, OnDestroy {
     Exporting(Highcharts);
     this.dataLoaderService.data$.subscribe(res => {
       this.dataMap = res.years;
-      const data: any[] =[];
+      const data: any[] = [];
       this.years.forEach(year => {
-        data.push({name:year.toString(), data: this.dataMap.get(year)});
+        data.push({name: year, data: this.dataMap.get(year).map(drug => drug = {x: drug.date, y: drug.year, drug: drug})});
       });
       this.series = data;
       this.makeChart();
     });
 
-    this.yearFilterService.year$.subscribe(years =>{
+    this.yearFilterService.year$.subscribe(years => {
       this.years = years;
-      const data: any[] =[];
+      const data: any[] = [];
       this.years.forEach(year => {
-        data.push({name:year.toString(), data: this.dataMap.get(year)});
+        data.push({name: year, data: this.dataMap.get(year).map(drug => drug = {x: drug.date, y: drug.year, drug: drug})});
       });
       this.series = data;
       this.makeChart();
     });
 
     this.drugHoverService.clickednode$.subscribe(drug => {
-      let list:any[] = this.chart.series.filter(l => l.name === drug.year);
-      const point = list[0].data.filter(d =>d['drug'].name === drug.name);
-      point[0].setState(point[0].state==='hover'? '': 'hover');
+      const list: any[] = this.chart.series.filter(l => l.name === drug.year);
+      const point = list[0].data.filter(d => d['drug'].name === drug.name);
+      point[0].setState(point[0].state === 'hover' ? '' : 'hover');
     point[0].select(null, true);
       this.chart['tooltip'].refresh(point[0]);
     });
@@ -122,7 +122,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
           }
         },
         yAxis: {
-          title:{
+          title: {
             text: null
           },
           categories: ['2017', '2016', '2015', '2014', '2013', '2012'],
@@ -136,7 +136,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
      this.loadingService.toggleVisible(false);
   }
 
-  toggleHighlight(){
+  toggleHighlight() {
 
   }
 

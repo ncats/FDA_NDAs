@@ -7,7 +7,7 @@
  <div fxLayout="row" fxLayoutAlign="center center" id="yearFilter">
    <h2>FDA innovative drugs approved in: &nbsp;</h2>
    <mat-form-field>
-   <mat-select [formControl]="yearFilterCtrl" multiple>
+   <mat-select [formControl] = "yearFilterCtrl" multiple>
       <mat-option [value]=2017>2017</mat-option>
       <mat-option [value]=2016>2016</mat-option>
       <mat-option [value]=2015>2015</mat-option>
@@ -27,17 +27,17 @@
 
  <div fxLayout="row">
    <div fxFlex="33">
-   <app-drug-charts [field]="'moleculeType'" [label]="'Molecule Type'"></app-drug-charts>
+     <app-drug-charts [fields]="['substanceClass','moleculeType']" [label]="'Substance Class'"></app-drug-charts>
 <!--
      <app-drug-charts [fields]="['substanceClass', 'moleculeType']" [label]="'Molecule Type'"></app-drug-charts>
 -->
    </div>
-   <div fxFlex="33">
-   <app-drug-charts [field]="'substanceClass'" [label]="'Substance Class'"></app-drug-charts>
+<!--   <div fxFlex="33">
+     <app-drug-charts [field]="'moleculeType'" [label]="'Molecule Type'"></app-drug-charts>
    </div>
    <div fxFlex="33">
    <app-drug-charts [field]="'pharmacology'" [label]="'Pharmacology'"></app-drug-charts>
-   </div>
+   </div>-->
  </div>
 
  <div fxLayout="row">

@@ -61,15 +61,14 @@ export class DataLoaderService {
       obj.date = Date.parse(d[0] + '/' + d[1]);
       obj.moleculeType = obj.moleculeType.toLowerCase();
       obj.fullDate = Date.parse(obj.dateString);
-      let year:number = Number(obj.dateString.split('/')[2]);
-      obj.year = obj.dateString.split('/')[2];
-      let yearList: any[] = this.dataMap.get(year);
+      obj.year =  Number(obj.dateString.split('/')[2]);
+      let yearList: any[] = this.dataMap.get(obj.year);
      if (yearList && yearList.length > 0) {
-       yearList.push({x: obj.date, y: year, drug: obj});
+       yearList.push(obj);
      }else {
-       yearList = [{x: obj.date, y: year, drug: obj}];
+       yearList = [obj];
      }
-        this.dataMap.set(year, yearList);
+        this.dataMap.set(obj.year, yearList);
      result.push(obj);
     }
     this._dataSource.next({drugs: result, years: this.dataMap});
