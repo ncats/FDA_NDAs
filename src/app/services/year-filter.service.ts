@@ -3,7 +3,7 @@ import {Subject} from 'rxjs/Subject';
 
 
 @Injectable()
-export class YearFilterService {
+export class YearDataService {
 
   private _yearFilterSource = new Subject<any>();
   year$ = this._yearFilterSource.asObservable();

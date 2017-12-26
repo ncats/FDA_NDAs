@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { YearFilterService } from './year-filter.service';
+import { YearDataService } from './year-filter.service';
 
-describe('YearFilterService', () => {
+describe('YearDataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [YearFilterService]
+      providers: [YearDataService]
     });
   });
 
-  it('should be created', inject([YearFilterService], (service: YearFilterService) => {
+  it('should be created', inject([YearDataService], (service: YearDataService) => {
     expect(service).toBeTruthy();
   }));
 });

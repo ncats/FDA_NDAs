@@ -6,8 +6,10 @@ dateString: string;
 initClinicalStudy: number;
 date: number; // utc number for date and month
 year: number;
+nctDate: string;
 fullDate: number;
 use: string;
+developmentTime: any;
 press: string;
 trials: string;
 first: boolean;

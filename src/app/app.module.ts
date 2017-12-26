@@ -10,13 +10,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {DrugHoverService} from './services/drug-hover.service';
 import { DrugChartsComponent } from './drug-charts/drug-charts.component';
-import {FilterService} from "./services/filter.service";
+import {DataService} from "./services/data.service";
 import { NcatsHeaderComponent } from './ncats-header/ncats-header.component';
 import { NcatsFooterComponent } from './ncats-footer/ncats-footer.component';
-import {YearFilterService} from "./services/year-filter.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LoadingService} from "./services/loading.service";
 import { TooltipComponent } from './tooltip/tooltip.component';
+import { DrugCountsComponent } from './drug-counts/drug-counts.component';
+import { TimeCountsComponent } from './time-counts/time-counts.component';
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     DrugChartsComponent,
     NcatsHeaderComponent,
     NcatsFooterComponent,
-    TooltipComponent
+    TooltipComponent,
+    DrugCountsComponent,
+    TimeCountsComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +44,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
   providers: [
     DataLoaderService,
     DrugHoverService,
-    FilterService,
-    YearFilterService,
+    DataService,
     LoadingService
   ],
   entryComponents: [TooltipComponent],

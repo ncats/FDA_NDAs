@@ -5,20 +5,53 @@
     <mat-spinner></mat-spinner>
   </div>
  <div fxLayout="row" fxLayoutAlign="center center" id="yearFilter">
-   <h2>FDA innovative drugs approved in: &nbsp;</h2>
+   <h2>Innovative Drugs: &nbsp;</h2><br>
    <mat-form-field>
    <mat-select [formControl] = "yearFilterCtrl" multiple>
-      <mat-option [value]=2017>2017</mat-option>
-      <mat-option [value]=2016>2016</mat-option>
-      <mat-option [value]=2015>2015</mat-option>
-      <mat-option [value]=2014>2014</mat-option>
-      <mat-option [value]=2013>2013</mat-option>
-      <mat-option [value]=2012>2012</mat-option>
+      <mat-option [value]=2017>2017 </mat-option>
+      <mat-option [value]=2016>2016 </mat-option>
+      <mat-option [value]=2015>2015 </mat-option>
+      <mat-option [value]=2014>2014 </mat-option>
+      <mat-option [value]=2013>2013 </mat-option>
+      <mat-option [value]=2012>2012 </mat-option>
   </mat-select>
      </mat-form-field>
  </div>
-   <div fxLayout="row" id="timeLine">
-     <div fxFlex="100">
+   <div fxLayout="row" fxLayoutAlign="center center">
+   <h3>Molecules that earned first-time approval in {{yearFilterCtrl.value}}  by FDA</h3>
+
+ </div>
+
+  <div fxLayout="row">
+    <h1>{{yearFilterCtrl.value}} Highlights</h1>
+  </div>
+
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center stretch" >
+    <div fxFlex="33">
+      <mat-card>
+        First gene therapies approved (3 in all)
+      <mat-list>
+        <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/2SPI046IKD" target="_blank">voretigene neparvovec</a></mat-list-item>
+        <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/U2I8T43Y7R" target="_blank">axicabtagene ciloleucel</a></mat-list-item>
+        <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/Q6C9WHR03O" target="_blank">tisagenlecleucel</a></mat-list-item>
+      </mat-list>
+      </mat-card>
+    </div>
+    <div fxFlex="33">
+      <mat-card>
+        <app-time-counts></app-time-counts>
+      </mat-card>
+    </div>
+    <div fxFlex="33">
+      <mat-card>
+      <app-drug-counts></app-drug-counts>
+      </mat-card>
+    </div>
+  </div>
+  <hr>
+
+  <div fxLayout="row" id="timeLine">
+     <div fxFlex="99">
            <app-timeline></app-timeline>
    </div>
  </div>
@@ -28,9 +61,6 @@
  <div fxLayout="row">
    <div fxFlex="33">
      <app-drug-charts [fields]="['substanceClass','moleculeType']" [label]="'Substance Class'"></app-drug-charts>
-<!--
-     <app-drug-charts [fields]="['substanceClass', 'moleculeType']" [label]="'Molecule Type'"></app-drug-charts>
--->
    </div>
   <div fxFlex="33">
      <app-drug-charts [fields]="['therapeuticClass', 'substanceClass']" [label]="'Therapeutic Class'"></app-drug-charts>
@@ -42,7 +72,7 @@
  </div>
 
  <div fxLayout="row">
-   <div fxFlex="100">
+   <div fxFlex="99">
    <app-drug-details></app-drug-details>
    </div>
  </div>

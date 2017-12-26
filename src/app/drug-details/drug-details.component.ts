@@ -2,9 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {Drug} from '../models/drug';
 import {MatSort, MatTableDataSource} from '@angular/material';
 import {DrugHoverService} from '../services/drug-hover.service';
-import {DataLoaderService} from '../services/data-loader.service';
-import {FilterService} from '../services/filter.service';
-import {YearFilterService} from '../services/year-filter.service';
+import {DataService} from '../services/data.service';
 
 @Component({
   selector: 'app-drug-details',
@@ -12,8 +10,7 @@ import {YearFilterService} from '../services/year-filter.service';
   styleUrls: ['./drug-details.component.css']
 })
 export class DrugDetailsComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['name', 'ingredients', 'fullDate', 'references', 'use', 'notes'];
-  data: Drug[] = [];
+  displayedColumns = ['fullDate', 'name', 'ingredients', 'target', 'use', 'references'];
   backup: Drug[] = [];
   checked ={
     first: false,
@@ -24,52 +21,24 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
     accelerated: false
   };
 
-  dataMap: Map<number, any[]> = new Map();
-  years: number[] = [2017];
-  dataSource = new MatTableDataSource<any>(this.data);
+  dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private dataLoaderService: DataLoaderService,
-              private drugHoverService: DrugHoverService,
-              private filterService: FilterService,
-              private yearFilterService: YearFilterService
+  constructor(private drugHoverService: DrugHoverService,
+              private dataService: DataService
   ){}
 
 
   ngOnInit() {
-    this.dataLoaderService.data$.subscribe(res => {
-     // this.backup = res.drugs;
-        this.dataMap = res.years;
-      let data: Drug[] = [];
-
-      this.years.forEach(year => {
-        data = data.concat(this.dataMap.get(year));
-      });
-    //  data = data;
+    this.dataService.data$.subscribe(res => {
+      let data: Drug[] =[];
+      [...res.data.values()].forEach(year => data = data.concat(year));
       this.backup = data;
       this.dataSource.data = data;
     });
-
-    this.yearFilterService.year$.subscribe(years => {
-      this.years = years;
-      let data: Drug[] = [];
-      this.years.forEach(year => {
-      data = data.concat(this.dataMap.get(year));
-      });
-      this.backup = data;
-      this.dataSource.data = data;
-    });
-
 
     this.drugHoverService.hoverednode$.subscribe(drug => {
       this.dataSource.data = Array.from(new Set([drug].concat(this.dataSource.data)));
-    });
-
-    this.filterService.filter$.subscribe(filter => {
-      if (filter === 'clear') {
-        this.dataSource.data = this.backup;
-      }
-      this.dataSource.data = this.dataSource.data.filter(drug => drug[filter.field] === filter.term);
     });
   }
 
@@ -91,8 +60,15 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   }
 
   toggleFilter (event: any, filter: string): void {
+    console.log(event);
     this.checked[filter] = !this.checked[filter];
-    let filtered: Drug[] = this.backup;
+    if(event.checked) {
+      this.dataService.filterBoolean(filter);
+    }else{
+      this.dataService.clearFilter();
+    }
+
+  /*  let filtered: Drug[] = this.backup;
     let filters: string[] = [];
     for (let field in this.checked){
       if (this.checked[field]){
@@ -101,6 +77,12 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
     }
 
     filters.forEach(filter=> filtered = filtered.filter(drug => !!drug[filter] === true));
-    this.dataSource.data = filtered.filter((elem, pos, arr) =>  arr.indexOf(elem) == pos);
+
+
+    this.dataSource.data = filtered.filter((elem, pos, arr) =>  arr.indexOf(elem) == pos);*/
   }
-}
+  getCount(field:string):number {
+  const r = this.dataSource.data.filter((drug) => !!drug[field] ===true);
+  return r.length;
+  }
+  }

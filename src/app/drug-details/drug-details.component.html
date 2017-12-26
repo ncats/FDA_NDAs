@@ -3,55 +3,63 @@
 </div>
 <div fxLayout="row" >
   <div fxFlex="1 1 auto" class="with-icon">
-    <mat-checkbox (change)="toggleFilter($event, 'first')"></mat-checkbox>&nbsp; First-in-class: <mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon>
+    <mat-checkbox (change)="toggleFilter($event, 'first')" aria-label="first in class"></mat-checkbox>&nbsp; First-in-class (&nbsp;<mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon>&nbsp; {{getCount("first")}})
   </div>
   <div fxFlex="1 1 auto" class="with-icon">
-    <mat-checkbox (change)="toggleFilter($event, 'orphan')"></mat-checkbox>&nbsp; Orphan Designation: <mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon>
+    <mat-checkbox (change)="toggleFilter($event, 'orphan')" aria-label="Orphan Designation"></mat-checkbox>&nbsp; Orphan Designation (&nbsp; <mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon>&nbsp; {{getCount("orphan")}})
   </div>
   <div fxFlex="1 1 auto" class="with-icon">
-    <mat-checkbox (change)="toggleFilter($event, 'fastTrack')"></mat-checkbox>&nbsp; Fast Track: <mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon>
+    <mat-checkbox (change)="toggleFilter($event, 'fastTrack')" aria-label="Fast Track"></mat-checkbox>&nbsp; Fast Track (&nbsp; <mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon>&nbsp; {{getCount("fastTrack")}})
   </div>
   <div fxFlex="1 1 auto" class="with-icon">
-<mat-checkbox (change)="toggleFilter($event, 'breakthrough')"></mat-checkbox>&nbsp; FDA Breakthrough Designation: <mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon>
+<mat-checkbox (change)="toggleFilter($event, 'breakthrough')" aria-label="FDA Breakthrough Designation"></mat-checkbox>&nbsp; FDA Breakthrough Designation(&nbsp; <mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon>&nbsp; {{getCount("breakthrough")}})
   </div>
   <div fxFlex="1 1 auto" class="with-icon">
-<mat-checkbox (change)="toggleFilter($event, 'priority')"></mat-checkbox>&nbsp; Priority Review: <mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon>
+<mat-checkbox (change)="toggleFilter($event, 'priority')" aria-label="Priority Review"></mat-checkbox>&nbsp; Priority Review (&nbsp;<mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon>&nbsp; {{getCount("priority")}})
   </div>
   <div fxFlex="1 1 auto" class="with-icon">
-<mat-checkbox (change)="toggleFilter($event, 'accelerated')"></mat-checkbox>&nbsp; FDA Accelerated Approval: <mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon>
+<mat-checkbox (change)="toggleFilter($event, 'accelerated')" aria-label="FDA Accelerated Approval"></mat-checkbox>&nbsp; FDA Accelerated Approval(&nbsp;<mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon>&nbsp; {{getCount("accelerated")}})
   </div>
 </div>
 
 <mat-form-field>
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
 </mat-form-field>
+
 <mat-table #table [dataSource]="dataSource" matSort >
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
+  <ng-container matColumnDef="fullDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Approval Date</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      {{row.dateString}}
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <ng-template [ngIf]="row.unii">
-    <a href = "https://drugs-dev.ncats.io/ginas/app/drug/{{row.unii}}" target="_blank">{{row.name}}</a>
-        </ng-template>
-      <ng-template [ngIf]="!row.unii">
-        {{row.name}}
-      </ng-template>
+      {{row.name}} <br/>
+      <span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon></span>
+      <span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon></span>
+      <span *ngIf="row.fastTrack" matTooltip="Fast Track" [matTooltipPosition]="'above'"><mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon></span>
+      <span *ngIf="row.breakthrough" matTooltip="FDA Breakthrough Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon></span>
+      <span *ngIf="row.priority" matTooltip="Priority Review" [matTooltipPosition]="'above'"><mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon></span>
+      <span *ngIf="row.accelerated" matTooltip="FDA Accelerated Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon></span>
+
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="ingredients">
     <mat-header-cell *matHeaderCellDef mat-sort-header >Active Ingredients</mat-header-cell>
     <mat-cell *matCellDef="let row">
-{{row.ingredients}}
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="fullDate">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Timeline</mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      {{row.dateString}}
+      <ng-template [ngIf]="row.unii">
+        <a href = "https://drugs.ncats.io/ginas/app/drug/{{row.unii}}" target="_blank">{{row.ingredients}}</a>
+      </ng-template>
+      <ng-template [ngIf]="!row.unii">
+        {{row.ingredients}}
+      </ng-template>
     </mat-cell>
   </ng-container>
 
@@ -72,22 +80,17 @@
     </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="target">
+    <mat-header-cell *matHeaderCellDef >Target</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      {{row.target}}
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="use">
     <mat-header-cell *matHeaderCellDef >Use</mat-header-cell>
     <mat-cell *matCellDef="let row">
       {{row.use}}
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="notes">
-    <mat-header-cell *matHeaderCellDef >Notes</mat-header-cell>
-    <mat-cell *matCellDef="let row">
-<span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon></span>
-<span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon></span>
-<span *ngIf="row.fastTrack" matTooltip="Fast Track" [matTooltipPosition]="'above'"><mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon></span>
-<span *ngIf="row.breakthrough" matTooltip="FDA Breakthrough Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon></span>
-<span *ngIf="row.priority" matTooltip="Priority Review" [matTooltipPosition]="'above'"><mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon></span>
-<span *ngIf="row.accelerated" matTooltip="FDA Accelerated Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon></span>
     </mat-cell>
   </ng-container>
 

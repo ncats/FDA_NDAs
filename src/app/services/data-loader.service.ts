@@ -55,13 +55,15 @@ export class DataLoaderService {
       const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
       for (let j in headers) {
-        obj[headers[j]] = currentline[j];
+        obj[headers[j]] = currentline[j].replace('"','').replace('"','');
       }
       const d = obj.dateString.split('/');
       obj.date = Date.parse(d[0] + '/' + d[1]);
       obj.moleculeType = obj.moleculeType.toLowerCase();
       obj.fullDate = Date.parse(obj.dateString);
       obj.year =  Number(obj.dateString.split('/')[2]);
+      obj.developmentTime = this.getDevTime(obj);
+
       let yearList: any[] = this.dataMap.get(obj.year);
      if (yearList && yearList.length > 0) {
        yearList.push(obj);
@@ -69,10 +71,25 @@ export class DataLoaderService {
        yearList = [obj];
      }
         this.dataMap.set(obj.year, yearList);
-     console.log(obj);
-     result.push(obj);
+   //  result.push(obj);
     }
-    this._dataSource.next({drugs: result, years: this.dataMap});
+    this._dataSource.next(this.dataMap);
+  }
+
+  getDevTime(drug:Drug):any{
+    let start: Date;
+    if(drug.initClinicalStudy){
+      start = new Date("1/1/".concat(drug.initClinicalStudy.toString()));
+    }else{
+      start = new Date(drug.nctDate.split('/')[2]);
+    }
+    const end: Date =  new Date(drug.fullDate);
+    const d1Y = start.getFullYear();
+    const d2Y = end.getFullYear();
+    const d1M = start.getMonth();
+    const d2M = end.getMonth();
+    //console.log(((d2M+12*d2Y)-(d1M+12*d1Y))/12);
+    return ((d2M+12*d2Y)-(d1M+12*d1Y))/12;
   }
 }
 
