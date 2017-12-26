@@ -12,7 +12,7 @@ import {YearFilterService} from '../services/year-filter.service';
   styleUrls: ['./drug-details.component.css']
 })
 export class DrugDetailsComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['name', 'ingredients', 'newIngredients', 'fullDate', 'details', 'references', 'use', 'notes'];
+  displayedColumns = ['name', 'ingredients', 'fullDate', 'references', 'use', 'notes'];
   data: Drug[] = [];
   backup: Drug[] = [];
   checked ={

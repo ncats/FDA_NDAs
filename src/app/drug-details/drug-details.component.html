@@ -32,23 +32,19 @@
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
     <mat-cell *matCellDef="let row">
-      <mat-list>
-        <mat-list-item>{{row.name}}</mat-list-item>
-      </mat-list>
+      <ng-template [ngIf]="row.unii">
+    <a href = "https://drugs-dev.ncats.io/ginas/app/drug/{{row.unii}}" target="_blank">{{row.name}}</a>
+        </ng-template>
+      <ng-template [ngIf]="!row.unii">
+        {{row.name}}
+      </ng-template>
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="ingredients">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Active Ingredients</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header >Active Ingredients</mat-header-cell>
     <mat-cell *matCellDef="let row">
 {{row.ingredients}}
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="newIngredients">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>New Ingredients</mat-header-cell>
-    <mat-cell *matCellDef="let row">
-{{row.newIngredients}}
     </mat-cell>
   </ng-container>
 
@@ -59,12 +55,12 @@
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="details">
+<!--  <ng-container matColumnDef="details">
     <mat-header-cell *matHeaderCellDef>Details</mat-header-cell>
     <mat-cell *matCellDef="let row">
 
     </mat-cell>
-  </ng-container>
+  </ng-container>-->
 
   <ng-container matColumnDef="references">
     <mat-header-cell *matHeaderCellDef>References</mat-header-cell>
@@ -96,5 +92,5 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" fxLayoutAlign="center start" (click)="drugClick(row)" [ngClass]="{clicked: clicked}" (mouseenter) ="hover(row) "  (mouseleave) ="hover(row)"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="drugClick(row)" [ngClass]="{clicked: clicked}" (mouseenter) ="hover(row) "  (mouseleave) ="hover(row)"></mat-row>
 </mat-table>

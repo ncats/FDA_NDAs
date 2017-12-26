@@ -69,6 +69,7 @@ export class DataLoaderService {
        yearList = [obj];
      }
         this.dataMap.set(obj.year, yearList);
+     console.log(obj);
      result.push(obj);
     }
     this._dataSource.next({drugs: result, years: this.dataMap});
