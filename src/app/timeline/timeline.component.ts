@@ -28,7 +28,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   constructor(private drugHoverService: DrugHoverService,
               private dataService: DataService,
-              private loadingService: LoadingService,
               private _resolver: ComponentFactoryResolver,
               private _injector: Injector
 ) {

@@ -15,22 +15,17 @@
   <div *ngIf="loading" class = "loadingIcon" fxLayoutAlign="center center">
     <mat-spinner></mat-spinner>
   </div>
- <div fxLayout="row" fxLayoutAlign="center center" id="yearFilter">
-   <h2>Innovative Drugs: &nbsp;</h2><br>
- </div>
-   <div fxLayout="row" fxLayoutAlign="center center">
-<!--
-   <h3>Molecules that earned first-time approval in {{yearFilterCtrl.value}}  by FDA</h3>
--->
- </div>
 
-  <div fxLayout="row">
-<!--
-    <h1>{{yearFilterCtrl.value}} Highlights</h1>
--->
-  </div>
+  <mat-expansion-panel [expanded]="'true'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h1>{{years.join(", ")}} Overview</h1><br>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
 
-    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center stretch" >
+    <!-- <div fxLayout="row" fxLayoutAlign="start center" id="yearFilter">
+     </div>-->
+    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center none">
     <div fxFlex="33">
       <mat-card>
         First gene therapies approved (3 in all)
@@ -52,34 +47,57 @@
       </mat-card>
     </div>
   </div>
-  <hr>
+  </mat-expansion-panel>
 
+  <mat-expansion-panel [expanded]="'true'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h1>{{years.join(", ")}} Timeline</h1><br>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
   <div fxLayout="row" id="timeLine">
      <div fxFlex="99">
            <app-timeline></app-timeline>
    </div>
  </div>
+  </mat-expansion-panel>
 
- <hr>
-
- <div fxLayout="row">
+  <mat-expansion-panel [expanded]="'true'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h1>{{years.join(", ")}} Details</h1><br>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+ <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center none">
    <div fxFlex="33">
+     <mat-card>
      <app-drug-charts [fields]="['substanceClass','moleculeType']" [label]="'Substance Class'"></app-drug-charts>
+     </mat-card>
    </div>
   <div fxFlex="33">
-     <app-drug-charts [fields]="['therapeuticClass', 'substanceClass']" [label]="'Therapeutic Class'"></app-drug-charts>
+    <mat-card>
+    <app-drug-charts [fields]="['therapeuticClass', 'substanceClass']" [label]="'Therapeutic Class'"></app-drug-charts>
+    </mat-card>
    </div>
    <!--
    <div fxFlex="33">
    <app-drug-charts [field]="'pharmacology'" [label]="'Pharmacology'"></app-drug-charts>
    </div>-->
  </div>
+  </mat-expansion-panel>
 
+  <mat-expansion-panel [expanded]="'true'">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h1>{{years.join(", ")}} All Drugs</h1><br>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
  <div fxLayout="row">
    <div fxFlex="99">
    <app-drug-details></app-drug-details>
    </div>
  </div>
+  </mat-expansion-panel>
 </div>
 </mat-sidenav-container>
 

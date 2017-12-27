@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {DataLoaderService} from "./data-loader.service";
+import {ReplaySubject} from "rxjs/ReplaySubject";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class DataService {
+  years: number[] = [2017];
   private _dataSource = new Subject<any>();
   data$ = this._dataSource.asObservable();
+  private _yearChange = new BehaviorSubject<any>(this.years);
+  years$ = this._yearChange.asObservable();
   masterDataMap: Map<number, any[]> = new Map();
   returnedDataMap: Map<number, any[]> = new Map();
-  years: number[] = [2017];
 
 
   constructor(private dataLoaderService: DataLoaderService) {
@@ -52,6 +56,7 @@ export class DataService {
     this.years.forEach(year => {
       this.returnedDataMap.set(year, this.masterDataMap.get(year));
     });
+    this._yearChange.next(this.years);
     this._dataSource.next({data: this.returnedDataMap});
   }
 }

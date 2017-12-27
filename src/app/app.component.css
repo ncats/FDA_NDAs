@@ -1,6 +1,6 @@
-#main-body{
+/*#main-body{
   margin:8px;
-}
+}*/
 
 .loadingIcon {
   position: absolute; /* Sit on top of the page content */
@@ -13,6 +13,7 @@
   bottom: 0;
   background-color: rgba(0,0,0,0.3); /* Black background with opacity */
   color:#642F6C;
+  z-index: 666;
 }
 
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {DataService} from '../services/data.service';
+import {DataLoaderService} from "../services/data-loader.service";
 
 @Component({
   selector: 'app-filter-panel',
@@ -18,14 +19,17 @@ export class FilterPanelComponent implements OnInit {
     accelerated: false
   };
   years: number[] = [2017];
+  series: any[] =[];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+              private dataLoaderService: DataLoaderService) { }
 
   ngOnInit() {
-/*    this.yearFilterCtrl = new FormControl([2017]);
-    this.yearFilterCtrl.valueChanges.subscribe(value => {
-      this.dataService.filterByYear(value);
-    });*/
+    this.dataLoaderService.data$.subscribe(res => {
+      res.forEach((value, key) => {
+        this.series.push({key: key, count: value.length})
+      });
+    });
   }
 
   toggleFilter (event: any, filter: string): void {

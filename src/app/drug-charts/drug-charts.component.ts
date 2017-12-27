@@ -3,6 +3,7 @@ import {DrugHoverService} from '../services/drug-hover.service';
 import * as Highcharts from 'highcharts';
 import * as Drilldown from 'highcharts/modules/drilldown';
 import {DataService} from '../services/data.service';
+import {LoadingService} from "../services/loading.service";
 Drilldown(Highcharts);
 
 @Component({
@@ -18,8 +19,9 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
   dataMap: Map<number, any[]> = new Map();
   down: boolean;
 
-  constructor(private drugHoverService: DrugHoverService,
-              private dataService: DataService) {
+  constructor(
+    private loadingService: LoadingService,
+    private dataService: DataService) {
   }
 
   ngOnInit() {
@@ -133,6 +135,7 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
       }
     };
     this.chart = Highcharts.chart(this.chartTarget.nativeElement, options);
+    this.loadingService.toggleVisible(false);
   }
 
   ngOnDestroy () {

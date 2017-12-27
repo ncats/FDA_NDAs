@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import * as Highcharts from 'highcharts';
 import {DataLoaderService} from '../services/data-loader.service';
+import {DataService} from "../services/data.service";
 
 
 @Component({
@@ -13,15 +14,41 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
   @ViewChild('countChartTarget') chartTarget: ElementRef;
   chart: Highcharts.ChartObject;
   series: number[]=[];
+  years: number[]=[];
 
-  constructor(private  dataLoaderService: DataLoaderService) {
-  }
+  constructor(private  dataLoaderService: DataLoaderService,
+              private  dataService: DataService) {}
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
-    [...res.values()].forEach(drugs => this.series.push(drugs.length));
+    res.forEach(drugs => this.series.push(drugs.length));
       this.makeChart();
+      this.highlightBar();
     });
+
+    this.dataService.years$.subscribe(years => {
+      this.years = years;
+      if (this.chart) {
+        this.highlightBar();
+      }
+    });
+  }
+
+  highlightBar(): void {
+    let vals:number[] =[];
+    let cts:number =0;
+      let p = this.chart.series[0].data.forEach(e => {
+        if (this.years.find(y => y.toString() === e.category)) {
+          vals.push(e.y);
+          e.update({color: '#642F6C'}, false);
+        }
+        else {
+          e.update({color: '#64676b'}, false);
+        }
+      });
+    vals.forEach(count => cts=cts+count);
+    this.chart.setTitle({text: cts + ' innovative drugs in ' + this.years.join(", ")});
+    this.chart.redraw();
   }
 
   makeChart(): void {
@@ -32,10 +59,10 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
         type: 'column'
       },
       title: {
-        text: '49 innovative drugs in 2017'
+        text: null
       },
       subtitle: {
-        text: 'a high-water mark for drug development'
+      //  text: 'a high-water mark for drug development'
       },
       legend: {
         enabled: false
@@ -43,7 +70,7 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
       credits: {
         enabled: false
       },
-      colors: ['#642F6C'],
+      colors: ['#64676b'],
       tooltip: {
         headerFormat: '<span style="font-size:11px">{point.x}</span><br>',
         pointFormat: '<b>{point.y}</b><br/>'
