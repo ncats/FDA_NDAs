@@ -4,30 +4,35 @@
   <mat-table #yearTable [dataSource]="yearDataSource">
 
     <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-      <mat-header-cell *matHeaderCellDef>
+    <ng-container matColumnDef="select" >
+      <mat-header-cell *matHeaderCellDef class="col10">
         <mat-checkbox (change)="$event ? masterYearToggle() : null"
                       [checked]="yearSelection.hasValue() && isAllYearSelected()"
                       [indeterminate]="yearSelection.hasValue() && !isAllYearSelected()">
         </mat-checkbox>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      <mat-cell *matCellDef="let row" class="col10">
         <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? yearSelection.toggle(row) : null"
-                      [checked]="yearSelection.isSelected(row)">
+                      (change)="$event ? yearSelection.toggle(row.key) : null"
+                      [checked]="yearSelection.isSelected(row.key)">
         </mat-checkbox>
       </mat-cell>
     </ng-container>
 
     <!-- Position Column -->
-    <ng-container matColumnDef="filter">
-      <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row}} </mat-cell>
+    <ng-container matColumnDef="filter" >
+      <mat-header-cell *matHeaderCellDef class="col80"><h1>Year </h1></mat-header-cell>
+      <mat-cell *matCellDef="let row" class="col80"> {{row.key}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="count">
+      <mat-header-cell *matHeaderCellDef class="col10"> </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="col10">{{row.count}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"
-             (click)="yearSelection.toggle(row)">
+             (click)="yearSelection.toggle(row.key)">
     </mat-row>
   </mat-table>
 </div>
@@ -40,13 +45,13 @@
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
-      <mat-header-cell *matHeaderCellDef>
+      <mat-header-cell *matHeaderCellDef class="col10">
         <mat-checkbox (change)="$event ? masterApplicationToggle() : null"
                       [checked]="applicationSelection.hasValue() && isAllApplicationSelected()"
                       [indeterminate]="applicationSelection.hasValue() && !isAllApplicationSelected()">
         </mat-checkbox>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      <mat-cell *matCellDef="let row" class="col10">
         <mat-checkbox (click)="$event.stopPropagation()"
                       (change)="$event ? applicationSelection.toggle(row.value) : null"
                       [checked]="applicationSelection.isSelected(row.value)">
@@ -56,8 +61,13 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="filter">
-      <mat-header-cell *matHeaderCellDef> Application Type </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef class="col80"><h1>Application Type </h1></mat-header-cell>
+      <mat-cell *matCellDef="let row" class="col80"><mat-icon [color]="checked[row.value] ? 'primary' : ''"> {{row.icon}} </mat-icon> {{row.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="count">
+      <mat-header-cell *matHeaderCellDef class="col0"> </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="col10">{{getCount(row.value)}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -68,69 +78,6 @@
 </div>
 </mat-card-content>
 </mat-card>
-
-<mat-list>
-  <mat-list-item *ngFor="let year of series">
-    <mat-checkbox (change)="changeYear($event, year.key)" aria-label="year.key">{{year.key}} {{year.count}}</mat-checkbox>
-  </mat-list-item>
-</mat-list>
-
-
-
-
-<mat-card>
-  <mat-card-title>Application Type</mat-card-title>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item>
-        <mat-checkbox (change)="toggleFilter($event, 'first')" aria-label="first in class"></mat-checkbox>&nbsp; First-in-class (&nbsp;<mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon>&nbsp; {{getCount("first")}})
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="toggleFilter($event, 'orphan')" aria-label="Orphan Designation"></mat-checkbox>&nbsp; Orphan Designation (&nbsp; <mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon>&nbsp; {{getCount("orphan")}})
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="toggleFilter($event, 'fastTrack')" aria-label="Fast Track"></mat-checkbox>&nbsp; Fast Track (&nbsp; <mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon>&nbsp; {{getCount("fastTrack")}})
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="toggleFilter($event, 'breakthrough')" aria-label="FDA Breakthrough Designation"></mat-checkbox>&nbsp; FDA Breakthrough Designation(&nbsp; <mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon>&nbsp; {{getCount("breakthrough")}})
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="toggleFilter($event, 'priority')" aria-label="Priority Review"></mat-checkbox>&nbsp; Priority Review (&nbsp;<mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon>&nbsp; {{getCount("priority")}})
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="toggleFilter($event, 'accelerated')" aria-label="FDA Accelerated Approval"></mat-checkbox>&nbsp; FDA Accelerated Approval(&nbsp;<mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon>&nbsp; {{getCount("accelerated")}})
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
-
-<!--
-<mat-form-field>
-  <mat-select [formControl] = "yearFilterCtrl" multiple>
-    <mat-option [value]=2017>2017 </mat-option>
-    <mat-option [value]=2016>2016 </mat-option>
-    <mat-option [value]=2015>2015 </mat-option>
-    <mat-option [value]=2014>2014 </mat-option>
-    <mat-option [value]=2013>2013 </mat-option>
-    <mat-option [value]=2012>2012 </mat-option>
-  </mat-select>
-</mat-form-field>
-
-<div fxLayout="row" >
-  <div fxFlex="1 1 auto" class="with-icon">
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-  </div>
-</div>
--->
 
 
 

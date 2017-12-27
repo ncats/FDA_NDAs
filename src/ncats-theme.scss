@@ -67,15 +67,20 @@ $ncats-secondary: (
     A700 : #ffffff,
   )
 );
-
-body{
+html, body {
+  height: 100%;
   margin: 0 !important;
-  /*
-  font-family: HCo Verlag,CenturyGothic,AppleGothic,Gill Sans,Gill Sans MT,sans-serif;
-  */
 }
 
+.main{
+  display: flex !important;
+  min-height: 100vh !important;
+  flex-direction: column !important;
+}
 
+.mat-drawer-content {
+overflow: visible !important;
+}
 
 $ncats-app-primary: mat-palette($ncats-primary);
 $ncats-app-accent:  mat-palette($ncats-secondary);

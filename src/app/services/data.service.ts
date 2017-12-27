@@ -11,6 +11,8 @@ export class DataService {
   data$ = this._dataSource.asObservable();
   private _yearChange = new BehaviorSubject<any>(this.years);
   years$ = this._yearChange.asObservable();
+  private _applicationChange = new BehaviorSubject<any>({});
+  application$ = this._applicationChange.asObservable();
   masterDataMap: Map<number, any[]> = new Map();
   returnedDataMap: Map<number, any[]> = new Map();
 
@@ -18,7 +20,6 @@ export class DataService {
   constructor(private dataLoaderService: DataLoaderService) {
     // initial passing of data
     this.dataLoaderService.data$.subscribe(res => {
-      console.log(res);
       this.masterDataMap = res;
       this.years.forEach(year => {
         this.returnedDataMap.set(year, this.masterDataMap.get(year));
@@ -40,7 +41,8 @@ export class DataService {
         this.returnedDataMap.set(year, this.returnedDataMap.get(year).filter(drug => !!drug[field] === true));
       });
     });
-    this._dataSource.next({data: this.returnedDataMap});
+
+    this._dataSource.next({data: this.returnedDataMap, filters: fields});
   }
 
   clearFilter(keepData?: boolean): void {
@@ -48,7 +50,7 @@ export class DataService {
     this.years.forEach(year => {
       this.returnedDataMap.set(year, this.masterDataMap.get(year));
     });
-    this._dataSource.next({data: this.returnedDataMap, filter: keepData});
+    this._dataSource.next({data: this.returnedDataMap, filter: keepData, filters : []});
   }
 
   // filter for when the years change

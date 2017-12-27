@@ -2,6 +2,8 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import * as Highcharts from 'highcharts';
 import {DataLoaderService} from '../services/data-loader.service';
 import {DataService} from '../services/data.service';
+import {default as HighchartsMore} from 'highcharts/highcharts-more.src.js';
+HighchartsMore(Highcharts);
 
 @Component({
   selector: 'app-time-counts',
@@ -21,19 +23,31 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
-      res.forEach(drugs => {
+      [...res.values()].forEach(drugs => {
         let sum = 0;
         drugs.map(drug => sum = sum + drug.developmentTime);
         this.series.push(Number((sum / drugs.length).toFixed(2)));
       });
       this.makeChart();
-      this.highlightBar()
+      this.highlightBar();
     });
 
+
+   /* this.dataLoaderService.data$.subscribe(res => {
+      res.forEach(drugs => {
+        let sum = 0;
+        let r = drugs.map(drug => drug.developmentTime * 1000/1000);
+        this.series.push(r.sort((a,b)=> a-b));
+      });
+      console.log(JSON.stringify(this.series));
+      this.makeChart();
+   //   this.highlightBar()
+    });
+*/
     this.dataService.years$.subscribe(years => {
       this.years = years;
       if (this.chart) {
-        this.highlightBar();
+   //     this.highlightBar();
       }
     });
   }
@@ -94,6 +108,12 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
           text: 'Years'
         }
       },
+     /* plotOptions: {
+        boxplot: {
+          fillColor: '#64676b'
+        }
+      },
+*/
       series: [{
         data: ctrl.series
       }]

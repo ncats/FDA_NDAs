@@ -14,6 +14,13 @@
     </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="developmentTime">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Time in Development (years)</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      {{row.developmentTime}}
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
     <mat-cell *matCellDef="let row">

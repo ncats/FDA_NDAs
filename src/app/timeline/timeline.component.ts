@@ -8,7 +8,6 @@ import {DrugHoverService} from '../services/drug-hover.service';
 import {DataService} from "../services/data.service";
 // Load the exporting module.
 import Exporting from 'highcharts/modules/exporting.src.js';
-import {LoadingService} from "../services/loading.service";
 import {TooltipComponent} from "../tooltip/tooltip.component";
 
 

@@ -10,7 +10,7 @@ import {DataService} from '../services/data.service';
   styleUrls: ['./drug-details.component.css']
 })
 export class DrugDetailsComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['fullDate', 'name', 'ingredients', 'target', 'use', 'references'];
+  displayedColumns = ['fullDate', 'developmentTime', 'name', 'ingredients', 'target', 'use', 'references'];
   backup: Drug[] = [];
   checked = {
     first: false,
@@ -35,6 +35,12 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
       [...res.data.values()].forEach(year => data = data.concat(year));
       this.backup = data;
       this.dataSource.data = data;
+      if (res.filters) {
+        for (let field in this.checked) {
+          this.checked[field] = false;
+        }
+        res.filters.forEach(field => this.checked[field] = true);
+      }
     });
 
     this.drugHoverService.hoverednode$.subscribe(drug => {
