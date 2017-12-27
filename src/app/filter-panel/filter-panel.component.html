@@ -1,28 +1,77 @@
 <mat-card>
-  <mat-card-title>Year</mat-card-title>
   <mat-card-content>
-    <mat-list>
-      <mat-list-item>
-        <mat-checkbox (change)="changeYear($event, 2017)" aria-label="2017" [checked] ="'true'">2017</mat-checkbox>
-      </mat-list-item>
-      <mat-list-item>
-      <mat-checkbox (change)="changeYear($event, 2016)" aria-label="2016">2016</mat-checkbox>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="changeYear($event, 2015)" aria-label="2015">2015</mat-checkbox>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="changeYear($event, 2014)" aria-label="2014">2014</mat-checkbox>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="changeYear($event, 2013)" aria-label="2013">2013</mat-checkbox>
-      </mat-list-item>
-      <mat-list-item>
-        <mat-checkbox (change)="changeYear($event, 2012)" aria-label="2012">2012</mat-checkbox>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
+<div >
+  <mat-table #yearTable [dataSource]="yearDataSource">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterYearToggle() : null"
+                      [checked]="yearSelection.hasValue() && isAllYearSelected()"
+                      [indeterminate]="yearSelection.hasValue() && !isAllYearSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? yearSelection.toggle(row) : null"
+                      [checked]="yearSelection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="filter">
+      <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+             (click)="yearSelection.toggle(row)">
+    </mat-row>
+  </mat-table>
+</div>
+</mat-card-content>
 </mat-card>
+<mat-card>
+  <mat-card-content>
+<div >
+  <mat-table #applicationTable [dataSource]="applicationDataSource">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterApplicationToggle() : null"
+                      [checked]="applicationSelection.hasValue() && isAllApplicationSelected()"
+                      [indeterminate]="applicationSelection.hasValue() && !isAllApplicationSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? applicationSelection.toggle(row.value) : null"
+                      [checked]="applicationSelection.isSelected(row.value)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="filter">
+      <mat-header-cell *matHeaderCellDef> Application Type </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+             (click)="applicationSelection.toggle(row.value)">
+    </mat-row>
+  </mat-table>
+</div>
+</mat-card-content>
+</mat-card>
+
+
+
+
 
 <mat-card>
   <mat-card-title>Application Type</mat-card-title>
@@ -77,3 +126,6 @@
   </div>
 </div>
 -->
+
+
+
