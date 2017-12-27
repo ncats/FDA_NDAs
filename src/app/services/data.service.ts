@@ -34,9 +34,11 @@ export class DataService {
     this._dataSource.next({data: this.returnedDataMap, filter: true});
   }
 
-  filterBoolean(field: string): void {
-    [...this.returnedDataMap.keys()].forEach(year => {
-      this.returnedDataMap.set(year, this.returnedDataMap.get(year).filter(drug => !!drug[field]=== true));
+  filterBoolean(fields: string[]): void {
+    fields.forEach(field => {
+      [...this.returnedDataMap.keys()].forEach(year => {
+        this.returnedDataMap.set(year, this.returnedDataMap.get(year).filter(drug => !!drug[field] === true));
+      });
     });
     this._dataSource.next({data: this.returnedDataMap});
   }
