@@ -12,7 +12,7 @@ import {DataService} from '../services/data.service';
 export class DrugDetailsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['fullDate', 'name', 'ingredients', 'target', 'use', 'references'];
   backup: Drug[] = [];
-  checked ={
+  checked = {
     first: false,
     orphan: false,
     fastTrack: false,
@@ -26,12 +26,12 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
 
   constructor(private drugHoverService: DrugHoverService,
               private dataService: DataService
-  ){}
+  ) {}
 
 
   ngOnInit() {
     this.dataService.data$.subscribe(res => {
-      let data: Drug[] =[];
+      let data: Drug[] = [];
       [...res.data.values()].forEach(year => data = data.concat(year));
       this.backup = data;
       this.dataSource.data = data;
@@ -58,31 +58,4 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   hover(drug: Drug) {
     this.drugHoverService.clickedNode(drug);
   }
-
-  toggleFilter (event: any, filter: string): void {
-    console.log(event);
-    this.checked[filter] = !this.checked[filter];
-    if(event.checked) {
-      this.dataService.filterBoolean(filter);
-    }else{
-      this.dataService.clearFilter();
-    }
-
-  /*  let filtered: Drug[] = this.backup;
-    let filters: string[] = [];
-    for (let field in this.checked){
-      if (this.checked[field]){
-        filters.push(field);
-      }
-    }
-
-    filters.forEach(filter=> filtered = filtered.filter(drug => !!drug[filter] === true));
-
-
-    this.dataSource.data = filtered.filter((elem, pos, arr) =>  arr.indexOf(elem) == pos);*/
-  }
-  getCount(field:string):number {
-  const r = this.dataSource.data.filter((drug) => !!drug[field] ===true);
-  return r.length;
-  }
-  }
+}

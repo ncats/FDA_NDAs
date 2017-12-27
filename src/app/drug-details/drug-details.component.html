@@ -1,26 +1,3 @@
-<div fxLayout="row">
-  <h3>Legend</h3>
-</div>
-<div fxLayout="row" >
-  <div fxFlex="1 1 auto" class="with-icon">
-    <mat-checkbox (change)="toggleFilter($event, 'first')" aria-label="first in class"></mat-checkbox>&nbsp; First-in-class (&nbsp;<mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon>&nbsp; {{getCount("first")}})
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-    <mat-checkbox (change)="toggleFilter($event, 'orphan')" aria-label="Orphan Designation"></mat-checkbox>&nbsp; Orphan Designation (&nbsp; <mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon>&nbsp; {{getCount("orphan")}})
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-    <mat-checkbox (change)="toggleFilter($event, 'fastTrack')" aria-label="Fast Track"></mat-checkbox>&nbsp; Fast Track (&nbsp; <mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon>&nbsp; {{getCount("fastTrack")}})
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-<mat-checkbox (change)="toggleFilter($event, 'breakthrough')" aria-label="FDA Breakthrough Designation"></mat-checkbox>&nbsp; FDA Breakthrough Designation(&nbsp; <mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon>&nbsp; {{getCount("breakthrough")}})
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-<mat-checkbox (change)="toggleFilter($event, 'priority')" aria-label="Priority Review"></mat-checkbox>&nbsp; Priority Review (&nbsp;<mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon>&nbsp; {{getCount("priority")}})
-  </div>
-  <div fxFlex="1 1 auto" class="with-icon">
-<mat-checkbox (change)="toggleFilter($event, 'accelerated')" aria-label="FDA Accelerated Approval"></mat-checkbox>&nbsp; FDA Accelerated Approval(&nbsp;<mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon>&nbsp; {{getCount("accelerated")}})
-  </div>
-</div>
 
 <mat-form-field>
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">

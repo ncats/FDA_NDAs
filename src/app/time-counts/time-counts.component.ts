@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import * as Highcharts from 'highcharts';
-import {DataLoaderService} from "../services/data-loader.service";
+import {DataLoaderService} from '../services/data-loader.service';
 
 @Component({
   selector: 'app-time-counts',
@@ -11,23 +11,23 @@ import {DataLoaderService} from "../services/data-loader.service";
 export class TimeCountsComponent implements OnInit, OnDestroy {
   @ViewChild('timeCountChartTarget') chartTarget: ElementRef;
   chart: Highcharts.ChartObject;
-  series: number[]=[];
+  series: number[]= [];
 
   constructor(private  dataLoaderService: DataLoaderService) {
   }
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
-      [...res.values()].forEach(drugs=> {
-        let sum:number =0;
-        drugs.map(drug=> sum = sum + drug.developmentTime);
-        this.series.push(sum/drugs.length);
+      [...res.values()].forEach(drugs => {
+        let sum = 0;
+        drugs.map(drug => sum = sum + drug.developmentTime);
+        this.series.push(Number((sum / drugs.length).toFixed(2)));
       });
       this.makeChart();
     });
   }
 
-  makeChart():void {
+  makeChart(): void {
     const ctrl = this;
     // Generate the chart
     const options = {
@@ -37,8 +37,8 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
       title: {
         text: '2017 Median time in clinical development'
       },
-      subtitle:{
-        text:'< 8 years'
+      subtitle: {
+        text: '< 8 years'
       },
       legend: {
         enabled: false

@@ -9,7 +9,7 @@ year: number;
 nctDate: string;
 fullDate: number;
 use: string;
-developmentTime: any;
+developmentTime: number;
 press: string;
 trials: string;
 first: boolean;

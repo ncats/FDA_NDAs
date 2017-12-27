@@ -50,11 +50,11 @@ export class DataLoaderService {
     const result: any[] = [];
 
     const headers = lines.shift().split(',');
-    for (let i of lines) {
+    for (const i of lines) {
       const obj: Drug = new Drug();
       const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
-      for (let j in headers) {
+      for (const j in headers) {
         obj[headers[j]] = currentline[j].replace('"','').replace('"','');
       }
       const d = obj.dateString.split('/');
@@ -76,11 +76,11 @@ export class DataLoaderService {
     this._dataSource.next(this.dataMap);
   }
 
-  getDevTime(drug:Drug):any{
+  getDevTime(drug: Drug): number {
     let start: Date;
-    if(drug.initClinicalStudy){
-      start = new Date("1/1/".concat(drug.initClinicalStudy.toString()));
-    }else{
+    if (drug.initClinicalStudy) {
+      start = new Date('1/1/'.concat(drug.initClinicalStudy.toString()));
+    }else {
       start = new Date(drug.nctDate.split('/')[2]);
     }
     const end: Date =  new Date(drug.fullDate);
@@ -88,8 +88,7 @@ export class DataLoaderService {
     const d2Y = end.getFullYear();
     const d1M = start.getMonth();
     const d2M = end.getMonth();
-    //console.log(((d2M+12*d2Y)-(d1M+12*d1Y))/12);
-    return ((d2M+12*d2Y)-(d1M+12*d1Y))/12;
+    return Number((((d2M + 12 * d2Y) - (d1M + 12 * d1Y)) / 12).toFixed(2));
   }
 }
 

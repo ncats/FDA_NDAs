@@ -10,29 +10,18 @@ import {DataService} from "./services/data.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  yearFilterCtrl: FormControl;
-  loading: boolean = false;
+  loading = false;
   masterDataMap: Map<number, any[]> = new Map();
 
 
-  constructor(private dataLoaderService : DataLoaderService,
-              private dataService : DataService,
-              private loadingService: LoadingService){
+  constructor(private dataLoaderService: DataLoaderService,
+              private loadingService: LoadingService) {
     this.dataLoaderService.getData('assets/2012-2017-NMEs.csv').subscribe();
   }
 
-  ngOnInit():void {
+  ngOnInit(): void {
     this.loadingService.loading$.subscribe(res => this.loading = res);
-    this.dataLoaderService.data$.subscribe(res=> this.masterDataMap = res);
-    this.yearFilterCtrl = new FormControl([2017]);
-    this.yearFilterCtrl.valueChanges.subscribe(value => {
-      this.dataService.filterByYear(value);
-    });
-  }
-
-  ngAfterViewInit():void{
-    this.loadingService.toggleVisible(false);
-
+    this.dataLoaderService.data$.subscribe(res => this.masterDataMap = res);
   }
 }
 

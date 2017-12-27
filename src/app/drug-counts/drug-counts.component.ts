@@ -1,8 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {DrugHoverService} from "../services/drug-hover.service";
-import {DataService} from "../services/data.service";
 import * as Highcharts from 'highcharts';
-import {DataLoaderService} from "../services/data-loader.service";
+import {DataLoaderService} from '../services/data-loader.service';
 
 
 @Component({
@@ -21,12 +19,12 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
-    [...res.values()].forEach(drugs=> this.series.push(drugs.length));
+    [...res.values()].forEach(drugs => this.series.push(drugs.length));
       this.makeChart();
     });
   }
 
-  makeChart():void {
+  makeChart(): void {
     const ctrl = this;
     // Generate the chart
     const options = {
@@ -36,8 +34,8 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
       title: {
         text: '49 innovative drugs in 2017'
       },
-      subtitle:{
-        text:'a high-water mark for drug development'
+      subtitle: {
+        text: 'a high-water mark for drug development'
       },
       legend: {
         enabled: false

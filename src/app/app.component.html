@@ -1,29 +1,33 @@
 <app-ncats-header></app-ncats-header>
 
+<mat-sidenav-container class = "upperSection">
+  <button type="button" class="sidenavToggle" mat-raised-button [color]="'accent'" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-sidenav #sidenav [mode]="'over'" class = "upperSection">
+    <!-- sidenav content -->
+    <app-filter-panel></app-filter-panel>
+  </mat-sidenav>
+
+  <!-- primary content -->
 <div id="main-body">
   <div *ngIf="loading" class = "loadingIcon" fxLayoutAlign="center center">
     <mat-spinner></mat-spinner>
   </div>
  <div fxLayout="row" fxLayoutAlign="center center" id="yearFilter">
    <h2>Innovative Drugs: &nbsp;</h2><br>
-   <mat-form-field>
-   <mat-select [formControl] = "yearFilterCtrl" multiple>
-      <mat-option [value]=2017>2017 </mat-option>
-      <mat-option [value]=2016>2016 </mat-option>
-      <mat-option [value]=2015>2015 </mat-option>
-      <mat-option [value]=2014>2014 </mat-option>
-      <mat-option [value]=2013>2013 </mat-option>
-      <mat-option [value]=2012>2012 </mat-option>
-  </mat-select>
-     </mat-form-field>
  </div>
    <div fxLayout="row" fxLayoutAlign="center center">
+<!--
    <h3>Molecules that earned first-time approval in {{yearFilterCtrl.value}}  by FDA</h3>
-
+-->
  </div>
 
   <div fxLayout="row">
+<!--
     <h1>{{yearFilterCtrl.value}} Highlights</h1>
+-->
   </div>
 
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center stretch" >
@@ -77,5 +81,14 @@
    </div>
  </div>
 </div>
+</mat-sidenav-container>
 
 <app-ncats-footer></app-ncats-footer>
+
+
+
+
+
+
+
+

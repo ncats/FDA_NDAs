@@ -20,7 +20,7 @@ export class DataService {
         this.returnedDataMap.set(year, this.masterDataMap.get(year));
       });
       this._dataSource.next({data: this.returnedDataMap});
-    })
+    });
   }
 
   filterString(term: string, field: string ): void {
@@ -37,7 +37,7 @@ export class DataService {
     this._dataSource.next({data: this.returnedDataMap});
   }
 
-  clearFilter(keepData?:boolean): void {
+  clearFilter(keepData?: boolean): void {
     this.returnedDataMap.clear();
     this.years.forEach(year => {
       this.returnedDataMap.set(year, this.masterDataMap.get(year));
@@ -45,8 +45,8 @@ export class DataService {
     this._dataSource.next({data: this.returnedDataMap, filter: keepData});
   }
 
-  //filter for when the years change
-  filterByYear(years:number[]):void {
+  // filter for when the years change
+  filterByYear(years: number[]): void {
     this.years = years;
     this.returnedDataMap.clear();
     this.years.forEach(year => {

@@ -18,6 +18,7 @@ import {LoadingService} from "./services/loading.service";
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { DrugCountsComponent } from './drug-counts/drug-counts.component';
 import { TimeCountsComponent } from './time-counts/time-counts.component';
+import { FilterPanelComponent } from './filter-panel/filter-panel.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TimeCountsComponent } from './time-counts/time-counts.component';
     NcatsFooterComponent,
     TooltipComponent,
     DrugCountsComponent,
-    TimeCountsComponent
+    TimeCountsComponent,
+    FilterPanelComponent
   ],
   imports: [
     BrowserModule,
