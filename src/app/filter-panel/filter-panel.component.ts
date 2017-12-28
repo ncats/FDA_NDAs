@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
 import {DataService} from '../services/data.service';
-import {DataLoaderService} from "../services/data-loader.service";
+import {DataLoaderService} from '../services/data-loader.service';
 import {MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 
@@ -11,18 +10,18 @@ import {SelectionModel} from '@angular/cdk/collections';
   styleUrls: ['./filter-panel.component.css']
 })
 export class FilterPanelComponent implements OnInit {
-  yearFilterCtrl: FormControl;
   displayedColumns = ['select', 'filter', 'count'];
-  series: any[] =[];
+  series: any[] = [];
   yearDataSource = new MatTableDataSource<any>(this.series);
   yearSelection = new SelectionModel<number>(true, [2017]);
   applicationDataSource = new MatTableDataSource<any>([
-    {name: 'First in class', value: 'first', icon:'verified_user'},
-    {name: 'Orphan Designation', value: 'orphan', icon:'child_friendly'},
-    {name: 'Fast Track', value: 'fastTrack', icon:'flight_takeoff'},
-    {name: 'FDA Breakthrough Designation', value: 'breakthrough', icon:'trending_up'},
-    {name: 'Priority Review', value: 'priority', icon:'visibility'},
-    {name: 'FDA Accelerated Approval', value: 'accelerated', icon:'fast_forward'}]);
+    {name: 'First in class', value: 'first', icon: 'verified_user'},
+    {name: 'Orphan Designation', value: 'orphan', icon: 'child_friendly'},
+    {name: 'Fast Track', value: 'fastTrack', icon: 'flight_takeoff'},
+    {name: 'FDA Breakthrough Designation', value: 'breakthrough', icon: 'trending_up'},
+    {name: 'Priority Review', value: 'priority', icon: 'visibility'},
+    {name: 'FDA Accelerated Approval', value: 'accelerated', icon: 'fast_forward'}
+    ]);
   applicationSelection = new SelectionModel<any>(true, []);
   checked = {
     first: false,
@@ -32,6 +31,7 @@ export class FilterPanelComponent implements OnInit {
     priority: false,
     accelerated: false
   };
+  stop = false;
   years: number[] = [2017];
   dataMap: Map<number, any[]> = new Map();
 
@@ -42,16 +42,25 @@ export class FilterPanelComponent implements OnInit {
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
       res.forEach((value, key) => {
-        this.series.push({key: key, count: value.length})
+        this.series.push({key: key, count: value.length});
       });
       this.yearDataSource.data = this.series;
     });
 
     this.dataService.data$.subscribe(res => this.dataMap = res.data);
 
-    this.yearSelection.onChange.subscribe(change => {
-      this.dataService.filterByYear(this.yearSelection.selected);
+    this.dataService.years$.subscribe(years => {
+      this.stop = true;
+      this.yearSelection.deselect(...this.years);
+      this.yearSelection.select(...years);
+      this.years = years;
     });
+    this.yearSelection.onChange.subscribe(change => {
+      if (!this.stop) {
+        this.dataService.filterByYear(this.yearSelection.selected);
+      }
+      this.stop = false;
+      });
 
     this.applicationSelection.onChange.subscribe(change => {
       change.added.forEach(field => this.checked[field] = true);
@@ -92,8 +101,8 @@ export class FilterPanelComponent implements OnInit {
   }
 
   getCount(field: string): number {
-    let sum: number = 0;
-    this.dataMap.forEach(drugs =>  sum = sum + drugs.filter(drug => !!drug[field]===true).length);
+    let sum = 0;
+    this.dataMap.forEach(drugs =>  sum = sum + drugs.filter(drug => !!drug[field] === true).length);
     return sum;
   }
 }

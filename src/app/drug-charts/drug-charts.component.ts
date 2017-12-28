@@ -3,7 +3,7 @@ import {DrugHoverService} from '../services/drug-hover.service';
 import * as Highcharts from 'highcharts';
 import * as Drilldown from 'highcharts/modules/drilldown';
 import {DataService} from '../services/data.service';
-import {LoadingService} from "../services/loading.service";
+import {LoadingService} from '../services/loading.service';
 Drilldown(Highcharts);
 
 @Component({
@@ -26,14 +26,14 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataService.data$.subscribe(res => {
-      if(!res.filter){
+      if (!res.filter) {
        this.dataMap = res.data;
        this.getDrilldown();
      }
     });
   }
 
-  getDrilldown():void{
+  getDrilldown(): void {
     const series: any = [];
     const drilldown: any = [];
     const firstFilterMap: Map<string, any> = new Map();

@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import * as Highcharts from 'highcharts';
 import {DataLoaderService} from '../services/data-loader.service';
-import {DataService} from "../services/data.service";
+import {DataService} from '../services/data.service';
 
 
 @Component({
@@ -35,19 +35,18 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
   }
 
   highlightBar(): void {
-    let vals:number[] =[];
-    let cts:number =0;
-      let p = this.chart.series[0].data.forEach(e => {
+    const vals: number[] = [];
+    let cts = 0;
+      const p = this.chart.series[0].data.forEach(e => {
         if (this.years.find(y => y.toString() === e.category)) {
           vals.push(e.y);
           e.update({color: '#642F6C'}, false);
-        }
-        else {
+        } else {
           e.update({color: '#64676b'}, false);
         }
       });
-    vals.forEach(count => cts=cts+count);
-    this.chart.setTitle({text: cts + ' innovative drugs in ' + this.years.join(", ")});
+    vals.forEach(count => cts = cts + count);
+    this.chart.setTitle({text: cts + ' innovative drugs in ' + this.years.join(', ')});
     this.chart.redraw();
   }
 
@@ -74,6 +73,17 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
       tooltip: {
         headerFormat: '<span style="font-size:11px">{point.x}</span><br>',
         pointFormat: '<b>{point.y}</b><br/>'
+      },
+      plotOptions: {
+        series: {
+          point: {
+            events: {
+              click: function (event) {
+                ctrl.dataService.filterByYear([Number(this.category)]);
+              }
+            }
+          }
+        }
       },
       xAxis: {
          title: {

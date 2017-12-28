@@ -47,26 +47,25 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
     this.dataService.years$.subscribe(years => {
       this.years = years;
       if (this.chart) {
-   //     this.highlightBar();
+        this.highlightBar();
       }
     });
   }
 
   highlightBar(): void {
-    let vals:number[] =[];
-    let cts:number =0;
-    let p = this.chart.series[0].data.forEach(e => {
+    const vals: number[] = [];
+    let cts = 0;
+    const p = this.chart.series[0].data.forEach(e => {
       if (this.years.find(y => y.toString() === e.category)) {
         vals.push(e.y);
         e.update({color: '#265668'}, false);
-      }
-      else {
+      } else {
         e.update({color: '#64676b'}, false);
       }
     });
-    vals.forEach(count => cts=cts+count);
+    vals.forEach(count => cts = cts + count);
     cts = Math.ceil(cts / vals.length);
-    this.chart.setTitle({text: this.years.join(", ") + " Median time in clinical development"}, {text: '< '  +cts + ' years'});
+    this.chart.setTitle({text: this.years.join(', ') + ' Median time in clinical development'}, {text: '< '  + cts + ' years'});
     this.chart.redraw();
   }
 
@@ -93,6 +92,19 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
       tooltip: {
         headerFormat: '<span style="font-size:11px">{point.x}</span><br>',
         pointFormat: '<b>{point.y}</b><br/>'
+      },
+      plotOptions: {
+        series: {
+          point: {
+            events: {
+              click: function (event) {
+                console.log(this);
+                console.log(event);
+                ctrl.dataService.filterByYear([Number(this.category)]);
+              }
+            }
+          }
+        }
       },
       xAxis: {
         title: {

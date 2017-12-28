@@ -1,13 +1,10 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
-import {DataLoaderService} from "./services/data-loader.service";
-import {FormControl} from "@angular/forms";
-import {LoadingService} from "./services/loading.service";
-import {DataService} from "./services/data.service";
-import {DOCUMENT} from "@angular/common";
-import {Drug} from "./models/drug";
-import {Observable} from "rxjs/Observable";
-import { zip } from 'rxjs/observable/zip';
-import {combineLatest} from "rxjs/observable/combineLatest";
+import {DataLoaderService} from './services/data-loader.service';
+import {LoadingService} from './services/loading.service';
+import {DataService} from './services/data.service';
+import {DOCUMENT} from '@angular/common';
+import {Drug} from './models/drug';
+import {combineLatest} from 'rxjs/observable/combineLatest';
 
 
 @Component({
@@ -31,7 +28,7 @@ export class AppComponent implements OnInit{
     this.dataLoaderService.getData('assets/2012-2017-NMEs.csv').subscribe();
   }
 
-@HostListener("window:scroll", [])
+@HostListener('window:scroll', [])
   ngOnInit(): void {
     const dataMap$ = this.dataLoaderService.data$;
     const yearList$ = this.dataService.years$;
@@ -39,9 +36,7 @@ export class AppComponent implements OnInit{
 
     combineLatest(dataMap$, yearList$, loading$)
       .subscribe(obs => {
-        console.log(this);
-        console.log(obs);
-        this.masterDataMap =obs[0];
+        this.masterDataMap = obs[0];
         this.years = obs[1];
         this.loading = obs[2];
         this.getOutliers();
@@ -50,36 +45,34 @@ export class AppComponent implements OnInit{
  }
 
   getMedian() {
-    let sum: number = 0;
-    const counts: any[] =[];
-    this.years.forEach(year =>{
+    let sum = 0;
+    const counts: any[] = [];
+    this.years.forEach(year => {
       const r = this.masterDataMap.get(year);
       r.forEach(drug => sum = sum + drug.developmentTime);
       counts.push(Number((sum / r.length).toFixed(2)));
     });
-    let s:number =0;
+    let s = 0;
      counts.forEach(count => {
       s =  s + count;
     });
-    this.median = Number((s/counts.length).toFixed(2));
+    this.median = Number((s / counts.length).toFixed(2));
   }
 
-  getOutliers(){
-    const counts: any[] =[];
-    this.years.forEach(year =>{
-      console.log(year);
-      console.log(this.masterDataMap);
-      const r = this.masterDataMap.get(year).sort((a,b)=> a.developmentTime-b.developmentTime);
+  getOutliers() {
+    const counts: any[] = [];
+    this.years.forEach(year => {
+      const r = this.masterDataMap.get(year).sort((a, b) => a.developmentTime - b.developmentTime);
       counts.push(r);
     });
-    const min: any[] =[];
-    const max: any[] =[];
+    const min: any[] = [];
+    const max: any[] = [];
     counts.forEach(year => {
       min.push(year[0]);
-      max.push(year[year.length-1]);
+      max.push(year[year.length - 1]);
     });
-    this.min = min.sort((a,b)=> a.developmentTime-b.developmentTime)[0];
-    this.max = max.sort((a,b)=> a.developmentTime-b.developmentTime)[max.length-1];
+    this.min = min.sort((a, b) => a.developmentTime - b.developmentTime)[0];
+    this.max = max.sort((a, b) => a.developmentTime - b.developmentTime)[max.length - 1];
   }
 
   onWindowScroll() {

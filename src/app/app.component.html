@@ -26,7 +26,7 @@
 
     <!-- <div fxLayout="row" fxLayoutAlign="start center" id="yearFilter">
      </div>-->
-    <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center none">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="center none">
     <div fxFlex="33">
       <mat-card>
         <h3>First gene therapies approved (3 in all)</h3>
@@ -75,7 +75,7 @@
         <h1>{{years.join(", ")}} Details</h1><br>
       </mat-panel-title>
     </mat-expansion-panel-header>
- <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center none">
+ <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="center none">
    <div fxFlex="33">
      <mat-card>
      <app-drug-charts [fields]="['substanceClass','moleculeType']" [label]="'Substance Class'"></app-drug-charts>
@@ -99,7 +99,7 @@
         <h1>{{years.join(", ")}} All Drugs</h1><br>
       </mat-panel-title>
     </mat-expansion-panel-header>
- <div fxLayout="row">
+ <div fxLayout="row" fxLayout.xs="column">
    <div fxFlex="99">
    <app-drug-details></app-drug-details>
    </div>
