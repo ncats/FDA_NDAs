@@ -72,7 +72,7 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
   makeChart(): void {
     const ctrl = this;
     // Generate the chart
-    const options = {
+    const options: any = {
       chart: {
         type: 'column'
       },
@@ -100,7 +100,7 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
               click: function (event) {
                 console.log(this);
                 console.log(event);
-                ctrl.dataService.filterByYear([Number(this.category)]);
+               // ctrl.dataService.changeYears([Number(this.category)]);
               }
             }
           }

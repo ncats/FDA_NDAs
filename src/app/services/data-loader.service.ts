@@ -5,6 +5,8 @@ import {Subject} from 'rxjs/Subject';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 import {Drug} from '../models/drug';
+import * as moment from 'moment';
+
 
 @Injectable()
 export class DataLoaderService {
@@ -58,37 +60,38 @@ export class DataLoaderService {
         obj[headers[j]] = currentline[j].replace('"','').replace('"','');
       }
       const d = obj.dateString.split('/');
-      obj.date = Date.parse(d[0] + '/' + d[1]);
+      obj.date = moment(d[0] + '/' + d[1], "MM/DD").valueOf(); // MM/DD
       obj.moleculeType = obj.moleculeType.toLowerCase();
-      obj.fullDate = Date.parse(obj.dateString);
+      obj.fullDate = moment(obj.dateString, "MM/DD/YYYY").valueOf();
       obj.year =  Number(obj.dateString.split('/')[2]);
       obj.developmentTime = this.getDevTime(obj);
 
       let yearList: any[] = this.dataMap.get(obj.year);
-     if (yearList && yearList.length > 0) {
-       yearList.push(obj);
-     }else {
-       yearList = [obj];
-     }
-        this.dataMap.set(obj.year, yearList);
-   //  result.push(obj);
+      if (yearList && yearList.length > 0) {
+        yearList.push(obj);
+      }else {
+        yearList = [obj];
+      }
+      this.dataMap.set(obj.year, yearList);
+      //  result.push(obj);
     }
     this._dataSource.next(this.dataMap);
   }
 
   getDevTime(drug: Drug): number {
-    let start: Date;
-    if (drug.initClinicalStudy) {
-      start = new Date('1/1/'.concat(drug.initClinicalStudy.toString()));
+    let start: any;
+    if (drug.initClinicalStudy && drug.initClinicalStudy.toString() !== "?") {
+      start = moment('01/01/'.concat(drug.initClinicalStudy.toString()),"MM/DD/YYYY");
     }else {
-      start = new Date(drug.nctDate.split('/')[2]);
+      start = moment(drug.nctDate, "MM/DD/YYYY");
     }
-    const end: Date =  new Date(drug.fullDate);
-    const d1Y = start.getFullYear();
+    const end = moment(drug.fullDate);
+    /*const d1Y = start.getFullYear();
     const d2Y = end.getFullYear();
     const d1M = start.getMonth();
     const d2M = end.getMonth();
-    return Number((((d2M + 12 * d2Y) - (d1M + 12 * d1Y)) / 12).toFixed(2));
+    return Number((((d2M + 12 * d2Y) - (d1M + 12 * d1Y)) / 12).toFixed(2));*/
+    return end.diff(start, 'years', true);
+
   }
 }
-

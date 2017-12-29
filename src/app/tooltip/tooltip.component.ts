@@ -11,7 +11,6 @@ export class TooltipComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-   // console.log(this.drug);
   }
 
 }

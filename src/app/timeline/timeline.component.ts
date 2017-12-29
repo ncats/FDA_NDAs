@@ -3,12 +3,15 @@ import {
   ViewChild
 } from '@angular/core';
 import {Drug} from '../models/drug';
+import {DataLoaderService} from '../services/data-loader.service';
 import * as Highcharts from 'highcharts';
 import {DrugHoverService} from '../services/drug-hover.service';
 import {DataService} from "../services/data.service";
 // Load the exporting module.
 import Exporting from 'highcharts/modules/exporting.src.js';
+import {LoadingService} from "../services/loading.service";
 import {TooltipComponent} from "../tooltip/tooltip.component";
+// Initialize exporting module.
 
 
 // todo: add exporting module
@@ -21,26 +24,30 @@ import {TooltipComponent} from "../tooltip/tooltip.component";
 export class TimelineComponent implements OnInit, OnDestroy {
   @ViewChild('chartTarget') chartTarget: ElementRef;
   chart: Highcharts.ChartObject;
+  years: number[] = [2017];
   series: any = [];
+
+  dataMap: Map<number, any[]> = new Map();
 
    private _component: ComponentRef<TooltipComponent>;
 
   constructor(private drugHoverService: DrugHoverService,
               private dataService: DataService,
+              private loadingService: LoadingService,
               private _resolver: ComponentFactoryResolver,
               private _injector: Injector
 ) {
   }
 
   ngOnInit() {
-    // Initialize exporting module.
     Exporting(Highcharts);
     const factory = this._resolver.resolveComponentFactory(TooltipComponent);
     this._component = factory.create(this._injector);
     this.dataService.data$.subscribe(res => {
+      this.dataMap = res.data;
       const data: any[] = [];
-      [...res.data.entries()].forEach(entry => {
-        data.push({name: entry[0], data: res.data.get(entry[0]).map(drug => drug = {x: drug.date, y: drug.year, drug: drug})});
+      [...this.dataMap.entries()].forEach(entry => {
+        data.push({name: entry[0], data: this.dataMap.get(entry[0]).map(drug => drug = {x: drug.date, y: drug.year, drug: drug})});
       });
       this.series = data;
       this.makeChart();
@@ -53,6 +60,19 @@ export class TimelineComponent implements OnInit, OnDestroy {
     point[0].select(null, true);
       this.chart['tooltip'].refresh(point[0]);
     });
+
+
+/*    this.dataService.filter$.subscribe(filter => {
+     // console.log(filter);
+     /!* let list:any[] = this.chart.series.filter(l => l.name === drug.year);
+      console.log(list);
+      const point = list[0].data.filter(d =>d['drug'].name === drug.name);
+      console.log(point);
+      point[0].setState(point[0].state==='hover'? '': 'hover');
+      point[0].select(null, true);
+      this.chart['tooltip'].refresh(point[0]);
+      this.dataSource.data = this.dataSource.data.filter(drug => drug[filter.field] === filter.term);*!/
+    });*/
   }
 
   makeChart() {
@@ -61,9 +81,10 @@ export class TimelineComponent implements OnInit, OnDestroy {
       const options = {
         chart: {
           type: 'scatter',
-          height: '12%'
+          height: '15%'
         },
-        colors: ['#642F6C'],
+        colors: ['#642F6C'
+        ],
        title: {
          text: null
        },
@@ -113,6 +134,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
      };
 
      this.chart = Highcharts.chart(this.chartTarget.nativeElement, options);
+     this.loadingService.toggleVisible(false);
   }
 
   toggleHighlight() {

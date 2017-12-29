@@ -19,6 +19,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { DrugCountsComponent } from './drug-counts/drug-counts.component';
 import { TimeCountsComponent } from './time-counts/time-counts.component';
 import { FilterPanelComponent } from './filter-panel/filter-panel.component';
+import { YearDetailsComponent } from './year-details/year-details.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { FilterPanelComponent } from './filter-panel/filter-panel.component';
     TooltipComponent,
     DrugCountsComponent,
     TimeCountsComponent,
-    FilterPanelComponent
+    FilterPanelComponent,
+    YearDetailsComponent
   ],
   imports: [
     BrowserModule,

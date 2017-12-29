@@ -1,0 +1,28 @@
+<div *ngIf ="year2017">
+<h3>First gene therapies approved in 2017 (3 in all)</h3>
+<mat-list>
+  <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/2SPI046IKD" target="_blank">voretigene neparvovec</a></mat-list-item>
+  <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/U2I8T43Y7R" target="_blank">axicabtagene ciloleucel</a></mat-list-item>
+  <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/Q6C9WHR03O" target="_blank">tisagenlecleucel</a></mat-list-item>
+</mat-list>
+</div>
+<h3>clinical development times: </h3>
+<mat-list>
+  <mat-list-item>Median –  {{median}} years</mat-list-item>
+  <mat-list-item>
+    Shortest -- {{min?.developmentTime.toFixed(2) }} years -- &nbsp;
+    <ng-template [ngIf]="min?.unii">
+    <a href = "https://drugs.ncats.io/ginas/app/drug/{{min?.unii}}" target="_blank">{{min?.ingredients}}</a>
+  </ng-template>
+    <ng-template [ngIf]="!min?.unii">
+      {{min?.ingredients}}
+    </ng-template></mat-list-item>
+  <mat-list-item> Longest – {{max?.developmentTime.toFixed(2) }} years -- &nbsp;
+    <ng-template [ngIf]="max?.unii">
+    <a href = "https://drugs.ncats.io/ginas/app/drug/{{max?.unii}}" target="_blank">{{max?.ingredients}}</a>
+  </ng-template>
+    <ng-template [ngIf]="!max?.unii">
+      {{max?.ingredients}}
+    </ng-template>
+  </mat-list-item>
+</mat-list>

@@ -24,32 +24,19 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <!-- <div fxLayout="row" fxLayoutAlign="start center" id="yearFilter">
-     </div>-->
     <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="center none">
     <div fxFlex="33">
-      <mat-card>
-        <h3>First gene therapies approved (3 in all)</h3>
-      <mat-list>
-        <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/2SPI046IKD" target="_blank">voretigene neparvovec</a></mat-list-item>
-        <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/U2I8T43Y7R" target="_blank">axicabtagene ciloleucel</a></mat-list-item>
-        <mat-list-item><a href = "https://drugs.ncats.io/ginas/app/drug/Q6C9WHR03O" target="_blank">tisagenlecleucel</a></mat-list-item>
-      </mat-list>
-        <h3>clinical development times: </h3>
-        <mat-list>
-          <mat-list-item>Median –  {{median}} years</mat-list-item>
-          <mat-list-item> Shortest – {{min?.developmentTime }} years -- {{min?.ingredients }}</mat-list-item>
-          <mat-list-item> Longest – {{max?.developmentTime }} years -- {{max?.ingredients }}</mat-list-item>
-        </mat-list>
+      <mat-card fxFlex fxFlexAlign="stretch">
+        <app-year-details></app-year-details>
       </mat-card>
     </div>
     <div fxFlex="33">
-      <mat-card>
+      <mat-card fxFlex fxFlexAlign="stretch">
         <app-time-counts></app-time-counts>
       </mat-card>
     </div>
     <div fxFlex="33">
-      <mat-card>
+      <mat-card fxFlex fxFlexAlign="stretch">
       <app-drug-counts></app-drug-counts>
       </mat-card>
     </div>
@@ -106,13 +93,14 @@
  </div>
   </mat-expansion-panel>
 </div>
+  <div class="scroll-to-top" [ngClass]="{'show-scroll': navIsFixed}">
+    <button  mat-fab color="primary" (click)="scrollToTop()">
+      <mat-icon> arrow_upward </mat-icon>
+    </button>
+  </div>
+
 </mat-sidenav-container>
-</div>
 <!--Scroll to top-->
-<div class="scroll-to-top" [ngClass]="{'show-scroll': navIsFixed}">
-  <button  mat-fab color="primary" (click)="scrollToTop()">
-    <mat-icon> arrow_upward </mat-icon>
-  </button>
 </div>
 <app-ncats-footer class ="footer"></app-ncats-footer>
 

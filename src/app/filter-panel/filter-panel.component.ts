@@ -3,6 +3,7 @@ import {DataService} from '../services/data.service';
 import {DataLoaderService} from '../services/data-loader.service';
 import {MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-filter-panel',
@@ -51,15 +52,17 @@ export class FilterPanelComponent implements OnInit {
 
     this.dataService.years$.subscribe(years => {
       this.stop = true;
-      this.yearSelection.deselect(...this.years);
-      this.yearSelection.select(...years);
+    // /  years.forEach(year => this.yearSelection.toggle(year));
+    //  this.yearSelection.deselect(...this.years);
+    //  this.yearSelection.select(...years);
       this.years = years;
     });
+
     this.yearSelection.onChange.subscribe(change => {
-      if (!this.stop) {
+   //   if (!this.stop) {
         this.dataService.filterByYear(this.yearSelection.selected);
-      }
-      this.stop = false;
+     // }
+    ////  this.stop = false;
       });
 
     this.applicationSelection.onChange.subscribe(change => {
