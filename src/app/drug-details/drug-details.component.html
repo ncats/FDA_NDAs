@@ -17,7 +17,7 @@
   <ng-container matColumnDef="developmentTime">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Time in Development (years)</mat-header-cell>
     <mat-cell *matCellDef="let row">
-      {{row.developmentTime}}
+      {{row.developmentTime.toFixed(2)}}
     </mat-cell>
   </ng-container>
 
