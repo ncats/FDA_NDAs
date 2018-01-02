@@ -16,3 +16,28 @@ mat-row {
   display: flex;
   align-items: center;
 }
+
+.mat-table {
+  overflow: auto;
+}
+
+.mat-column-select {
+  overflow: visible;
+}
+
+.col0{
+  min-width: 0%;
+}
+
+
+.col10{
+  min-width: 10%;
+}
+
+.col15{
+  min-width: 15%;
+}
+
+.col20{
+  min-width: 20%;
+}

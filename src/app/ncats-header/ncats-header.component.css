@@ -31,3 +31,15 @@ a:hover{
   padding: 10px;
 }
 
+
+ .logo-header {
+  font-size: 55px;
+}
+
+span.logo-header {
+  color: #ababab;
+}
+
+span.logo-header.subsection {
+  color: #642f6c;
+}

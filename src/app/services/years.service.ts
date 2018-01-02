@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
@@ -9,14 +10,14 @@ import * as moment from 'moment';
 
 
 @Injectable()
-export class DataLoaderService {
+export class YearsService {
 
   private _dataSource = new Subject<any>();
   //  Observable navItem stream
   data$ = this._dataSource.asObservable();
-  dataMap: Map<number, any[]> = new Map();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getData(url: string): Observable<any> {
     return this.http.get(url, {responseType: 'text'})
@@ -53,44 +54,10 @@ export class DataLoaderService {
 
     const headers = lines.shift().split(',');
     for (const i of lines) {
-      const obj: Drug = new Drug();
-      const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-for (const j in headers) {
-        obj[headers[j]] = currentline[j].replace('"','').replace('"','');
-      }
-      const d = obj.dateString.split('/');
-      obj.date = moment(d[0] + '/' + d[1], "MM/DD").valueOf(); // MM/DD
-      obj.moleculeType = obj.moleculeType.toLowerCase();
-      obj.fullDate = moment(obj.dateString, "MM/DD/YYYY").valueOf();
-      obj.year =  Number(obj.dateString.split('/')[2]);
-      obj.developmentTime = this.getDevTime(obj);
-
-      let yearList: any[] = this.dataMap.get(obj.year);
-      if (yearList && yearList.length > 0) {
-        yearList.push(obj);
-      }else {
-        yearList = [obj];
-      }
-      this.dataMap.set(obj.year, yearList);
-      //  result.push(obj);
+      const hist: number[] =[];
+      let spl = i.split(',');
+      result.push([Number(spl[0]),Number(spl[1])]);
     }
-    this._dataSource.next(this.dataMap);
-  }
-
-  getDevTime(drug: Drug): number {
-    let start: any;
-    if (drug.initClinicalStudy && drug.initClinicalStudy.toString() !== "?") {
-      start = moment('01/01/'.concat(drug.initClinicalStudy.toString()),"MM/DD/YYYY");
-    }else {
-      start = moment(drug.nctDate, "MM/DD/YYYY");
-    }
-    const end = moment(drug.fullDate);
-    /*const d1Y = start.getFullYear();
-    const d2Y = end.getFullYear();
-    const d1M = start.getMonth();
-    const d2M = end.getMonth();
-    return Number((((d2M + 12 * d2Y) - (d1M + 12 * d1Y)) / 12).toFixed(2));*/
-    return end.diff(start, 'years', true);
-
-  }
+    this._dataSource.next(result);
+  };
 }

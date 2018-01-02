@@ -8,22 +8,22 @@
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
   <ng-container matColumnDef="fullDate">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Approval Date</mat-header-cell>
-    <mat-cell *matCellDef="let row">
+    <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Approval Date</mat-header-cell>
+    <mat-cell class="col10" *matCellDef="let row">
       {{row.dateString}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="developmentTime">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Time in Development (years)</mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      {{row.developmentTime.toFixed(2)}}
+    <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Clinical Development Time (years)</mat-header-cell>
+    <mat-cell class="col10" *matCellDef="let row">
+      {{row.developmentTime.toFixed(1)}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
-    <mat-cell *matCellDef="let row">
+    <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
+    <mat-cell class="col10" *matCellDef="let row">
       {{row.name}} <br/>
       <span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon></span>
       <span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon></span>
@@ -36,8 +36,8 @@
   </ng-container>
 
   <ng-container matColumnDef="ingredients">
-    <mat-header-cell *matHeaderCellDef mat-sort-header >Active Ingredients</mat-header-cell>
-    <mat-cell *matCellDef="let row">
+    <mat-header-cell class="col15"  *matHeaderCellDef mat-sort-header >Active Ingredients</mat-header-cell>
+    <mat-cell class="col15" *matCellDef="let row">
       <ng-template [ngIf]="row.unii">
         <a href = "https://drugs.ncats.io/ginas/app/drug/{{row.unii}}" target="_blank">{{row.ingredients}}</a>
       </ng-template>
@@ -54,27 +54,35 @@
     </mat-cell>
   </ng-container>-->
 
-  <ng-container matColumnDef="references">
-    <mat-header-cell *matHeaderCellDef>References</mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <mat-list>
-        <mat-list-item *ngIf="row.press"><a href = "https://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/{{row.press}}.htm" target="_blank">Press Release</a></mat-list-item>
-        <mat-list-item *ngIf="row.trials"><a href = "https://www.fda.gov/Drugs/InformationOnDrugs/{{row.trials}}.htm" target="_blank">Drug Trials</a></mat-list-item>
-      </mat-list>
-    </mat-cell>
-  </ng-container>
+
 
   <ng-container matColumnDef="target">
-    <mat-header-cell *matHeaderCellDef >Target</mat-header-cell>
-    <mat-cell *matCellDef="let row">
+    <mat-header-cell class="col10" *matHeaderCellDef >Target</mat-header-cell>
+    <mat-cell class="col10" *matCellDef="let row">
       {{row.target}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="use">
-    <mat-header-cell *matHeaderCellDef >Use</mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      {{row.use}}
+    <mat-header-cell class="col20" *matHeaderCellDef >Disease</mat-header-cell>
+    <mat-cell class="col20" *matCellDef="let row">
+      <ng-template [ngIf]="row.disease && row.disease !=='?'">
+        <span class="disease" matTooltip={{row.use}} [matTooltipPosition]="'above'"><b>{{row.disease}}</b></span>
+      </ng-template>
+      <ng-template [ngIf]="!row.disease">
+        {{row.use}}
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="references">
+    <mat-header-cell class="col10" *matHeaderCellDef>Innovation</mat-header-cell>
+    <mat-cell class="col10" *matCellDef="let row">
+      <ng-template [ngIf]="row.innovation && row.innovation !=='?'">
+        {{row.innovation}}
+      </ng-template>
+      <!--<p *ngIf="row.press"><a href = "https://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/{{row.press}}.htm" target="_blank">Press Release</a></p>
+        <p *ngIf="row.trials"><a href = "https://www.fda.gov/Drugs/InformationOnDrugs/{{row.trials}}.htm" target="_blank">Drug Trials</a></p>-->
     </mat-cell>
   </ng-container>
 

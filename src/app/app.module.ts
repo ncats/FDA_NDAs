@@ -20,6 +20,7 @@ import { DrugCountsComponent } from './drug-counts/drug-counts.component';
 import { TimeCountsComponent } from './time-counts/time-counts.component';
 import { FilterPanelComponent } from './filter-panel/filter-panel.component';
 import { YearDetailsComponent } from './year-details/year-details.component';
+import {YearsService} from "./services/years.service";
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { YearDetailsComponent } from './year-details/year-details.component';
     DataLoaderService,
     DrugHoverService,
     DataService,
+    YearsService,
     LoadingService
   ],
   entryComponents: [TooltipComponent],

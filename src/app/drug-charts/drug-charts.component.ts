@@ -85,8 +85,9 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
           }
         }
       },
+      colors: ['#642f6c', '#7b4e82', '#936d98','#b297b6', '#d1c1d3', '#b297b6'],
       title: {
-        text: 'FDA approved Drugs by ' + ctrl.label
+        text: 'FDA Approved Drugs by ' + ctrl.label
       },
       subtitle: {
         text: 'Click the slices to drill down.'

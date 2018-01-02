@@ -85,11 +85,14 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
           }
         }
       },
+
+
       xAxis: {
          title: {
           text: null
         },
         categories: ['2017', '2016', '2015', '2014', '2013', '2012'],
+        reversed: true,
         labels: {
           step: 1
         },

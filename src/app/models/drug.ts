@@ -9,6 +9,7 @@ year: number;
 nctDate: string;
 fullDate: number;
 use: string;
+innovation: string;
 developmentTime: number;
 press: string;
 trials: string;
@@ -18,7 +19,8 @@ fastTrack: boolean;
 breakthrough: boolean;
 priority: boolean;
 accelerated: boolean;
-therapeuticClass; moleculeType; modeOfAction; substanceClass; innovationCategories; unii; pharmacology: string;
+disease: string;
+therapeuticClass; moleculeType; modeOfAction; substanceClass; unii; pharmacology: string;
 constructor() {}
 
 }

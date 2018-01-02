@@ -35,5 +35,8 @@
   opacity: 1;
   transition: all .2s ease-in-out;
 }
-/*
-265668*/
+
+.ncats-emphasis {
+  color:#642F6C;
+font-weight: bold;
+}
