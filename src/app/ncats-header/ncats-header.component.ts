@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-ncats-header',
+  selector: 'pharos-ncats-header',
   templateUrl: './ncats-header.component.html',
   styleUrls: ['./ncats-header.component.css']
 })

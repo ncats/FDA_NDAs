@@ -1,5 +1,5 @@
 <mat-toolbar [color]="'primary'">
-<mat-toolbar-row id="ncats-banner" >
+<mat-toolbar-row id="ncats-banner" fxLayout="row" fxLayout.xs="column" [fxHide.lt-sm]="true">
     <img src="./assets/images/nihribbon-hhs.svg" alt="HHS Logo">
   <a href="http://www.hhs.gov/" title="Go to the hhs.gov"target="_blank">U.S. Department of Health &amp; Human Services</a>
   <img src="./assets/images/nihribbon-divider.svg" alt="Divider Arrow">
@@ -9,11 +9,11 @@
   <img src="./assets/images/nih-ribbon.svg" alt="NCATS">
   <a href="http://www.ncats.nih.gov" target="new">NCATS</a>
 </mat-toolbar-row>
-  <mat-toolbar-row id = "ncats-logo">
-    <div>
+  <mat-toolbar-row id = "ncats-logo" fxLayout="row" fxLayout.xs="column">
+    <div >
       <img src="./assets/images/ncats.svg" alt="NCATS" class=" ncats-logo">
     </div>
-    <div>
+    <div [fxHide.lt-sm]="true">
       <span class = "logo-header subsection">&nbsp; Innovative Drugs</span>
     </div>
   </mat-toolbar-row>
