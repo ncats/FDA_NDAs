@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Drug} from '../models/drug';
 import {MatSort, MatTableDataSource} from '@angular/material';
 import {DrugHoverService} from '../services/drug-hover.service';
@@ -7,7 +7,8 @@ import {DataService} from '../services/data.service';
 @Component({
   selector: 'app-drug-details',
   templateUrl: './drug-details.component.html',
-  styleUrls: ['./drug-details.component.css']
+  styleUrls: ['./drug-details.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DrugDetailsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['fullDate', 'developmentTime', 'name', 'ingredients', 'target', 'use', 'references'];

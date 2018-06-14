@@ -41,3 +41,7 @@ mat-row {
 .col20{
   min-width: 20%;
 }
+
+.icons {
+  display: block;
+}

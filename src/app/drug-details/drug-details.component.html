@@ -23,15 +23,14 @@
 
   <ng-container matColumnDef="name">
     <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
-    <mat-cell class="col10" *matCellDef="let row">
-      {{row.name}} <br/>
+    <mat-cell class="col10 icons" *matCellDef="let row">
+  {{row.name}}<br/>
       <span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon></span>
       <span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon></span>
       <span *ngIf="row.fastTrack" matTooltip="Fast Track" [matTooltipPosition]="'above'"><mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon></span>
       <span *ngIf="row.breakthrough" matTooltip="FDA Breakthrough Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon></span>
       <span *ngIf="row.priority" matTooltip="Priority Review" [matTooltipPosition]="'above'"><mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon></span>
       <span *ngIf="row.accelerated" matTooltip="FDA Accelerated Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon></span>
-
     </mat-cell>
   </ng-container>
 
