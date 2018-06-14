@@ -11,10 +11,12 @@
 </mat-toolbar-row>
   <mat-toolbar-row id = "ncats-logo" fxLayout="row" fxLayout.xs="column">
     <div >
-      <img src="./assets/images/ncats.svg" alt="NCATS" class=" ncats-logo">
+      <a href="http://www.ncats.nih.gov" title="National Center for Advancing Translational Sciences | Homepage" target="new">
+        <img src="./assets/images/ncats.svg" alt="ncats logo" class=" ncats-logo" id="logo">
+      </a>
     </div>
     <div [fxHide.lt-sm]="true">
-      <span class = "logo-header subsection">&nbsp; Innovative Drugs</span>
+      <a href = "https:drugs.ncats.io"><span class = "logo-header subsection">&nbsp; <span class = "logo-header">Inxight:</span> Drugs</span></a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>

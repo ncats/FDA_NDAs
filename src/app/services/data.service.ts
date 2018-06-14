@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Subject, BehaviorSubject} from 'rxjs';
 import {DataLoaderService} from "./data-loader.service";
-import {ReplaySubject} from "rxjs/ReplaySubject";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class DataService {

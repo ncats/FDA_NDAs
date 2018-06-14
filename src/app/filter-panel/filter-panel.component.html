@@ -8,13 +8,15 @@
       <mat-header-cell *matHeaderCellDef class="col10">
         <mat-checkbox (change)="$event ? masterYearToggle() : null"
                       [checked]="yearSelection.hasValue() && isAllYearSelected()"
-                      [indeterminate]="yearSelection.hasValue() && !isAllYearSelected()">
+                      [indeterminate]="yearSelection.hasValue() && !isAllYearSelected()"
+                      aria-label = 'select all'>
         </mat-checkbox>
       </mat-header-cell>
       <mat-cell *matCellDef="let row" class="col10">
         <mat-checkbox (click)="$event.stopPropagation()"
                       (change)="$event ? yearSelection.toggle(row.key) : null"
-                      [checked]="yearSelection.isSelected(row.key)">
+                      [checked]="yearSelection.isSelected(row.key)"
+                      aria-label={{row.key}}>
         </mat-checkbox>
       </mat-cell>
     </ng-container>
@@ -48,13 +50,15 @@
       <mat-header-cell *matHeaderCellDef class="col10">
         <mat-checkbox (change)="$event ? masterApplicationToggle() : null"
                       [checked]="applicationSelection.hasValue() && isAllApplicationSelected()"
-                      [indeterminate]="applicationSelection.hasValue() && !isAllApplicationSelected()">
+                      [indeterminate]="applicationSelection.hasValue() && !isAllApplicationSelected()"
+                      aria-label = 'select all'>
         </mat-checkbox>
       </mat-header-cell>
       <mat-cell *matCellDef="let row" class="col10">
         <mat-checkbox (click)="$event.stopPropagation()"
                       (change)="$event ? applicationSelection.toggle(row.value) : null"
-                      [checked]="applicationSelection.isSelected(row.value)">
+                      [checked]="applicationSelection.isSelected(row.value)"
+                      aria-label='{{row.value}}'>
         </mat-checkbox>
       </mat-cell>
     </ng-container>
@@ -62,7 +66,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="filter">
       <mat-header-cell *matHeaderCellDef class="col80"><h1>Application Type </h1></mat-header-cell>
-      <mat-cell *matCellDef="let row" class="col80"><mat-icon [color]="checked[row.value] ? 'primary' : ''"> {{row.icon}} </mat-icon> {{row.name}} </mat-cell>
+      <mat-cell *matCellDef="let row" class="col80"><mat-icon [color]="checked[row.value] ? 'primary' : ''"> {{row.icon}} </mat-icon>&nbsp;{{row.name}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="count">

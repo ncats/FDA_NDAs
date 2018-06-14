@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} 
 import * as Highcharts from 'highcharts';
 import {DataService} from "../services/data.service";
 import {DataLoaderService} from "../services/data-loader.service";
-import {combineLatest} from 'rxjs/observable/combineLatest';
+import {combineLatest} from 'rxjs';
 import {Drug} from "../models/drug";
 import {YearsService} from "../services/years.service";
 import {default as Annotations} from 'highcharts/modules/annotations';

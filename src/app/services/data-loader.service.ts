@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import {Drug} from '../models/drug';
 import * as moment from 'moment';
 
@@ -74,6 +72,7 @@ export class DataLoaderService {
       this.dataMap.set(obj.year, yearList);
       //  result.push(obj);
     }
+    console.log(this.dataMap);
     this._dataSource.next(this.dataMap);
   }
 

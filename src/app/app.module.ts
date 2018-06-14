@@ -11,8 +11,6 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {DrugHoverService} from './services/drug-hover.service';
 import { DrugChartsComponent } from './drug-charts/drug-charts.component';
 import {DataService} from './services/data.service';
-import { NcatsHeaderComponent } from '../../../predictor/src/app/ncats-header/ncats-header.component';
-import { NcatsFooterComponent } from '../../../predictor/src/app/ncats-footer/ncats-footer.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoadingService} from './services/loading.service';
 import { TooltipComponent } from './tooltip/tooltip.component';
@@ -21,6 +19,8 @@ import { TimeCountsComponent } from './time-counts/time-counts.component';
 import { FilterPanelComponent } from './filter-panel/filter-panel.component';
 import { YearDetailsComponent } from './year-details/year-details.component';
 import {YearsService} from "./services/years.service";
+import {NcatsHeaderComponent} from "./ncats-header/ncats-header.component";
+import {NcatsFooterComponent} from "./ncats-footer/ncats-footer.component";
 
 
 @NgModule({

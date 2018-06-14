@@ -1,9 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import { of } from 'rxjs/observable/of';
+import {Observable, Subject,  of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {Drug} from '../models/drug';
 import * as moment from 'moment';
