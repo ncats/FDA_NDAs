@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Subject, BehaviorSubject} from 'rxjs';
 import {DataLoaderService} from "./data-loader.service";
+import {environment} from '../../environments/environment.prod';
+
+const YEAR = environment.selectedYear;
 
 @Injectable()
 export class DataService {
-  years: number[] = [2017];
+  years: number[] = [YEAR];
   private _dataSource = new Subject<any>();
   data$ = this._dataSource.asObservable();
   private _yearChange = new BehaviorSubject<any>(this.years);

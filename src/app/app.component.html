@@ -28,6 +28,12 @@
           <div *ngFor="let year of years">
             <h4>{{year}}</h4>
           <div [ngSwitch]=year>
+            <div *ngSwitchCase="'2018'">
+              - <span class = "ncats-emphasis">Highest</span> ever number of innovative drugs approved in a year.<br>
+              - FDA approves <span class = "ncats-emphasis">first-ever</span> RNAi therapeutic. (<a href ='https://drugs.ncats.io/ginas/app/drug/50FKX8CB2Y' target="_blank">patisiran</a> )<br>
+              - The <span class = "ncats-emphasis">first</span> pharmaceutical derived from marijuana approved. (<a href ='https://drugs.ncats.io/ginas/app/drug/19GBJ60SN5' target="_blank">cannabidiol</a>) <br>
+              - <span class = "ncats-emphasis">First</span> single-dose medicine to prevent the relapse of P. vivax malaria. (<a href ='https://drugs.ncats.io/ginas/app/drug/262P8GS9L9' target="_blank">tafenoquine</a>) <br>
+            </div>
             <div *ngSwitchCase="'2017'">
                 - Second <span class = "ncats-emphasis">highest</span> ever number of drugs approved (50).<br>
                 - <span class = "ncats-emphasis">First</span> ever approval of gene therapies (3 approved).<br>

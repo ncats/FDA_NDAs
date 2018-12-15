@@ -1,11 +1,12 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, Subject,  of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {Drug} from '../models/drug';
 import * as moment from 'moment';
+import {environment} from '../../environments/environment.prod';
 
+const URL = environment.yearsUrl;
 
 @Injectable()
 export class YearsService {
@@ -17,8 +18,8 @@ export class YearsService {
   constructor(private http: HttpClient) {
   }
 
-  getData(url: string): Observable<any> {
-    return this.http.get(url, {responseType: 'text'})
+  getData(): Observable<any> {
+    return this.http.get(URL, {responseType: 'text'})
       .pipe(
         map(response => this.csvJSON(response.trim())),
         catchError(this.handleError('getData', []))

@@ -3,7 +3,10 @@ import {DataService} from '../services/data.service';
 import {DataLoaderService} from '../services/data-loader.service';
 import {MatTableDataSource} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
-import {forEach} from "@angular/router/src/utils/collection";
+
+import {environment} from '../../environments/environment.prod';
+
+const YEAR = environment.selectedYear;
 
 @Component({
   selector: 'app-filter-panel',
@@ -14,7 +17,7 @@ export class FilterPanelComponent implements OnInit {
   displayedColumns = ['select', 'filter', 'count'];
   series: any[] = [];
   yearDataSource = new MatTableDataSource<any>(this.series);
-  yearSelection = new SelectionModel<number>(true, [2017]);
+  yearSelection = new SelectionModel<number>(true, [YEAR]);
   applicationDataSource = new MatTableDataSource<any>([
     {name: 'First in class', value: 'first', icon: 'verified_user'},
     {name: 'Orphan Designation', value: 'orphan', icon: 'child_friendly'},
@@ -33,7 +36,7 @@ export class FilterPanelComponent implements OnInit {
     accelerated: false
   };
   stop = false;
-  years: number[] = [2017];
+  years: number[] = [YEAR];
   dataMap: Map<number, any[]> = new Map();
 
 
@@ -58,14 +61,14 @@ export class FilterPanelComponent implements OnInit {
       this.years = years;
     });
 
-    this.yearSelection.onChange.subscribe(change => {
+    this.yearSelection.changed.subscribe(change => {
    //   if (!this.stop) {
         this.dataService.filterByYear(this.yearSelection.selected);
      // }
     ////  this.stop = false;
       });
 
-    this.applicationSelection.onChange.subscribe(change => {
+    this.applicationSelection.changed.subscribe(change => {
       change.added.forEach(field => this.checked[field] = true);
       change.removed.forEach(field => this.checked[field] = false);
       if (this.applicationSelection.selected.length === 0) {
@@ -105,10 +108,10 @@ export class FilterPanelComponent implements OnInit {
 
   getCount(field: string): number {
     let sum = 0;
-    if(this.dataMap && this.dataMap.size > 0) {
+    if (this.dataMap && this.dataMap.size > 0) {
       this.dataMap.forEach(drugs => {
         console.log(drugs);
-        sum = sum + drugs.filter(drug => !!drug[field] === true).length
+        sum = sum + drugs.filter(drug => !!drug[field] === true).length;
       });
       return sum;
     }

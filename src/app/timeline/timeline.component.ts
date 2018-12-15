@@ -13,8 +13,11 @@ import {LoadingService} from "../services/loading.service";
 import {TooltipComponent} from "../tooltip/tooltip.component";
 // Initialize exporting module.
 
+import {environment} from '../../environments/environment.prod';
 
 // todo: add exporting module
+
+const YEAR = environment.selectedYear;
 
 @Component({
   selector: 'app-timeline',
@@ -24,7 +27,7 @@ import {TooltipComponent} from "../tooltip/tooltip.component";
 export class TimelineComponent implements OnInit, OnDestroy {
   @ViewChild('chartTarget') chartTarget: ElementRef;
   chart: Highcharts.ChartObject;
-  years: number[] = [2017];
+  years: number[] = [YEAR];
   series: any = [];
 
   dataMap: Map<number, any[]> = new Map();

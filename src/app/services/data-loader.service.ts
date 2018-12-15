@@ -4,7 +4,9 @@ import {Observable, of, Subject} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {Drug} from '../models/drug';
 import * as moment from 'moment';
+import {environment} from '../../environments/environment.prod';
 
+const URL = environment.dataUrl;
 
 @Injectable()
 export class DataLoaderService {
@@ -16,8 +18,8 @@ export class DataLoaderService {
 
   constructor(private http: HttpClient) {}
 
-  getData(url: string): Observable<any> {
-    return this.http.get(url, {responseType: 'text'})
+  getData(): Observable<any> {
+    return this.http.get(URL, {responseType: 'text'})
       .pipe(
         map(response => this.csvJSON(response.trim())),
         catchError(this.handleError('getData', []))

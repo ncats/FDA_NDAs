@@ -24,13 +24,13 @@ export class AppComponent implements OnInit{
               private dataService: DataService,
               private yearsService: YearsService,
               @Inject(DOCUMENT) private document: Document) {
-    this.dataLoaderService.getData('assets/2012-2017-NMEs-6-13-18.csv').subscribe();
-    this.yearsService.getData('assets/years.csv').subscribe();
+    this.dataLoaderService.getData().subscribe();
+    this.yearsService.getData().subscribe();
   }
 
   ngOnInit(): void {
-    this.dataService.years$.subscribe(res =>this.years = res);
-    this.loadingService.loading$.subscribe(res =>this.loading = res);
+    this.dataService.years$.subscribe(res => this.years = res);
+    this.loadingService.loading$.subscribe(res => this.loading = res);
  }
 
 
