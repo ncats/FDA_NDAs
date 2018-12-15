@@ -110,7 +110,6 @@ export class FilterPanelComponent implements OnInit {
     let sum = 0;
     if (this.dataMap && this.dataMap.size > 0) {
       this.dataMap.forEach(drugs => {
-        console.log(drugs);
         sum = sum + drugs.filter(drug => !!drug[field] === true).length;
       });
       return sum;

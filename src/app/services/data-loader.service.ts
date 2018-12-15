@@ -74,7 +74,6 @@ export class DataLoaderService {
       this.dataMap.set(obj.year, yearList);
       //  result.push(obj);
     }
-    console.log(this.dataMap);
     this._dataSource.next(this.dataMap);
   }
 

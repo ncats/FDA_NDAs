@@ -39,7 +39,6 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
         let r = drugs.map(drug => drug.developmentTime * 1000/1000);
         this.series.push(r.sort((a,b)=> a-b));
       });
-      console.log(JSON.stringify(this.series));
       this.makeChart();
    //   this.highlightBar()
     });
@@ -98,8 +97,6 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
           point: {
             events: {
               click: function (event) {
-                console.log(this);
-                console.log(event);
                // ctrl.dataService.changeYears([Number(this.category)]);
               }
             }
