@@ -1,9 +1,12 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DrugHoverService} from '../services/drug-hover.service';
 import * as Highcharts from 'highcharts';
-import * as Drilldown from 'highcharts/modules/drilldown';
 import {DataService} from '../services/data.service';
 import {LoadingService} from '../services/loading.service';
+
+declare var require: any;
+const Drilldown: any = require('highcharts/modules/drilldown');
+
 Drilldown(Highcharts);
 
 @Component({
@@ -12,10 +15,10 @@ Drilldown(Highcharts);
   styleUrls: ['./drug-charts.component.css']
 })
 export class DrugChartsComponent implements OnInit, OnDestroy {
-  @ViewChild('chartTarget') chartTarget: ElementRef;
+  @ViewChild('chartTarget', {static: true}) chartTarget: ElementRef;
   @Input()fields: string[];
   @Input()label: string;
-  chart: Highcharts.ChartObject;
+  chart: any;
   dataMap: Map<number, any[]> = new Map();
   down: boolean;
 
@@ -68,10 +71,10 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
     this.makeChart(series, drilldown);
   }
 
-  makeChart(series:any, drilldown:any):void {
+  makeChart(series: any, drilldown: any): void {
     const ctrl = this;
     // Generate the chart
-    const options = {
+    const options: any = {
       chart: {
         type: 'pie',
         events: {
@@ -85,7 +88,7 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
           }
         }
       },
-      colors: ['#642f6c', '#7b4e82', '#936d98','#b297b6', '#d1c1d3', '#b297b6'],
+      colors: ['#642f6c', '#7b4e82', '#936d98', '#b297b6', '#d1c1d3', '#b297b6'],
       title: {
         text: 'FDA Approved Drugs by ' + ctrl.label
       },

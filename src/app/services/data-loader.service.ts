@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of, Subject} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {Drug} from '../models/drug';
-import * as moment from git'moment';
+import * as moment from 'moment';
 import {environment} from '../../environments/environment.prod';
 
 const URL = environment.dataUrl;
@@ -56,19 +56,19 @@ export class DataLoaderService {
       const obj: Drug = new Drug();
       const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
       for (const j in headers) {
-        obj[headers[j]] = currentline[j].replace(/"/g,'');
+        obj[headers[j]] = currentline[j].replace(/"/g, '');
       }
       const d = obj.dateString.split('/');
-      obj.date = moment(d[0] + '/' + d[1], "MM/DD").valueOf(); // MM/DD
+      obj.date = moment(d[0] + '/' + d[1], 'MM/DD').valueOf(); // MM/DD
       obj.moleculeType = obj.moleculeType.toLowerCase();
-      obj.fullDate = moment(obj.dateString, "MM/DD/YYYY").valueOf();
+      obj.fullDate = moment(obj.dateString, 'MM/DD/YYYY').valueOf();
       obj.year =  Number(obj.dateString.split('/')[2]);
       obj.developmentTime = this.getDevTime(obj);
 
       let yearList: any[] = this.dataMap.get(obj.year);
       if (yearList && yearList.length > 0) {
         yearList.push(obj);
-      }else {
+      } else {
         yearList = [obj];
       }
       this.dataMap.set(obj.year, yearList);
@@ -79,10 +79,10 @@ export class DataLoaderService {
 
   getDevTime(drug: Drug): number {
     let start: any;
-    if (drug.initClinicalStudy && drug.initClinicalStudy.toString() !== "?") {
-      start = moment('01/01/'.concat(drug.initClinicalStudy.toString()),"MM/DD/YYYY");
-    }else {
-      start = moment(drug.nctDate, "MM/DD/YYYY");
+    if (drug.initClinicalStudy && drug.initClinicalStudy.toString() !== '?') {
+      start = moment('01/01/'.concat(drug.initClinicalStudy.toString()), 'MM/DD/YYYY');
+    } else {
+      start = moment(drug.nctDate, 'MM/DD/YYYY');
     }
     const end = moment(drug.fullDate);
     /*const d1Y = start.getFullYear();

@@ -6,12 +6,16 @@ import {Drug} from '../models/drug';
 import {DataLoaderService} from '../services/data-loader.service';
 import * as Highcharts from 'highcharts';
 import {DrugHoverService} from '../services/drug-hover.service';
-import {DataService} from "../services/data.service";
+import {DataService} from '../services/data.service';
 // Load the exporting module.
-import Exporting from 'highcharts/modules/exporting.src.js';
-import {LoadingService} from "../services/loading.service";
-import {TooltipComponent} from "../tooltip/tooltip.component";
+import {LoadingService} from '../services/loading.service';
+import {TooltipComponent} from '../tooltip/tooltip.component';
+
 // Initialize exporting module.
+declare var require: any;
+const Exporting: any = require('highcharts/modules/exporting');
+Exporting(Highcharts);
+
 
 import {environment} from '../../environments/environment.prod';
 
@@ -25,8 +29,8 @@ const YEAR = environment.selectedYear;
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit, OnDestroy {
-  @ViewChild('chartTarget') chartTarget: ElementRef;
-  chart: Highcharts.ChartObject;
+  @ViewChild('chartTarget', {static: true}) chartTarget: ElementRef;
+  chart: any;
   years: number[] = [YEAR];
   series: any = [];
 
@@ -43,7 +47,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    Exporting(Highcharts);
     const factory = this._resolver.resolveComponentFactory(TooltipComponent);
     this._component = factory.create(this._injector);
     this.dataService.data$.subscribe(res => {
@@ -81,7 +84,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   makeChart() {
     // Generate the chart
     const ctrl = this;
-      const options = {
+      const options: any = {
         chart: {
           type: 'scatter',
           height: '15%'

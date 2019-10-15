@@ -2,7 +2,9 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import * as Highcharts from 'highcharts';
 import {DataLoaderService} from '../services/data-loader.service';
 import {DataService} from '../services/data.service';
-import {default as HighchartsMore} from 'highcharts/highcharts-more.src.js';
+
+declare var require: any;
+const HighchartsMore: any = require('highcharts/highcharts-more');
 HighchartsMore(Highcharts);
 
 @Component({
@@ -12,10 +14,10 @@ HighchartsMore(Highcharts);
 })
 
 export class TimeCountsComponent implements OnInit, OnDestroy {
-  @ViewChild('timeCountChartTarget') chartTarget: ElementRef;
-  chart: Highcharts.ChartObject;
-  series: number[]= [];
-  years: number[]= [];
+  @ViewChild('timeCountChartTarget', {static: true}) chartTarget: ElementRef;
+  chart: any;
+  series: number[] = [];
+  years: number[] = [];
 
   constructor(private  dataLoaderService: DataLoaderService,
               private  dataService: DataService) {

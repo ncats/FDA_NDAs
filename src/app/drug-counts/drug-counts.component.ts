@@ -11,10 +11,10 @@ import {DataService} from '../services/data.service';
 })
 
 export class DrugCountsComponent implements OnInit, OnDestroy {
-  @ViewChild('countChartTarget') chartTarget: ElementRef;
-  chart: Highcharts.ChartObject;
-  series: number[]=[];
-  years: number[]=[];
+  @ViewChild('countChartTarget', {static: true}) chartTarget: ElementRef;
+  chart: any;
+  series: number[] = [];
+  years: number[] = [];
 
   constructor(private  dataLoaderService: DataLoaderService,
               private  dataService: DataService) {}

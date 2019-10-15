@@ -3,7 +3,7 @@ import {DataLoaderService} from './services/data-loader.service';
 import {LoadingService} from './services/loading.service';
 import {DataService} from './services/data.service';
 import {DOCUMENT} from '@angular/common';
-import {YearsService} from "./services/years.service";
+import {YearsService} from './services/years.service';
 
 
 
@@ -12,7 +12,7 @@ import {YearsService} from "./services/years.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   loading = true;
   years: number[] = [];
   history: any = [];

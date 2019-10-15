@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Drug} from "../models/drug";
+import {Drug} from '../models/drug';
 
 @Component({
   selector: 'app-tooltip',

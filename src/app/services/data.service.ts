@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Subject, BehaviorSubject} from 'rxjs';
-import {DataLoaderService} from "./data-loader.service";
+import {DataLoaderService} from './data-loader.service';
 import {environment} from '../../environments/environment.prod';
 
 const YEAR = environment.selectedYear;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../services/data.service';
 import {DataLoaderService} from '../services/data-loader.service';
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 
 import {environment} from '../../environments/environment.prod';
@@ -73,7 +73,7 @@ export class FilterPanelComponent implements OnInit {
       change.removed.forEach(field => this.checked[field] = false);
       if (this.applicationSelection.selected.length === 0) {
         this.dataService.clearFilter();
-      }else {
+      } else {
         this.dataService.filterBoolean(this.applicationSelection.selected);
       }
     });

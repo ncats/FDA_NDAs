@@ -1,11 +1,13 @@
 import {ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import * as Highcharts from 'highcharts';
-import {DataService} from "../services/data.service";
-import {DataLoaderService} from "../services/data-loader.service";
+import {DataService} from '../services/data.service';
+import {DataLoaderService} from '../services/data-loader.service';
 import {combineLatest} from 'rxjs';
-import {Drug} from "../models/drug";
-import {YearsService} from "../services/years.service";
-import {default as Annotations} from 'highcharts/modules/annotations';
+import {Drug} from '../models/drug';
+import {YearsService} from '../services/years.service';
+
+declare var require: any;
+const Annotations: any = require('highcharts/modules/annotations');
 Annotations(Highcharts);
 
 @Component({
@@ -14,7 +16,7 @@ Annotations(Highcharts);
   styleUrls: ['./year-details.component.css']
 })
 export class YearDetailsComponent implements OnInit, OnDestroy {
-  @ViewChild('historyChartTarget') chartTarget: ElementRef;
+  @ViewChild('historyChartTarget', {static: true}) chartTarget: ElementRef;
   masterDataMap: Map<number, any[]> = new Map();
   min: Drug;
   max: Drug;
@@ -22,7 +24,7 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
   years: number[];
   history: any[];
   year2017 = false;
-  chart: Highcharts.ChartObject;
+  chart: any;
 
 
   constructor(private dataLoaderService: DataLoaderService,
@@ -54,7 +56,7 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
           const point = this.chart.series[0].data.filter(d => d.category === year)[0];
           point.select(true, true);
           this.chart['tooltip'].refresh(point);
-        })
+        });
         //  }
         // this.getOutliers();
         // this.getMedian();
@@ -128,7 +130,7 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
             xAxis: 0,
             yAxis: 0,
             x: 2017,
-            y:50
+            y: 50
           },
           text: 'Historic number of innovative drugs approved'
         }]

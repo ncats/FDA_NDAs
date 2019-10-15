@@ -18,9 +18,9 @@ import { DrugCountsComponent } from './drug-counts/drug-counts.component';
 import { TimeCountsComponent } from './time-counts/time-counts.component';
 import { FilterPanelComponent } from './filter-panel/filter-panel.component';
 import { YearDetailsComponent } from './year-details/year-details.component';
-import {YearsService} from "./services/years.service";
-import {NcatsHeaderComponent} from "./ncats-header/ncats-header.component";
-import {NcatsFooterComponent} from "./ncats-footer/ncats-footer.component";
+import {YearsService} from './services/years.service';
+import {NcatsHeaderComponent} from './ncats-header/ncats-header.component';
+import {NcatsFooterComponent} from './ncats-footer/ncats-footer.component';
 
 
 @NgModule({

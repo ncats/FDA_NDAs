@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Drug} from '../models/drug';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import {DrugHoverService} from '../services/drug-hover.service';
 import {DataService} from '../services/data.service';
 
@@ -23,7 +24,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   };
 
   dataSource = new MatTableDataSource<any>([]);
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private drugHoverService: DrugHoverService,
               private dataService: DataService
@@ -37,7 +38,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
       this.backup = data;
       this.dataSource.data = data;
       if (res.filters) {
-        for (let field in this.checked) {
+        for (const field in this.checked) {
           this.checked[field] = false;
         }
         res.filters.forEach(field => this.checked[field] = true);

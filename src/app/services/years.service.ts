@@ -53,10 +53,10 @@ export class YearsService {
 
     const headers = lines.shift().split(',');
     for (const i of lines) {
-      const hist: number[] =[];
-      let spl = i.split(',');
-      result.push([Number(spl[0]),Number(spl[1])]);
+      const hist: number[] = [];
+      const spl = i.split(',');
+      result.push([Number(spl[0]), Number(spl[1])]);
     }
     this._dataSource.next(result);
-  };
+  }
 }

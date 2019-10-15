@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('drugs2017 App', () => {
+describe('FDA_NDAs App', () => {
   let page: AppPage;
 
   beforeEach(() => {
