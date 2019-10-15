@@ -98,8 +98,6 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
           point: {
             events: {
               click: function (event) {
-                console.log(this);
-                console.log(event);
                // ctrl.dataService.changeYears([Number(this.category)]);
               }
             }

@@ -11,7 +11,7 @@ const YEAR = environment.selectedYear;
 @Component({
   selector: 'app-filter-panel',
   templateUrl: './filter-panel.component.html',
-  styleUrls: ['./filter-panel.component.css']
+  styleUrls: ['./filter-panel.component.scss']
 })
 export class FilterPanelComponent implements OnInit {
   displayedColumns = ['select', 'filter', 'count'];
@@ -110,7 +110,6 @@ export class FilterPanelComponent implements OnInit {
     let sum = 0;
     if (this.dataMap && this.dataMap.size > 0) {
       this.dataMap.forEach(drugs => {
-        console.log(drugs);
         sum = sum + drugs.filter(drug => !!drug[field] === true).length;
       });
       return sum;

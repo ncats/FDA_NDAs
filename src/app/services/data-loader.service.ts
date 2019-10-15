@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of, Subject} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {Drug} from '../models/drug';
-import * as moment from 'moment';
+import * as moment from git'moment';
 import {environment} from '../../environments/environment.prod';
 
 const URL = environment.dataUrl;
@@ -74,7 +74,6 @@ export class DataLoaderService {
       this.dataMap.set(obj.year, yearList);
       //  result.push(obj);
     }
-    console.log(this.dataMap);
     this._dataSource.next(this.dataMap);
   }
 
