@@ -110,7 +110,6 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
                 if (ctrl.down) {
                   //  ctrl.dataService.filterString(this.name, 'year');
                 }
-             //   console.log(this);
               },
               mouseOut: function () {
                 if (ctrl.down) {
