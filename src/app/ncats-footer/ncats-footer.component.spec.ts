@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NcatsFooterComponent } from './ncats-footer.component';
+import {MaterialModule} from '../../assets/material/material.module';
 
 describe('NcatsFooterComponent', () => {
   let component: NcatsFooterComponent;
@@ -8,7 +9,10 @@ describe('NcatsFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NcatsFooterComponent ]
+      declarations: [ NcatsFooterComponent ],
+      imports: [
+        MaterialModule
+      ]
     })
     .compileComponents();
   }));

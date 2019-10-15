@@ -8,7 +8,9 @@ import {environment} from '../../environments/environment.prod';
 
 const URL = environment.dataUrl;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DataLoaderService {
 
   private _dataSource = new Subject<any>();
@@ -52,12 +54,12 @@ export class DataLoaderService {
     const result: any[] = [];
 
     const headers = lines.shift().split(',');
-    for (const i of lines) {
-      const obj: Drug = new Drug();
-      const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-      for (const j in headers) {
-        obj[headers[j]] = currentline[j].replace(/"/g, '');
-      }
+      lines.forEach( i => {
+        const obj: Drug = new Drug();
+        const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+        headers.forEach((j, index) => {
+          obj[j] = currentline[index].replace(/"/g, '');
+        });
       const d = obj.dateString.split('/');
       obj.date = moment(d[0] + '/' + d[1], 'MM/DD').valueOf(); // MM/DD
       obj.moleculeType = obj.moleculeType.toLowerCase();
@@ -73,7 +75,7 @@ export class DataLoaderService {
       }
       this.dataMap.set(obj.year, yearList);
       //  result.push(obj);
-    }
+      });
     this._dataSource.next(this.dataMap);
   }
 

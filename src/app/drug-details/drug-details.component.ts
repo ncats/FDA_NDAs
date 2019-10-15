@@ -38,9 +38,14 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
       this.backup = data;
       this.dataSource.data = data;
       if (res.filters) {
-        for (const field in this.checked) {
-          this.checked[field] = false;
-        }
+        this.checked = {
+          first: false,
+          orphan: false,
+          fastTrack: false,
+          breakthrough: false,
+          priority: false,
+          accelerated: false
+        };
         res.filters.forEach(field => this.checked[field] = true);
       }
     });

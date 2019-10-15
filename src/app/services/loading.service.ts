@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Subject} from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LoadingService {
   private _loadingSource = new Subject<any>();
   //  Observable navItem stream

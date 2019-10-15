@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import {Drug} from '../models/drug';
 import {Subject} from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DrugHoverService {
 
   private _hoveredNodeSource = new Subject<any>();

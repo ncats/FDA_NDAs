@@ -4,8 +4,8 @@ import {DataLoaderService} from '../services/data-loader.service';
 import {DataService} from '../services/data.service';
 
 declare var require: any;
-const HighchartsMore: any = require('highcharts/highcharts-more');
-HighchartsMore(Highcharts);
+const HIGHCHARTS_MORE: any = require('highcharts/highcharts-more');
+HIGHCHARTS_MORE(Highcharts);
 
 @Component({
   selector: 'app-time-counts',

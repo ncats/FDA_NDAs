@@ -1,4 +1,6 @@
-# Drugs2017
+# FDA NDAs
+
+This is a list of new drug approvals (NDAs) from the FDA, compiled at the end of each year. Historical data from 2012 on exists.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.0.
 

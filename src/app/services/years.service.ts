@@ -8,7 +8,9 @@ import {environment} from '../../environments/environment.prod';
 
 const URL = environment.yearsUrl;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class YearsService {
 
   private _dataSource = new Subject<any>();

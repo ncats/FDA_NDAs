@@ -5,9 +5,9 @@ import {DataService} from '../services/data.service';
 import {LoadingService} from '../services/loading.service';
 
 declare var require: any;
-const Drilldown: any = require('highcharts/modules/drilldown');
+const DRILLDOWN: any = require('highcharts/modules/drilldown');
 
-Drilldown(Highcharts);
+DRILLDOWN(Highcharts);
 
 @Component({
   selector: 'app-drug-charts',

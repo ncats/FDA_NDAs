@@ -5,7 +5,9 @@ import {environment} from '../../environments/environment.prod';
 
 const YEAR = environment.selectedYear;
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DataService {
   years: number[] = [YEAR];
   private _dataSource = new Subject<any>();

@@ -69,6 +69,7 @@ export class FilterPanelComponent implements OnInit {
       });
 
     this.applicationSelection.changed.subscribe(change => {
+      console.log(change);
       change.added.forEach(field => this.checked[field] = true);
       change.removed.forEach(field => this.checked[field] = false);
       if (this.applicationSelection.selected.length === 0) {

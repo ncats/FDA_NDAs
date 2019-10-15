@@ -43,8 +43,7 @@ import {NcatsFooterComponent} from './ncats-footer/ncats-footer.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule
+    MaterialModule
   ],
   providers: [
     DataLoaderService,

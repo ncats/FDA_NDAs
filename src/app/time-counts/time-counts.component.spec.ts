@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TimeCountsComponent } from './time-counts.component';
+import {DataLoaderService} from '../services/data-loader.service';
+import {MaterialModule} from '../../assets/material/material.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {DataService} from '../services/data.service';
 
 describe('TimeCountsComponent', () => {
   let component: TimeCountsComponent;
@@ -8,7 +12,15 @@ describe('TimeCountsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimeCountsComponent ]
+      declarations: [ TimeCountsComponent ],
+      providers: [
+        DataLoaderService,
+        DataService
+      ],
+      imports: [
+        MaterialModule,
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
   }));

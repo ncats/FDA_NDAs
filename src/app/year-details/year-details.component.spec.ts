@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { YearDetailsComponent } from './year-details.component';
+import {DataLoaderService} from '../services/data-loader.service';
+import {MaterialModule} from '../../assets/material/material.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {DataService} from '../services/data.service';
+import {YearsService} from '../services/years.service';
 
 describe('YearDetailsComponent', () => {
   let component: YearDetailsComponent;
@@ -8,7 +13,16 @@ describe('YearDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ YearDetailsComponent ]
+      declarations: [ YearDetailsComponent ],
+      providers: [
+        DataLoaderService,
+        DataService,
+        YearsService
+      ],
+      imports: [
+        MaterialModule,
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
   }));

@@ -1,11 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { YearsService } from './years.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('YearsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [YearsService]
+      providers: [YearsService],
+      imports: [
+        HttpClientTestingModule
+      ]
     });
   });
 

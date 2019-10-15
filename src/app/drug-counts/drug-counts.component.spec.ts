@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DrugCountsComponent } from './drug-counts.component';
+import {MaterialModule} from '../../assets/material/material.module';
+import {DataLoaderService} from '../services/data-loader.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {DataService} from '../services/data.service';
 
 describe('DrugCountsComponent', () => {
   let component: DrugCountsComponent;
@@ -8,7 +12,15 @@ describe('DrugCountsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DrugCountsComponent ]
+      declarations: [ DrugCountsComponent ],
+      imports: [
+        MaterialModule,
+        HttpClientTestingModule
+      ],
+      providers: [
+        DataLoaderService,
+        DataService
+      ]
     })
     .compileComponents();
   }));

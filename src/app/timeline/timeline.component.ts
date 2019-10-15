@@ -13,8 +13,8 @@ import {TooltipComponent} from '../tooltip/tooltip.component';
 
 // Initialize exporting module.
 declare var require: any;
-const Exporting: any = require('highcharts/modules/exporting');
-Exporting(Highcharts);
+const EXPORTING: any = require('highcharts/modules/exporting');
+EXPORTING(Highcharts);
 
 
 import {environment} from '../../environments/environment.prod';

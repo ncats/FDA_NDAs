@@ -7,8 +7,8 @@ import {Drug} from '../models/drug';
 import {YearsService} from '../services/years.service';
 
 declare var require: any;
-const Annotations: any = require('highcharts/modules/annotations');
-Annotations(Highcharts);
+const ANNOTATIONS: any = require('highcharts/modules/annotations');
+ANNOTATIONS(Highcharts);
 
 @Component({
   selector: 'app-year-details',
