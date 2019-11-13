@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  dataUrl: './assets/2012-2018-NMEs-12-31-18.csv',
+  dataUrl: './assets/2012-2019-NMEs-11-11-19.csv',
   yearsUrl: './assets/years.csv',
-  selectedYear: 2018
+  selectedYear: 2019
 };

@@ -29,6 +29,10 @@
           <div *ngFor="let year of years">
             <h4>{{year}}</h4>
           <div [ngSwitch]=year>
+            <div *ngSwitchCase="'2019'">
+              - Approval of <span class = "ncats-emphasis">Zolgensma</span> "marks another milestone in the transformational power of gene and cell therapies to treat a wide range of diseases." (<a href ='https://drugs.ncats.io/ginas/app/drug/MLU3LU3EVV' target="_blank">onasemnogene abeparvovec</a>)<br>
+              - The <span class = "ncats-emphasis">first</span> first treatment for post-partum depression. (<a href ='https://drugs.ncats.io/ginas/app/drug/S39XZ5QV8Y' target="_blank">brexanolone</a>) <br>
+            </div>
             <div *ngSwitchCase="'2018'">
               - <span class = "ncats-emphasis">Highest</span> ever number of innovative drugs approved in a year.<br>
               - FDA approves <span class = "ncats-emphasis">first-ever</span> RNAi therapeutic. (<a href ='https://drugs.ncats.io/ginas/app/drug/50FKX8CB2Y' target="_blank">patisiran</a> )<br>

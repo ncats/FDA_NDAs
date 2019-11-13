@@ -129,16 +129,17 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
           point: {
             xAxis: 0,
             yAxis: 0,
-            x: 2017,
-            y: 50
+            x: 2018,
+            y: 61
           },
-          text: 'Historic number of innovative drugs approved'
+          text: '2018: Historic number of innovative drugs approved (61)'
         }]
       }],
       xAxis: {
         title: {
           text: null
-        }
+        },
+        endOnTick: 1
       },
       yAxis: {
         title: {
