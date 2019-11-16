@@ -6,7 +6,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 
 import {environment} from '../../environments/environment.prod';
 
-const YEAR = environment.selectedYear;
+const YEARS = environment.selectedYears;
 
 @Component({
   selector: 'app-filter-panel',
@@ -17,7 +17,7 @@ export class FilterPanelComponent implements OnInit {
   displayedColumns = ['select', 'filter', 'count'];
   series: any[] = [];
   yearDataSource = new MatTableDataSource<any>(this.series);
-  yearSelection = new SelectionModel<number>(true, [YEAR]);
+  yearSelection = new SelectionModel<number>(true, YEARS);
   applicationDataSource = new MatTableDataSource<any>([
     {name: 'First in class', value: 'first', icon: 'verified_user'},
     {name: 'Orphan Designation', value: 'orphan', icon: 'child_friendly'},
@@ -36,7 +36,7 @@ export class FilterPanelComponent implements OnInit {
     accelerated: false
   };
   stop = false;
-  years: number[] = [YEAR];
+  years: number[] = YEARS;
   dataMap: Map<number, any[]> = new Map();
 
 

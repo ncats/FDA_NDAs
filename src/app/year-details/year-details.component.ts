@@ -99,7 +99,7 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
     // Generate the chart
     const options: any = {
        title: {
-        text: 'Innovative Drugs 1941-2017'
+        text: 'Novel Drugs 1941-2019'
       },
       legend: {
         enabled: false
@@ -115,7 +115,7 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
       annotations: [  {
         labelOptions: {
           shape: 'connector',
-          align: 'right'
+          align: 'left'
         },
         labels: [{
           point: {
@@ -124,7 +124,7 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
             x: 1996,
             y: 50
           },
-          text: '1996: PDUFA helps FDA clear NDA backlog'
+          text: 'PDUFA clears NDA backlog (1996)'
         }, {
           point: {
             xAxis: 0,
@@ -132,14 +132,14 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
             x: 2018,
             y: 61
           },
-          text: '2018: Historic number of innovative drugs approved (61)'
+          text: '61 novel drugs (2018)'
         }]
       }],
       xAxis: {
         title: {
           text: null
         },
-        endOnTick: 1
+        endOnTick: 0
       },
       yAxis: {
         title: {

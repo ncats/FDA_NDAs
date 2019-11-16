@@ -21,7 +21,7 @@ import {environment} from '../../environments/environment.prod';
 
 // todo: add exporting module
 
-const YEAR = environment.selectedYear;
+const YEARS = environment.selectedYears;
 
 @Component({
   selector: 'app-timeline',
@@ -31,7 +31,7 @@ const YEAR = environment.selectedYear;
 export class TimelineComponent implements OnInit, OnDestroy {
   @ViewChild('chartTarget', {static: true}) chartTarget: ElementRef;
   chart: any;
-  years: number[] = [YEAR];
+  years: number[] = YEARS;
   series: any = [];
 
   dataMap: Map<number, any[]> = new Map();
