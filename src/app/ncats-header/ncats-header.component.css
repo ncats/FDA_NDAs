@@ -2,7 +2,7 @@
   height: 30px;
   color: #fff;
   cursor: pointer;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: 400 ,"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
 }
 
@@ -33,7 +33,9 @@ a:hover{
 
 
  .logo-header {
-  font-size: 55px;
+   font-size: 55px;
+   font-family: Roboto,"Helvetica Neue",sans-serif;
+   font-weight: 400;
 }
 
 span.logo-header {
