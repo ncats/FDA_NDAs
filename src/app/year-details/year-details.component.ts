@@ -130,9 +130,9 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
             xAxis: 0,
             yAxis: 0,
             x: 2018,
-            y: 61
+            y: 60
           },
-          text: '61 novel drugs (2018)'
+          text: '60 novel drugs (2018)'
         }]
       }],
       xAxis: {

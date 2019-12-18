@@ -3,7 +3,7 @@
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
 </mat-form-field>
 
-<mat-table #table [dataSource]="dataSource" matSort >
+<mat-table #table [dataSource]="dataSource" matSort matSortActive="fullDate" matSortDirection="desc">
 
   <!--- Note that these columns can be defined in any order.
         The actual rendered columns are set as a property on the row definition" -->
