@@ -22,8 +22,8 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
     priority: false,
     accelerated: false,
     blackBox: false,
-    imaging: false,
-    animal: false
+    diagnosticImaging: false,
+    animalRule: false
   };
 
   dataSource = new MatTableDataSource<any>([]);
@@ -49,8 +49,8 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
           priority: false,
           accelerated: false,
           blackBox: false,
-          imaging: false,
-          animal: false
+          diagnosticImaging: false,
+          animalRule: false
         };
         res.filters.forEach(field => this.checked[field] = true);
       }
