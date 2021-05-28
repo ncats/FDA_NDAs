@@ -1,5 +1,5 @@
 <div *ngIf="drug">
-<b>{{drug.name}}</b> approved <b>{{drug.dateString}}</b><br>
+<b>{{drug.product}}</b> approved <b>{{drug.appApprovalDate}}</b><br>
 <span *ngIf="drug.first"><mat-icon> verified_user </mat-icon></span>
 <span *ngIf="drug.orphan"><mat-icon> child_friendly </mat-icon></span>
 <span *ngIf="drug.fastTrack"><mat-icon> flight_takeoff </mat-icon></span>

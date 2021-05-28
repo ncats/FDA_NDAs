@@ -60,11 +60,11 @@ export class DataLoaderService {
         headers.forEach((j, index) => {
           obj[j] = currentline[index].replace(/"/g, '');
         });
-      const d = obj.dateString.split('/');
+      const d = obj.appApprovalDate.split('/');
       obj.date = moment(d[0] + '/' + d[1], 'MM/DD').valueOf(); // MM/DD
       obj.moleculeType = obj.moleculeType.toLowerCase();
-      obj.fullDate = moment(obj.dateString, 'MM/DD/YYYY').valueOf();
-      obj.year =  Number(obj.dateString.split('/')[2]);
+      obj.fullDate = moment(obj.appApprovalDate, 'MM/DD/YYYY').valueOf();
+      obj.year =  Number(obj.appApprovalDate.split('/')[2]);
       obj.developmentTime = this.getDevTime(obj);
 
       let yearList: any[] = this.dataMap.get(obj.year);
@@ -84,7 +84,7 @@ export class DataLoaderService {
     if (drug.initClinicalStudy && drug.initClinicalStudy.toString() !== '?') {
       start = moment('01/01/'.concat(drug.initClinicalStudy.toString()), 'MM/DD/YYYY');
     } else {
-      start = moment(drug.nctDate, 'MM/DD/YYYY');
+      start = moment(drug.indDate, 'MM/DD/YYYY');
     }
     const end = moment(drug.fullDate);
     /*const d1Y = start.getFullYear();

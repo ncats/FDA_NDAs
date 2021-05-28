@@ -24,7 +24,10 @@ export class FilterPanelComponent implements OnInit {
     {name: 'Fast Track', value: 'fastTrack', icon: 'flight_takeoff'},
     {name: 'FDA Breakthrough Designation', value: 'breakthrough', icon: 'trending_up'},
     {name: 'Priority Review', value: 'priority', icon: 'visibility'},
-    {name: 'FDA Accelerated Approval', value: 'accelerated', icon: 'fast_forward'}
+    {name: 'FDA Accelerated Approval', value: 'accelerated', icon: 'fast_forward'},
+    {name: 'Black Box Warning', value: 'blackBox', icon: 'check_box_outline_blank'},
+    {name: 'Diagnostic Imaging Agent', value: 'imaging', icon: 'image'},
+    {name: 'FDA Animal Rule Approval', value: 'animal', icon: 'pets'}
     ]);
   applicationSelection = new SelectionModel<any>(true, []);
   checked = {

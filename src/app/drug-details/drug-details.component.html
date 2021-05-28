@@ -10,27 +10,35 @@
   <ng-container matColumnDef="fullDate">
     <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Approval Date</mat-header-cell>
     <mat-cell class="col10" *matCellDef="let row">
-      {{row.dateString}}
+      {{row.appApprovalDate}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="developmentTime">
     <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Clinical Development Time (years)</mat-header-cell>
     <mat-cell class="col10" *matCellDef="let row">
-      {{row.developmentTime.toFixed(1)}}
+      <ng-container *ngIf="row.developmentTime.toFixed(1) == 'NaN'; else notNaN">
+        N/A
+      </ng-container>
+      <ng-template #notNaN>
+        {{row.developmentTime.toFixed(1)}}
+      </ng-template>
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="name">
     <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
     <mat-cell class="col10 icons" *matCellDef="let row">
-  {{row.name}}<br/>
+  {{row.product}}<br/>
       <span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon></span>
       <span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon></span>
       <span *ngIf="row.fastTrack" matTooltip="Fast Track" [matTooltipPosition]="'above'"><mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon></span>
       <span *ngIf="row.breakthrough" matTooltip="FDA Breakthrough Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon></span>
       <span *ngIf="row.priority" matTooltip="Priority Review" [matTooltipPosition]="'above'"><mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon></span>
       <span *ngIf="row.accelerated" matTooltip="FDA Accelerated Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon></span>
+      <span *ngIf="row.blackBox" matTooltip="Black Box Warning" [matTooltipPosition]="'above'"><mat-icon [color]="checked.blackBox ? 'primary' : ''"> check_box_outline_blank </mat-icon></span>
+      <span *ngIf="row.diagnosticImaging" matTooltip="Diagnostic Imaging Agent" [matTooltipPosition]="'above'"><mat-icon [color]="checked.imaging ? 'primary' : ''"> image </mat-icon></span>
+      <span *ngIf="row.animalRule" matTooltip="FDA Animal Rule Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked.animal ? 'primary' : ''"> pets </mat-icon></span>
     </mat-cell>
   </ng-container>
 
@@ -38,10 +46,11 @@
     <mat-header-cell class="col15"  *matHeaderCellDef mat-sort-header >Active Ingredients</mat-header-cell>
     <mat-cell class="col15" *matCellDef="let row">
       <ng-template [ngIf]="row.unii">
-        <a href = "https://drugs.ncats.io/ginas/app/drug/{{row.unii}}" target="_blank">{{row.ingredients}}</a>
+        <a href = "https://drugs.ncats.io/drug/{{row.unii.split('|')[0]}}" target="_blank">
+          {{row.nmeIngredients.replaceAll('|', ', ')}}</a>
       </ng-template>
       <ng-template [ngIf]="!row.unii">
-        {{row.ingredients}}
+        {{row.nmeIngredients}}
       </ng-template>
     </mat-cell>
   </ng-container>
@@ -69,7 +78,7 @@
         <span class="disease" matTooltip={{row.use}} [matTooltipPosition]="'above'"><b>{{row.disease}}</b></span>
       </ng-template>
       <ng-template [ngIf]="!row.disease">
-        {{row.use}}
+        {{row.indication}}
       </ng-template>
     </mat-cell>
   </ng-container>
