@@ -29,6 +29,13 @@
           <div *ngFor="let year of years">
             <h4 *ngIf="years.length>1">{{year}}</h4>
           <div [ngSwitch]=year>
+            <div *ngSwitchCase="'2021'">
+              - Approval of <span class = "ncats-emphasis">Aduhelm</span> "controversially represents first new treatment approved for Alzheimer’s since 2003." (<a href ='https://drugs.ncats.io/ginas/app/drug/105J35OE21' target="_blank">aducanumab</a>)<br>
+              - The <span class = "ncats-emphasis">first</span> fully approved COVID-19 vaccine, extraordinarily rapid time to approval for a novel medicine. (<a href ='https://www.fda.gov/vaccines-blood-biologics/comirnaty' target="_blank">tozinameran</a>) <br>
+            </div>
+            <div *ngSwitchCase="'2020'">
+              - <span class = "ncats-emphasis">Veklury</span> "had the fastest review time (76 days) for a non-accelerated approval." (<a href ='https://drugs.ncats.io/ginas/app/drug/3QKI37EEHE' target="_blank">remdesivir</a>)<br>
+            </div>
             <div *ngSwitchCase="'2019'">
               - Approval of <span class = "ncats-emphasis">Zolgensma</span> "marks another milestone in the transformational power of gene and cell therapies to treat a wide range of diseases." (<a href ='https://drugs.ncats.io/ginas/app/drug/MLU3LU3EVV' target="_blank">onasemnogene abeparvovec</a>)<br>
               - The <span class = "ncats-emphasis">first</span> treatment specifically indicated for post-partum depression. (<a href ='https://drugs.ncats.io/ginas/app/drug/S39XZ5QV8Y' target="_blank">brexanolone</a>) <br>
