@@ -15,12 +15,12 @@ DRILLDOWN(Highcharts);
   styleUrls: ['./drug-charts.component.css']
 })
 export class DrugChartsComponent implements OnInit, OnDestroy {
-  @ViewChild('chartTarget', {static: true}) chartTarget: ElementRef;
-  @Input()fields: string[];
-  @Input()label: string;
+  @ViewChild('chartTarget', {static: true}) chartTarget!: ElementRef;
+  @Input()fields!: string[];
+  @Input()label!: string;
   chart: any;
   dataMap: Map<number, any[]> = new Map();
-  down: boolean;
+  down!: boolean;
 
   constructor(
     private loadingService: LoadingService,
@@ -63,7 +63,7 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
     firstFilterMap.forEach((val, key) => {
       series.push({name: key, y: val.total, drilldown: key});
       const data: any[] = [];
-      val.filtered.forEach((count, field) => {
+      val.filtered.forEach((count: any, field: any) => {
         data.push([field, count]);
       });
       drilldown.push({name: key, id: key, data: data});
@@ -78,11 +78,11 @@ export class DrugChartsComponent implements OnInit, OnDestroy {
       chart: {
         type: 'pie',
         events: {
-          drilldown: function (e) {
+          drilldown: function (e: { seriesOptions: { name: string; }; }) {
             ctrl.down = true;
             ctrl.dataService.filterString(e.seriesOptions.name, ctrl.fields[0]);
           },
-          drillup: function (e) {
+          drillup: function () {
             ctrl.down = false;
             ctrl.dataService.clearFilter(true);
           }

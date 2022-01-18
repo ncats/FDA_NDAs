@@ -14,8 +14,8 @@ HIGHCHARTS_MORE(Highcharts);
 })
 
 export class TimeCountsComponent implements OnInit, OnDestroy {
-  @ViewChild('timeCountChartTarget', {static: true}) chartTarget: ElementRef;
-  chart: any;
+  @ViewChild('timeCountChartTarget', {static: true}) chartTarget!: ElementRef;
+  chart!: any;
   series: number[] = [];
   years: number[] = [];
 
@@ -27,7 +27,7 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
     this.dataLoaderService.data$.subscribe(res => {
       [...res.values()].forEach(drugs => {
         let sum = 0;
-        drugs.map(drug => sum = sum + drug.developmentTime);
+        drugs.map((drug: { developmentTime: number; }) => sum = sum + drug.developmentTime);
         this.series.push(Number((sum / drugs.length).toFixed(2)));
       });
       this.makeChart();
@@ -56,7 +56,7 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
   highlightBar(): void {
     const vals: number[] = [];
     let cts = 0;
-    const p = this.chart.series[0].data.forEach(e => {
+    const p = this.chart.series[0].data.forEach((e: { category: string; y: number; update: (arg0: { color: string; }, arg1: boolean) => void; }) => {
       if (this.years.find(y => y.toString() === e.category)) {
         vals.push(e.y);
         e.update({color: '#265668'}, false);
@@ -98,7 +98,7 @@ export class TimeCountsComponent implements OnInit, OnDestroy {
         series: {
           point: {
             events: {
-              click: function (event) {
+              click: function () {
                // ctrl.dataService.changeYears([Number(this.category)]);
               }
             }

@@ -11,8 +11,8 @@ import {DataService} from '../services/data.service';
 })
 
 export class DrugCountsComponent implements OnInit, OnDestroy {
-  @ViewChild('countChartTarget', {static: true}) chartTarget: ElementRef;
-  chart: any;
+  @ViewChild('countChartTarget', {static: true}) chartTarget!: ElementRef;
+  chart!: any;
   series: number[] = [];
   years: number[] = [];
 
@@ -21,7 +21,7 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataLoaderService.data$.subscribe(res => {
-    res.forEach(drugs => this.series.push(drugs.length));
+    res.forEach((drugs: string | any[]) => this.series.push(drugs.length));
       this.makeChart();
       this.highlightBar();
     });
@@ -37,7 +37,7 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
   highlightBar(): void {
     const vals: number[] = [];
     let cts = 0;
-      const p = this.chart.series[0].data.forEach(e => {
+      const p = this.chart.series[0].data.forEach((e: { category: string; y: number; update: (arg0: { color: string; }, arg1: boolean) => void; }) => {
         if (this.years.find(y => y.toString() === e.category)) {
           vals.push(e.y);
           e.update({color: '#642F6C'}, false);
@@ -78,7 +78,7 @@ export class DrugCountsComponent implements OnInit, OnDestroy {
         series: {
           point: {
             events: {
-              click: function (event) {
+              click: function () {
            //     ctrl.dataService.changeYears([Number(this.category)]);
               }
             }

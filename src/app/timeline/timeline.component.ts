@@ -29,14 +29,14 @@ const YEARS = environment.selectedYears;
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit, OnDestroy {
-  @ViewChild('chartTarget', {static: true}) chartTarget: ElementRef;
+  @ViewChild('chartTarget', {static: true}) chartTarget!: ElementRef;
   chart: any;
   years: number[] = YEARS;
   series: any = [];
 
   dataMap: Map<number, any[]> = new Map();
 
-   private _component: ComponentRef<TooltipComponent>;
+   private _component!: ComponentRef<TooltipComponent>;
 
   constructor(private drugHoverService: DrugHoverService,
               private dataService: DataService,
@@ -53,6 +53,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
       this.dataMap = res.data;
       const data: any[] = [];
       [...this.dataMap.entries()].forEach(entry => {
+        // @ts-ignore
         data.push({name: entry[0], data: this.dataMap.get(entry[0]).map(drug => drug = {x: drug.date, y: drug.year, drug: drug})});
       });
       this.series = data;
@@ -60,8 +61,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
     });
 
     this.drugHoverService.clickednode$.subscribe(drug => {
-      const list: any[] = this.chart.series.filter(l => l.name === drug.year);
-      const point = list[0].data.filter(d => d['drug'].name === drug.name);
+      const list: any[] = this.chart.series.filter((l: { name: any; }) => l.name === drug.year);
+      const point = list[0].data.filter((d: { [x: string]: { name: any; }; }) => d['drug'].name === drug.name);
       point[0].setState(point[0].state === 'hover' ? '' : 'hover');
     point[0].select(null, true);
       this.chart['tooltip'].refresh(point[0]);
@@ -104,7 +105,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
           series: {
             point: {
               events: {
-                mouseOver: function (event) {
+                mouseOver: function () {
+                  // @ts-ignore
                   ctrl.drugHoverService.hoveredNode(this.drug);
                 }
               }
@@ -114,6 +116,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
        series: ctrl.series,
         tooltip: {
           formatter: function() {
+            // @ts-ignore
             ctrl._component.instance.drug = this.point.drug;
             ctrl._component.changeDetectorRef.detectChanges();
             const element = ctrl._component.location.nativeElement;

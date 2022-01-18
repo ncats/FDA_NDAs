@@ -49,16 +49,18 @@ export class YearsService {
     };
   }
 
-  private csvJSON(csv): void {
+  private csvJSON(csv: string): void {
     const lines: string[] = csv.split(/\r\n|\n/);
     const result: any[] = [];
 
-    const headers = lines.shift().split(',');
-    for (const i of lines) {
-      const hist: number[] = [];
-      const spl = i.split(',');
-      result.push([Number(spl[0]), Number(spl[1])]);
+    if(lines && lines.length > 0) {
+      //const headers = lines.shift().split(',');
+      for (const i of lines) {
+      //  const hist: number[] = [];
+        const spl = i.split(',');
+        result.push([Number(spl[0]), Number(spl[1])]);
+      }
+      this._dataSource.next(result);
     }
-    this._dataSource.next(result);
   }
 }

@@ -16,14 +16,13 @@ ANNOTATIONS(Highcharts);
   styleUrls: ['./year-details.component.css']
 })
 export class YearDetailsComponent implements OnInit, OnDestroy {
-  @ViewChild('historyChartTarget', {static: true}) chartTarget: ElementRef;
+  @ViewChild('historyChartTarget', {static: true}) chartTarget!: ElementRef;
   masterDataMap: Map<number, any[]> = new Map();
-  min: Drug;
-  max: Drug;
-  median: number;
-  years: number[];
-  history: any[];
-  year2017 = false;
+  min!: Drug;
+  max!: Drug;
+  median!: number;
+  years!: number[];
+  history!: any[];
   chart: any;
 
 
@@ -45,53 +44,14 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
         this.masterDataMap = obs[0];
         this.years = obs[1];
         this.history = obs[2];
-        this.year2017 = false;
-        // if(this.years.find(y => y === 2017)) {
-        //   this.year2017 = true;
-        //  this.cd.detectChanges();
         this.makeChart();
-      //  this.chart.setTitle({text: 'innovative drugs in ' + this.years.join(', ')});
 
         this.years.forEach(year => {
-          const point = this.chart.series[0].data.filter(d => d.category === year)[0];
+          const point = this.chart.series[0].data.filter((d: { category: number; }) => d.category === year)[0];
           point.select(true, true);
           this.chart['tooltip'].refresh(point);
         });
-        //  }
-        // this.getOutliers();
-        // this.getMedian();
       });
-  }
-
-  getMedian() {
-    let sum = 0;
-    const counts: any[] = [];
-    this.years.forEach(year => {
-      const r = this.masterDataMap.get(year);
-      r.forEach(drug => sum = sum + drug.developmentTime);
-      counts.push(Number((sum / r.length).toFixed(2)));
-    });
-    let s = 0;
-    counts.forEach(count => {
-      s =  s + count;
-    });
-    this.median = Number((s / counts.length).toFixed(2));
-  }
-
-  getOutliers() {
-    const counts: any[] = [];
-    this.years.forEach(year => {
-      const r = this.masterDataMap.get(year).sort((a, b) => a.developmentTime - b.developmentTime);
-      counts.push(r);
-    });
-    const min: any[] = [];
-    const max: any[] = [];
-    counts.forEach(year => {
-      min.push(year[0]);
-      max.push(year[year.length - 1]);
-    });
-    this.min = min.sort((a, b) => a.developmentTime - b.developmentTime)[0];
-    this.max = max.sort((a, b) => a.developmentTime - b.developmentTime)[max.length - 1];
   }
 
   makeChart(): void {

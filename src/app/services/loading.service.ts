@@ -11,7 +11,7 @@ export class LoadingService {
 
   constructor() { }
 
-  toggleVisible(force) {
+  toggleVisible(force: boolean) {
     this._loadingSource.next(force);
   }
 }

@@ -31,13 +31,6 @@ describe('TimelineComponent', () => {
         LoadingService
       ]
     })
-      .overrideModule(BrowserDynamicTestingModule, {
-        set: {
-          entryComponents: [
-            TooltipComponent
-          ]
-        }
-      })
     .compileComponents();
   }));
 
