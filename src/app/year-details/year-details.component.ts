@@ -99,7 +99,7 @@ export class YearDetailsComponent implements OnInit, OnDestroy {
     // Generate the chart
     const options: any = {
        title: {
-        text: 'Novel Drugs 1941-2019'
+        text: 'Novel Drugs 1941-2021'
       },
       legend: {
         enabled: false
