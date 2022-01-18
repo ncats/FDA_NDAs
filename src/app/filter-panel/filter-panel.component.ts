@@ -30,7 +30,7 @@ export class FilterPanelComponent implements OnInit {
     {name: 'FDA Animal Rule Approval', value: 'animalRule', icon: 'pets'}
     ]);
   applicationSelection = new SelectionModel<any>(true, []);
-  checked = {
+  checked: {[n:string]: boolean} = {
     first: false,
     orphan: false,
     fastTrack: false,
@@ -50,16 +50,18 @@ export class FilterPanelComponent implements OnInit {
               private dataLoaderService: DataLoaderService) { }
 
   ngOnInit() {
+    console.log(this);
     this.dataLoaderService.data$.subscribe(res => {
-      res.forEach((value, key) => {
+      res.forEach((value: string | any[], key: any) => {
         this.series.push({key: key, count: value.length});
       });
-      this.yearDataSource.data = this.series;
+      this.yearDataSource.data = this.series.sort((a,b) => b.key-a.key);
     });
 
     this.dataService.data$.subscribe(res => this.dataMap = res.data);
 
     this.dataService.years$.subscribe(years => {
+      console.log(years);
       this.stop = true;
     // /  years.forEach(year => this.yearSelection.toggle(year));
     //  this.yearSelection.deselect(...this.years);
@@ -121,5 +123,6 @@ export class FilterPanelComponent implements OnInit {
       });
       return sum;
     }
+    return sum;
   }
 }

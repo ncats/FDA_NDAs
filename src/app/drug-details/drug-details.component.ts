@@ -14,7 +14,7 @@ import {DataService} from '../services/data.service';
 export class DrugDetailsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['fullDate', 'developmentTime', 'name', 'ingredients', 'target', 'use', 'references'];
   backup: Drug[] = [];
-  checked = {
+  checked: {[n:string]: boolean} = {
     first: false,
     orphan: false,
     fastTrack: false,
@@ -27,7 +27,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   };
 
   dataSource = new MatTableDataSource<any>([]);
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
   constructor(private drugHoverService: DrugHoverService,
               private dataService: DataService
@@ -36,6 +36,8 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataService.data$.subscribe(res => {
+      console.log(res);
+
       let data: Drug[] = [];
       [...res.data.values()].forEach(year => data = data.concat(year));
       this.backup = data;
@@ -52,7 +54,7 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
           diagnosticImaging: false,
           animalRule: false
         };
-        res.filters.forEach(field => this.checked[field] = true);
+        res.filters.forEach((field: string) => this.checked[field] = true);
       }
     });
 
@@ -64,10 +66,12 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+  applyFilter(filterValue: KeyboardEvent) {
+    console.log(filterValue.target)
+    console.log(filterValue)
+   // filterValue = filterValue.trim(); // Remove whitespace
+   // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+  //  this.dataSource.filter = filterValue;
   }
 
   drugClick(drug: Drug) {
@@ -77,4 +81,8 @@ export class DrugDetailsComponent implements OnInit, AfterViewInit {
   hover(drug: Drug) {
     this.drugHoverService.clickedNode(drug);
   }
-}
+
+  getColor(prop: string): string {
+    return this.checked[prop] ? 'primary' : '';
+  }
+  }

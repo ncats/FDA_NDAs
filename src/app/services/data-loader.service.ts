@@ -49,34 +49,38 @@ export class DataLoaderService {
     };
   }
 
-  private csvJSON(csv): void {
+  private csvJSON(csv: string): void {
     const lines: string[] = csv.split(/\r\n|\n/);
     const result: any[] = [];
 
-    const headers = lines.shift().split(',');
-      lines.forEach( i => {
+    if(lines && lines.length> 0) {
+      // @ts-ignore
+      const headers: string[] = lines.shift().split(',');
+      lines.forEach(i => {
         const obj: Drug = new Drug();
         const currentline = i.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
         headers.forEach((j, index) => {
+          // @ts-ignore
           obj[j] = currentline[index].replace(/"/g, '');
         });
-      const d = obj.appApprovalDate.split('/');
-      obj.date = moment(d[0] + '/' + d[1], 'MM/DD').valueOf(); // MM/DD
-      obj.moleculeType = obj.moleculeType.toLowerCase();
-      obj.fullDate = moment(obj.appApprovalDate, 'MM/DD/YYYY').valueOf();
-      obj.year =  Number(obj.appApprovalDate.split('/')[2]);
-      obj.developmentTime = this.getDevTime(obj);
+        const d = obj.appApprovalDate.split('/');
+        obj.date = moment(d[0] + '/' + d[1], 'MM/DD').valueOf(); // MM/DD
+        obj.moleculeType = obj.moleculeType.toLowerCase();
+        obj.fullDate = moment(obj.appApprovalDate, 'MM/DD/YYYY').valueOf();
+        obj.year = Number(obj.appApprovalDate.split('/')[2]);
+        obj.developmentTime = this.getDevTime(obj);
 
-      let yearList: any[] = this.dataMap.get(obj.year);
-      if (yearList && yearList.length > 0) {
-        yearList.push(obj);
-      } else {
-        yearList = [obj];
-      }
-      this.dataMap.set(obj.year, yearList);
-      //  result.push(obj);
+        let yearList: any[] | undefined = this.dataMap.get(obj.year);
+        if (yearList && yearList.length > 0) {
+          yearList.push(obj);
+        } else {
+          yearList = [obj];
+        }
+        this.dataMap.set(obj.year, yearList);
+        //  result.push(obj);
       });
-    this._dataSource.next(this.dataMap);
+      this._dataSource.next(this.dataMap);
+    }
   }
 
   getDevTime(drug: Drug): number {

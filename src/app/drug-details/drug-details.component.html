@@ -1,6 +1,6 @@
 
 <mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  <input matInput (keyup)="applyFilter($event)" placeholder="Search">
 </mat-form-field>
 
 <mat-table #table [dataSource]="dataSource" matSort matSortActive="fullDate" matSortDirection="desc">
@@ -17,7 +17,7 @@
   <ng-container matColumnDef="developmentTime">
     <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Clinical Development Time (years)</mat-header-cell>
     <mat-cell class="col10" *matCellDef="let row">
-      <ng-container *ngIf="row.developmentTime.toFixed(1) == 'NaN'; else notNaN">
+      <ng-container *ngIf="row.developmentTime.toFixed(1) === 'NaN'; else notNaN">
         N/A
       </ng-container>
       <ng-template #notNaN>
@@ -30,15 +30,15 @@
     <mat-header-cell class="col10" *matHeaderCellDef mat-sort-header>Product</mat-header-cell>
     <mat-cell class="col10 icons" *matCellDef="let row">
   {{row.product}}<br/>
-      <span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon [color]="checked.first ? 'primary' : ''"> verified_user </mat-icon></span>
-      <span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.orphan ? 'primary' : ''"> child_friendly </mat-icon></span>
-      <span *ngIf="row.fastTrack" matTooltip="Fast Track" [matTooltipPosition]="'above'"><mat-icon [color]="checked.fastTrack ? 'primary' : ''"> flight_takeoff </mat-icon></span>
-      <span *ngIf="row.breakthrough" matTooltip="FDA Breakthrough Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked.breakthrough ? 'primary' : ''"> trending_up </mat-icon></span>
-      <span *ngIf="row.priority" matTooltip="Priority Review" [matTooltipPosition]="'above'"><mat-icon [color]="checked.priority ? 'primary' : ''"> visibility </mat-icon></span>
-      <span *ngIf="row.accelerated" matTooltip="FDA Accelerated Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked.accelerated ? 'primary' : ''"> fast_forward </mat-icon></span>
-      <span *ngIf="row.blackBox" matTooltip="Black Box Warning" [matTooltipPosition]="'above'"><mat-icon [color]="checked.blackBox ? 'primary' : ''"> check_box_outline_blank </mat-icon></span>
-      <span *ngIf="row.diagnosticImaging" matTooltip="Diagnostic Imaging Agent" [matTooltipPosition]="'above'"><mat-icon [color]="checked.imaging ? 'primary' : ''"> image </mat-icon></span>
-      <span *ngIf="row.animalRule" matTooltip="FDA Animal Rule Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked.animal ? 'primary' : ''"> pets </mat-icon></span>
+      <span *ngIf="row.first" matTooltip="First-in-class" [matTooltipPosition]="'above'"><mat-icon [color]= "checked['first'] ?'primary' : null"> verified_user </mat-icon></span>
+      <span *ngIf="row.orphan" matTooltip="Orphan Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked['orphan'] ?'primary' : null"> child_friendly </mat-icon></span>
+      <span *ngIf="row.fastTrack" matTooltip="Fast Track" [matTooltipPosition]="'above'"><mat-icon [color]="checked['fastTrack'] ?'primary' : null"> flight_takeoff </mat-icon></span>
+      <span *ngIf="row.breakthrough" matTooltip="FDA Breakthrough Designation" [matTooltipPosition]="'above'"><mat-icon [color]="checked['breakthrough'] ?'primary' : null"> trending_up </mat-icon></span>
+      <span *ngIf="row.priority" matTooltip="Priority Review" [matTooltipPosition]="'above'"><mat-icon [color]="checked['priority'] ?'primary' : null"> visibility </mat-icon></span>
+      <span *ngIf="row.accelerated" matTooltip="FDA Accelerated Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked['accelerated'] ?'primary' : null"> fast_forward </mat-icon></span>
+      <span *ngIf="row.blackBox" matTooltip="Black Box Warning" [matTooltipPosition]="'above'"><mat-icon [color]="checked['blackBox'] ?'primary' : null"> check_box_outline_blank </mat-icon></span>
+      <span *ngIf="row.diagnosticImaging" matTooltip="Diagnostic Imaging Agent" [matTooltipPosition]="'above'"><mat-icon [color]="checked['imaging'] ?'primary' : null"> image </mat-icon></span>
+      <span *ngIf="row.animalRule" matTooltip="FDA Animal Rule Approval" [matTooltipPosition]="'above'"><mat-icon [color]="checked['animalRule'] ? 'primary' : null"> pets </mat-icon></span>
     </mat-cell>
   </ng-container>
 
@@ -95,5 +95,5 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="drugClick(row)" [ngClass]="{clicked: clicked}" (mouseenter) ="hover(row) "  (mouseleave) ="hover(row)"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="drugClick(row)" (mouseenter) ="hover(row) "  (mouseleave) ="hover(row)"></mat-row>
 </mat-table>

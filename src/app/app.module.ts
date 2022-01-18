@@ -52,7 +52,6 @@ import {NcatsFooterComponent} from './ncats-footer/ncats-footer.component';
     YearsService,
     LoadingService
   ],
-  entryComponents: [TooltipComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

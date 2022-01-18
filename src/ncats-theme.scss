@@ -1,5 +1,6 @@
+@use '@angular/material' as mat;
 @import '../node_modules/@angular/material/theming';
-@include mat-core();
+@include mat.core();
 
 
 $ncats-primary: (
@@ -86,11 +87,11 @@ chart {
 overflow: visible !important;
 }
 
-$ncats-app-primary: mat-palette($ncats-primary);
-$ncats-app-accent:  mat-palette($ncats-secondary);
+$ncats-app-primary: mat.define-palette($ncats-primary);
+$ncats-app-accent:  mat.define-palette($ncats-secondary);
 
-$ncats-app-warn:    mat-palette($mat-red);
+$ncats-app-warn:    mat.define-palette(mat.$red-palette);
 
-$ncats-app-theme: mat-light-theme($ncats-app-primary, $ncats-app-accent, $ncats-app-warn);
+$ncats-app-theme: mat.define-light-theme($ncats-app-primary, $ncats-app-accent, $ncats-app-warn);
 
-@include angular-material-theme($ncats-app-theme);
+@include mat.all-component-themes($ncats-app-theme);
